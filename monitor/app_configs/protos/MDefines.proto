@@ -1,0 +1,561 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+
+message MCombatTeamFormat {
+    int32 index = 1; //第几个阵型（0-4）
+    string name = 2; //阵型的名字
+    repeated int64 arrangement = 3; //阵型里卡牌的UID（数组大小9，对应九个位置，值为UID）
+    repeated FormulaCardItem formulas = 4; //阵法卡组
+    int32 petid = 5; //  宠物tid
+}
+message MRelationTeam {
+    int32 type = 1; //副本类型
+    int32 index = 2; //阵型索引(0-4)
+}
+
+message MDisplayCards {
+    int32 id = 1;
+    int32 level = 2;
+    int32 quality = 3;
+}
+
+message MShowEquipInfo
+{
+    int32 id = 1;
+    int32 level = 2;
+}
+
+message MShowExcluInfo
+{
+    bool active = 1;
+    int32 level = 2;
+}
+
+message MShowBadgeInfo
+{
+    int32 id_1 = 1;
+	int32 level_1 = 2;
+	int32 id_2 = 3;
+    int32 level_2 = 4;
+}
+
+message MShowAttrInfo
+{
+    int32 type = 1;
+	int32 value = 2;
+}
+
+message  MShowCard
+{
+    int32 id = 1;
+    int32 level = 2;
+    int32 quality = 3;
+	int64 combatPower = 4; // 战力
+	int32 favorlv = 5; // 好感度等级
+	int32 personallv = 6;
+	repeated MShowEquipInfo equipinfo = 7; // 装备
+    MShowExcluInfo excluinfo = 8; 
+    MShowBadgeInfo badgeinfo = 9;
+	repeated MShowAttrInfo attrInfo = 10;
+	int32 model = 11;
+}
+
+message MBasicPlayer 
+{
+    int64                   uid         = 1;    //  玩家ID
+    int32                   level       = 2;
+    string                  name        = 3;
+    string                  sign        = 4;    //个性签名
+    int32                   headicon    = 5;
+    int32                   fight       = 6;
+    int32                   guild       = 7;
+    int32                   viplv       = 8;
+    int32                   guildrank   = 9;    // 公会职位   
+    string                  guildname   = 10;
+    int32                   stageid     = 11;   // 普通关卡进度
+    repeated int64          members     = 12;   // 队伍的卡牌UID集合（member为空代表修改数据）
+    repeated MCard          cards       = 13;   //
+	repeated MDisplayCards  displayCards  = 14;   // 竞技场
+    repeated MShowCard      showCards = 15;  // 展示区卡牌
+    repeated MDisplayCards  jjcCards    = 16;   // 竞技场
+    int32                   format      = 17;   // 阵型
+}
+enum UpdatePatternEnum {
+    UPE_PUSHENTIRELY = 0; // 推送对应逻辑整体数据
+    UPE_REFRESHCHUNK = 1; // 对应数据块属性刷新 不存在对应数据项则创建(创建内容仅针对repeat类型) 
+    //UPE_ADDNEWCHUNK = 2;    // 对应数据块新增部分
+    //UPE_REMOVECHUNK = 3;    // 对应数据块移除部分
+}
+
+message MUpdatePattern {
+    UpdatePatternEnum upePattern = 1;
+}
+
+//装备位置
+enum EquipType {
+    EquipType_Invalid = 0;
+    EquipType_Weapon = 1; // 装备之武器
+    EquipType_Jacket = 2; // 装备之上衣
+    EquipType_Trousers = 3; // 装备之下衣
+    EquipType_Shoes = 4; // 装备之鞋子
+}
+
+//装备附魔类型
+//enum EnchantEquipType
+//{
+//    EnchantType_FireAvoid = 1;      // 火焰免伤
+//    EnchantType_IceAvoid = 2;      // 冰冻免伤
+//    EnchantType_ThunderAvoid = 3;    // 闪电免伤
+//    EnchantType_OtherAvoid = 4;       // 其它免伤
+//}
+
+message MAttr {
+    int32 type = 1; //属性类型
+    int32 value = 2; //属性值
+    int32 hisTrainSum = 3; //历史训练和
+}
+
+message MEquipInfo {
+    int64 weapon = 1; // 装备之武器 [sid对应装备背包slot]
+    int64 jacket = 2; // 装备之上衣 [sid对应装备背包slot]
+    int64 trousers = 3; // 装备之下衣 [sid对应装备背包slot]
+    int64 shoes = 4; // 装备之鞋子 [sid对应装备背包slot]
+}
+
+message MBadgeInfo {
+    int64 badge_1 = 1; // 徽章 [sid对应装备背包slot]
+    int64 badge_2 = 2; // 徽章 [sid对应装备背包slot]
+}
+
+//卡牌技能
+//message MSkill
+//{
+//	 int32 id = 1;		//技能id
+//	 int32 lvl = 2;		//技能等级
+//	 int32 value = 3;	//技能成长值
+//}
+
+enum EnumCardType {
+    CardType_Bag = 0; // 背包里的卡
+    CardType_Maze = 1; // 迷宫招募的卡
+}
+
+message MCard {
+    int64 uid = 1; // (不可堆叠的物品的 递增id)
+    int32 cardId = 2; // 卡牌id
+    MEquipInfo equip_attr = 3; // 装备属性
+    repeated MDisItem costlist = 4; // 培养这张卡的累计物品   type =>资源(0) 道具(1) 装备(2) 卡牌(9)
+    int32 quality = 5; // 品阶
+    int32 level = 6; // 等级
+    int32 exclu_flag = 7; // 专属装备激活 0未激活，1 激活
+    int32 exclu_strenglv = 8; // 专属装备强化等级
+    EnumCardType type = 9; // 卡类型
+    int32 personal_lv = 10; // 私物强化等级
+    int32 personal_exp = 11; // 私物强化经验
+    int32 combatPower = 12; // 战力
+    repeated MAttr attrs = 13; // 属性
+    MBadgeInfo badge_attr = 14; // 徽章属性
+}
+
+// 图鉴
+message MCardHandbook {
+    int32 cardid = 1; // 图鉴id
+    int32 quality = 2; // 图鉴突破
+    int32 level = 3; // 图鉴等级
+    int32 favorlv = 4; // 好感度等级
+    int32 favorexp = 5; // 好感度经验
+    int32 modelid = 6; // 当前设置立绘Id
+    repeated int32 unlockmodels = 7; // 所有解锁的立绘
+    int32 attrnum = 8; // 属性条数
+}
+
+message MItem {
+    int32 tid = 1; //物品配置id
+    int32 num = 2; //当前拥有的数量
+}
+
+// 附魔信息
+//message MEnchantInfo
+//{
+//     int32 enhantId = 1 ;
+//     int64 endtime = 2 ;
+//}
+
+//徽章附加信息
+message MBadgeVice {
+    int32 type = 1;
+    int32 point = 2;
+}
+
+//道具
+message MBagItem {
+    int32 id = 1; // 物品id
+    int64 sid = 2; // 物品唯一表示 格子id
+    int32 num = 3; // 数量
+    int32 bagtype = 4;
+    int32 timestamp = 5;
+
+    //道具属性
+    int32 subtype = 6; // 子类型
+
+    // 装备、徽章属性
+    int32 strengthLv = 7; // 强化等级
+    int32 strengthexp = 8; // 强化经验
+    int64 carduid = 9; // 在那个卡牌身上
+
+    // 徽章附加属性
+    repeated MBadgeVice badgevice = 10;
+}
+message MBag {
+    int32 type = 1; //背包的物品类型
+    repeated MBagItem items = 2;
+}
+
+//很多地方需要显示道具 资源比如掉落 关卡结算
+message MDisItem {
+    int32 type = 1; // 类型 告诉你在那个物品表 1 :标识道具表
+    int64 id = 2; // 物品id，卡牌uid
+    int64 num = 3; // 数量
+}
+
+// 副本关卡 通关
+//message MStage
+//{
+//	 int32 stageId		= 1;  //关卡id		
+//	repeated bool stars         = 2;  //星星情况 举例 如果只通过第二颗星星就是 false true false   
+//	 int32 todayWinCount   = 3;  //关卡今日胜利次数
+//	 int32 firstGetState = 4; //关卡 首次领取状态 0不能领取(像主线 那种没有首次领取 都是不可领取) 1 可以领取 2是领取过
+//	 int32 todayChallengeNum   = 5; //今日挑战次数
+//	 bool isPass		= 6;		//是否通关
+//     int32   resetChallengeTime  = 7;   // 重置挑战次数
+//     int32   resetChallengeCnt   = 8;
+//}
+
+//副本结点数据 比如领取宝箱情况
+//message MSection
+//{
+//	 int32 sectionId 	= 1;	//结点id
+//	repeated bool  isGift		= 2;	//领取情况
+//	 int32 state 		= 3;	//结点的状态 0：未通关 1:激活 2：通关
+//}
+
+// 挂机节点数据
+message MIdleStage {
+    int32 curChapterId = 1;
+    int32 curStageId = 2;
+    int32 winChapterId = 3;
+    int32 winStageId = 4;
+    int64 idleStartTime = 5; // 当前挂机开始时间
+    uint32 quickFightCnt = 6; // 今日快速战斗次数
+    repeated int32 awardStages = 7; // 可领取通关奖利的stages，挂机挑战boss时候关卡才会有通关奖利
+}
+
+//爬塔数据
+//message MTower
+//{	
+//	 int32 curLvl 			= 1;		// 当前的爬塔层数
+//	 int32 todayResetNum 	= 2;	 	// 重置次数 超过2次 就显示0 因为 没有次数可以花钱
+//	 int32 challengeBuyNum 	= 3;		// 购买挑战的次数 每个关卡有两次免费 用光后就的购买
+//	 uint32 lastSweepTime 	= 4;		// 上次扫荡的时间戳
+//	 int32 maxLvl			= 5;		// 挑战的最高层数
+//	 int32 lastSweepLvl		= 6;		// 上一次扫荡等级层数
+//     uint32 resetTimestamp  = 7;        // 重置时间戳
+//     int32 todayBuyResetNum = 8;        // 今日已购买的重置次数
+//
+//}
+
+//玩法类型 副本类型对应选择的阵型索引
+message MRelateFormationData {
+    int32 combatType = 1; //副本类型
+    int32 formationIndex = 2; //阵型索引(0-4)
+}
+
+message MFormatext {
+    ReturnValue formatid = 1; //  格式串ID  对应 language.xlsx
+    int32 timestamp = 2; //  发送时间
+    repeated string params = 3; //  参数表
+    int64 uid = 4; //  from
+}
+
+//世界，系统，工会，私聊0-3
+enum ChatChannelType {
+    ChatChan_World = 0;
+    ChatChan_System = 1;
+    ChatChan_Guild = 2;
+    ChatChan_Private = 3;
+}
+
+//聊天数据
+message MChatItem {
+    ChatChannelType chatChannel = 1; // 聊天频道
+    int32 avatarId = 2; // 头像ID(当为私聊的此值总表示对方的头像)
+    int64 playerGUID = 3; // 目标玩家(当为私聊的此值总表示对方的UID)
+    int32 playerLevel = 4; // 目标玩家等级(当为私聊的此值总表示对方的等级)
+    string playerName = 5; // 目标玩家名称(当为私聊的此值总表示对方的名字)
+    string chatContent = 6; // 聊天内容
+    bool isSend = 7; // 是否自己发送
+    int64 chatTime = 8; // 发送时间
+    int32 broadcastid = 9; // 广播消息id
+    repeated string params = 10; // 参数表
+    bool isRead = 11; //是否已经被阅读
+}
+
+// 商店购买cd
+message MShopBuyCD {
+    int32 shopid = 1; //
+    int32 timestamp = 2; // 时间段内首次购买时间
+    int32 cnt = 3; // 已购数量
+}
+
+// 商店数据结构
+message MShopInfo {
+    int32 type = 1; //	商店类型
+    int64 refreshtime = 2; //	刷新时间
+    int32 refreshnum = 3; //  刷新次数
+    repeated MShopItem itemlist = 4; //	商品列表
+}
+
+// 商店物品数据结构
+message MShopItem {
+    int32 pos = 1; //	位置
+    int32 sid = 2; //	shopprice表id
+    bool sold = 3; //	已售出
+    int32 randcost = 4; //	随机价格
+}
+
+//   公会 DB_Guild => MseGuildInfo
+message MGuildPlayer 
+{
+    int64   uid             = 1;    //  玩家ID
+    int32   level           = 2;    
+    string  name            = 3;    
+    int32   jointime        = 5;    //  申请加入时间 或 批准时间
+    int32   rank            = 6;    //  职位  会长 副会长  会员
+    int32   contribution    = 7;    //  帮会贡献   累计
+    int32   headicon        = 8;
+    int32   showcardtid     = 9;    //  看板娘id
+    int64   active          = 10;   //  个人贡献给工会的总活跃  - 通过日常活跃
+    int64   active_week     = 11;   //  个人贡献给工会的周活跃
+    int32   active_weektime = 12;   //  周活跃时间戳 - 每周清空
+    int64   power           = 13;   //  战力
+    bool    is_online       = 30;   //  是否在线
+    int32   lastlogin       = 31;   //  最后一次登录时间
+}
+
+message MGuildInfo 
+{
+    int64               id          = 1;    //
+    string              name        = 2;    
+    int32               level       = 3;    
+    int32               exp         = 4;    
+    int32               badge       = 5;    // 公会徽章资源ID
+    bool                needverify  = 6;    // 加入公会是否需要审批
+    int64               active      = 7;    // 工会活跃度  -- 用于开工会秘境  可消耗
+    int32               timestamp   = 8;    // 创建时间
+    string              notice      = 9;    // 公告
+    repeated MFormatext note        = 10;   // 日志
+}
+
+message MGuildInfoSimple 
+{
+    int64   id              = 1;    //
+    string  name            = 2;    // 公会名字
+    int32   level           = 3;    
+    int32   badge           = 4;    // 公会徽章资源ID
+    bool    needverify      = 5;    // 加入公会是否需要审批
+    int32   timestamp       = 6;    // 创建时间
+    string  admin_name      = 7;    // 会长名字
+    int32   mnumber         = 8;    // 人数
+    bool    already_appled  = 9;   // 已申请
+    int32   ranking         = 11;   // 公会排名
+    int32   admin_head      = 12;   // 会长头像
+    int64   total_power     = 13;   // 总战力
+}
+
+message MGuildMy // 跟Player走的工会信息
+{
+    int64 guildid       = 1; //  公会信息，需要记在玩家身上的
+    int32 guildexitime  = 2; //  上次退出公会的时间
+    int64 guildcoin     = 3; //  公会币
+}
+
+message MFriendItem {
+    int64 playerGUID = 1; // 好友ID
+    int32 avatarId = 2; // 头像ID
+    int32 playerLevel = 3; // 好友等级
+    string playerName = 4; // 好友名称
+    int32 playerFightPower = 5; // 好友战力
+    int64 chatTime = 6; // 好友列表表示离线时间，申请列表为申请时间，拜访时表示拜访时间
+    int64 visitTime = 7; // 最后一次拜访好友时间 单位ms
+    int64 beVisitedTime = 8; // 好友最后一次拜访时间 单位ms
+    int64 receiveTime = 9; // 最后一次接受拜访时间 单位ms
+    int32 optype = 10; // 0-add 1-delete 2-delete all 3-be visited 4-receive visit 5-visit
+    int32 curchapterid = 11; // 当前挂机章节id
+    int32 curstageid = 12; // 当前挂机关卡id
+    MCombatTeamFormat formats = 13; //pve阵型
+}
+
+message MFriendChatItem {
+    int64 senderUID = 1; // 发送者的UID
+    string chatContent = 2; // 聊天内容
+    int64 chatTime = 3; //发送时间
+    bool isRead = 4; //是否已经被阅读
+}
+
+//好友聊天数据
+message MFriendChatContent {
+    int64 friendUID = 1; // 好友的UID
+    repeated MFriendChatItem chatItems = 2; // 好友聊天内容
+}
+
+//WorldBoss伤害榜数据
+message MWorldBossRankItem {
+    string playerName = 1; // 玩家的名称
+    int64 playerDamage = 2; // 玩家的伤害
+}
+
+message MAchCompleted {
+    int32 tid = 1;
+    int32 timestamp = 2; // 成就完成的时间
+}
+
+message MTask {
+    int32 tid = 1;
+    int32 state = 2; // 已接受，完成， 已领取奖励。  TaskState
+    int32 timestamp = 3;
+    repeated int64 cond_params = 4;
+    int32 type = 5; // 任务类型  TaskType
+}
+
+//阵法卡列表
+message FormulaCardItem {
+    int32 id = 1; //ActionFormula.txt配表id
+    int32 count = 2; //数量
+}
+
+//阵法卡组设置
+message FormulaCardSettingItem {
+    int32 teamId = 1; //对应的阵型
+    repeated FormulaCardItem list = 2;
+}
+
+
+message MEntrust {
+    int64 uid = 1;
+    int32 tid = 2;
+    int32 state = 3; // 1未接取   2未完成   3已完成待领取
+    int32 accept_time = 4; // 任务接取时间
+    repeated int64 cardsid = 5; // 已使用的卡
+    repeated int64 helpuid = 6; // 增援好友id
+    repeated int64 helpcard = 7; // 增援卡id
+    int64 refreshtime = 8; // 刷新时间
+}
+
+message MWishList {
+    int32 tid = 1; // 心愿单id
+    repeated int32 wish = 2; // 需求的卡id
+}
+
+// 徽章附属性
+message MBadgeExtraAttr {
+    int32 type = 1; //类型
+    int32 point = 2; //值
+}
+
+// 阵容信息
+message MTeamInfo {
+    int32 cardid = 1; // 阵容信息
+    int32 levels = 2; // 阵容中卡牌对应等级
+    int32 quality = 3; // 阵容中卡牌突破等级
+}
+
+message MPReward {
+    int32 id = 1; // 奖励id
+    int32 gift1 = 2; // gift1是否已领取 0:否 1:是
+    int32 gift2 = 3; // gift2是否已领取 0:否 1:是
+}
+
+message MPass {
+    int32 pid = 1; // 通行证id
+    int32 process = 2; // 进度。
+    int32 status = 3; // 激活状态 3种状态 未激活、初级、高级
+    int64 endTime = 4; // 结束时间。
+    repeated MPReward reward = 5; // 已领取的reward
+}
+
+message MCardPieceExplore {
+    int64 sid = 1; // 探索卡牌sid
+    int32 explorenum = 2; // 探索数量
+    bool isexplore = 3; //是否探索中
+}
+
+enum ItemActType {
+    ItemActType_Invalid = 0;
+    ItemActType_Add = 1;
+    ItemActType_Del = 2;
+    ItemActType_Upd = 3;
+}
+
+message MItemAct {
+    int32 bagType = 1; //背包类型 1： 道具背包 以后可能扩展出多个背包 比如装备背包 资源类的 可以用另一种消息通知
+    ItemActType action = 2; //消息的行为是啥 1:add 2:删除 3:更新
+    MBagItem item = 3; //对应的道具
+}
+
+message MFunctionSate {
+    int32 type = 1; //功能类型
+    bool open = 2; //是否开启
+}
+
+message MRankRewardPlayer {
+    int64 uid = 1;
+    string name = 2;
+    int32 icon = 3;
+    int32 level = 4;
+    int64 completetime = 5;
+}
+
+message MRankGetkRewardComplete {
+    int32 type = 1; //排行榜类型
+    repeated int32 condition = 2; //达成条件
+}
+message MRankReward {
+    int32 condition = 1; //达成条件
+    repeated MRankRewardPlayer rewardplayer = 2; // 达成条件玩家
+}
+
+// 充值信息
+message MRechargeGift {
+    int32 gift_id = 1; // 礼包id
+    int32 buy_num = 2; // 已购次数
+    int64 end_time = 3; // 结束时间
+}
+
+// 触发式礼包
+message MTriggerGift {
+    int32 gift_id = 1; // 礼包id
+    int32 cfg_id = 2; // 条件表id
+    int32 cur_grade = 3; // 当前礼包档位
+    int64 end_time = 4; // 结束时间
+}
+
+// 活动公共数据
+enum ActivityOpeType {
+    AOT_Invalid = 0;
+    AOT_GET = 1; // 领取某个活动的奖励
+}
+message MActivityData {
+    int32 act_id = 1; // 活动id，activitySwitch表id
+    repeated int32 int_params = 2; // int参数列表
+    string str_params = 3; // string参数列表    
+}
+
+// activitySwitch推送信息
+message MActivityTableRecord {
+    int32 id = 1;
+    int32 group = 2;
+    string starttime = 3;
+    string endtime = 4;
+    int32 version = 5;
+    string param = 6;
+}

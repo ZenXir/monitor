@@ -1,0 +1,248 @@
+syntax = "proto3";
+enum ConstantDefine {
+    // 版本号
+    // Each of the version number in the range is: 0 to 255
+    DG_ReserVer = 0; // Reserves the version number
+    DG_MajorVer = 1; // Major version, Piece of information
+    DG_ProtoVer = 4; // Protocol version number
+    DG_MinorVer = 5; // Version number of resources
+    INVALID_ID = -1; // 无效的整数
+}
+
+enum CardRaceDefine {
+    CardRace_Invalid = 0;
+    CardRace_Land = 1;
+    CardRace_Water = 2;
+    CardRace_Fire = 3;
+    CardRace_Wind = 4;
+    CardRace_Light = 5;
+    CardRace_Dark = 6;
+}
+
+// 玩法类型
+enum CombatTypeDefine
+{
+	CombatTypeInvalid 			= 0;
+	CombatTypePve 				= 1; 	// PVE推图
+	CombatTypePvp 				= 2; 
+	CombatTypePvpdefend 		= 3;
+	CombatTypeKingTower 		= 4; 	// 王者之塔
+	CombatTypeGuildBoss		    = 5;	// 公会boss
+	CombatTypeGuildHunt		    = 6;	// 公会狩猎
+	CombatTypeMaze     		    = 7; 	// 迷宫
+	CombatTypeArena3V3Atack1	= 8; 	// 竞技场
+	CombatTypeArena3V3Atack2    = 9; 	// 竞技场
+	CombatTypeArena3V3Atack3    = 10; 	// 竞技场
+	CombatTypeArena3V3Defend1   = 11; 	// 竞技场
+	CombatTypeArena3V3Defend2   = 12; 	// 竞技场
+	CombatTypeArena3V3Defend3   = 13; 	// 竞技场
+	CombatTypeArena3V3			= 14; 	// 竞技场 用于3V3竞技场战报点播
+	CombatTypeEarthTower		= 15;	// 地塔阵容
+	CombatTypeWaterTower		= 16;	// 水塔阵容
+	CombatTypeFireTower		    = 17;	// 火塔阵容
+	CombatTypeWindTower		    = 18;	// 风塔阵容
+	CombatTypeMax 				= 19;
+}
+
+enum CombatDefine {
+    MAX_CARD_EACH_Invalid = 0;
+    MAX_CARD_EACH_SIDE = 9; // 单边最大角色数
+    MAX_CARD_ALL_SIDE = 18; // 双边最大角色数
+    MAX_EXIST_BUFF = 24; // 可带BUFF最大数
+    MAX_EVENT_BEFORE_FIGHT = 4; // 战前最大事件数
+    MAX_FIGHTER_NAME_LEN = 32; // 最大参战者名字长度
+    MAX_BUFF_EFFECT = 3; // 单个BUFF最大效果数
+    MAX_CARD_DISPLAY = 5; // 最大阵容展示卡牌数量
+};
+
+enum LogicEventType {
+    LogicEventType_Invalid = 0;
+    LogicEventType_FriendsList = 999001;
+    LogicEventType_ApplyList = 999002;
+    LogicEventType_BlackList = 999003;
+    LogicEventType_Broadcast = 999004;
+};
+
+enum BroadcastType {
+    BroadcastType_Invalid = 0;
+    BroadcastType_SelfServer = 1; // 本服
+    BroadcastType_AllServers = 2; // 全服
+    BroadcastType_Tutorial = 3; // 教学
+    BroadcastType_Selfness = 4; // 自己
+};
+
+enum TaskType {
+    TaskInvalidType = 0;
+    TaskDaily = 1;
+    TaskWeek = 2;
+    TaskAch = 3;
+    TaskStory = 4;
+    TaskNovice = 5;
+    TaskGrow = 6;
+};
+
+enum TaskState {
+    TaskInvalid = 0;
+    TaskAccepted = 1;
+    TaskCompleted = 2;
+    TaskReceived = 3;
+};
+
+// 公会职位
+enum EGuildPosition {
+    EGuildPosition_Invalid = 0;
+    EGuildPosition_Boss = 1; //  会长
+    EGuildPosition_VP = 2; //  副会长
+    EGuildPosition_Member = 3; //  成员
+}
+
+
+enum TriggerCond {
+    TriggerCondInvalid = 0;
+    TriggerCondLvup = 101; // 玩家等级达到x级
+    TriggerCondLvupVIP = 102; // 玩家VIP等级达到x级
+    TriggerCondPowerChange = 103; // 玩家战斗力最高达到x
+    TriggerCondSrcCurr = 104; // 玩家当前拥有xx资源xx数量
+    TriggerCondSrcMax = 105; // 玩家最多拥有xx资源xx数量
+    TriggerCondSrcSum = 106; // 玩家累计拥有xx资源xx数量
+    TriggerCondSrcSub = 107; // 玩家累计消耗xx资源xx数量
+    TriggerCondUnlockAvatar = 108; // 玩家已解锁x个头像
+    TriggerCondChangeName = 109; // 玩家第一次改名
+    TriggerCondRandomCards = 110; // 玩家在xx卡池抽卡xx次
+    TriggerCondSumRmb = 111; // 玩家累计充值xx金额
+    TriggerCondItemSub = 112; // 玩家累计消耗xx道具xx数量
+
+    TriggerCondCardCnt = 201; // 拥有卡牌总数量
+    TriggerCondCardCntQuality = 202; // 拥有xx品质的卡牌数量
+    TriggerCondCardCntLv = 203; // 卡牌等级达到x的卡牌数量
+    TriggerCondCardCntJobs = 204; // 卡牌职介等级达到x的卡牌数量
+    TriggerCondCardCntSurmount = 205; // 卡牌突破等级达到x的卡牌数量
+    TriggerCondCardTrainingCnt = 206; // 卡牌训练xx训练达到xx次
+    TriggerCondCardSkillLvCnt = 207; // 卡牌技能达到+x的技能数量
+
+
+    TriggerCondEquipCnt = 301; // 拥有装备总数量      数量
+    TriggerCondEquipCntQuality = 302; // 拥有xx品质装备数量      数量|装备品质编号
+    TriggerCondEquipStrenghLv = 303; // 装备强化大师等级达到x级的卡牌数量         数量|强化大师等级
+    TriggerCondEquipRemouldLv = 304; // 装备改造大师等级达到x级的卡牌数量	数量|改造大师等级
+    TriggerCondEquipStrenghCnt = 305; // 装备强化等级达到x的装备数量        数量|装备等级
+    TriggerCondEquipRemouldCnt = 306; // 装备改造等级达到x的装备数量      数量|装备改造等级
+
+    TriggerStagePassCommon = 401; // 通过普通（精英）关卡xx次
+    TriggerStagePass = 402; // 通过xx关卡xx次（通过xx章节也用这个，id填最后一关）
+    TriggerSectionStarCnt = 403; // xx章节星星数达到xx个
+    TriggerStageSweepingCnt = 404; // 累计扫荡关卡xx次
+
+    TriggerFriendCnt = 501; // 拥有x名好友
+    TriggerFriendVisit = 502; // 累计拜访好友x次   （友情点数整合到1004中，以下活动中资源相同处理）
+    TriggerFriendAcceptVisit = 503; // 累计接收好友来访x次
+    TriggerFriendBlack = 504; // 第一次拉黑玩家
+
+    TriggerGuildCreate = 601; // 第一次创建公会
+    TriggerGuildJoin = 602; // 第一次加入公会
+    TriggerGuildCheckin = 603; // 累计公会捐献x次
+
+    TriggerSrcStagePass = 701; // 资源副本	某个资源副本累计通关x次	数量|资源副本编号
+    TriggerTowerPass = 801; // 无尽森林	无尽森林（试练塔）成功通过第x层	数量
+    TriggerTowerReset = 802; // 无尽森林	无尽森林（试练塔）累计重置x次	数量
+
+    TriggerBossEnter = 901; // 魔龙现世（世界BOSS）累计参与x次	数量
+    TriggerBossKill = 902; // 魔龙现世（世界BOSS）完成致命一击累计x次	数量
+    TriggerBossPowerUp = 903; // 魔龙现世（世界BOSS）火力强化累计x次	数量
+    TriggerBossRank = 904; // 魔龙现世（世界BOSS）进入排行榜前x名累计x次	数量|名次
+
+    TriggerJJcFight = 1101; // 竞技场累计挑战x次	数量
+    TriggerJJcRank = 1102; // 竞技场排名进入前x名	名次
+
+    TriggerTowerPassLv = 1201; // 通关王者之塔xx层
+    TriggerContinueLogin = 1401;
+    TriggerCardUpCnt = 10001; // 升级卡牌xx次
+    TriggerEquipStrCnt = 10002; // 装备强化xx次
+    TriggerDrawCardCnt = 10003; // 酒馆召唤猎人xx次
+    TriggerStagePassCnt = 10004; // 通关主线xx次
+    TriggerQuickIdleCnt = 10005; // 快速挂机xx次
+    TriggerTowerCnt = 10006; // 挑战王者之塔xx次
+    TriggerIdleStageCnt = 10007; // 领取挂机奖励xx次
+    TriggerFrendSendCnt = 10008; // 赠送好友友情点xx次
+    TriggerJJcFightCnt = 10009; // 参加竞技场挑战xx次
+    TriggerOfferRecCnt = 10010; // 接受xx个xx悬赏任务
+    TriggerMazeBossCnt = 10011; // 击败迷宫第xx层bossxx次
+    TriggerMazeShopBuyCnt = 10012; // 迷宫商店购买英雄或道具xx次
+    TriggerGuildShopBuyCnt = 10013; // 公会商店购买装备xx次
+    TriggerShopBuyCnt = 10014; // 普通商铺购买道具xx次
+    TriggerJJcSuccessCnt = 10015; // 竞技场取得胜利xx场
+};
+
+// 全局配置表枚举 GlobalConfig.txt
+enum GlobalConfigIdx 
+{
+    GlobalConfigId_Invalid              = 0;
+    GlobalConfigId_DailyOffsetSecond    = 1;    // 每日刷新时间
+    GlobalConfigId_RecoverTime          = 2;    // 每多久恢复一次体力（单位秒）
+
+    GlobalConfigId_SkillBookId          = 9;    // 技能升级使用技能书的itemId
+    GlobalConfigId_CardCoefficient      = 10;   // 卡牌系数，计算命中等级之类的属性用
+    GlobalConfigId_ChangeNameCost       = 11;   // 更改昵称消耗钻石数
+
+    GlobalConfigId_PlayerMailMax        = 14;   // 玩家收到的邮件数量上限
+    GlobalConfigId_PlayerMailSaveLimit  = 15;   // 玩家收到的邮件保存时间上限（天）
+    GlobalConfigId_ServerMailSaveLimit  = 16;   // 服务器保存玩家邮件时间上限（天）
+
+    GlobalConfigId_FireCard             = 19;   // 卡牌出售资源折扣
+    GlobalConfigId_ItemNumLimit         = 21;   // 各个背包中各物品拥有数量上限
+    GlobalConfigId_OneSweepNumMax       = 22;   // 玩家可以自行选择扫荡次数 => 单次最多扫荡次数
+
+    GlobalConfigId_DecomposeLimit       = 29;   // 分解猎人单批批量选择上限
+
+    GlobalConfigId_GreatThanShareLv     = 34;   // 队伍卡牌当前等级与共鸣水晶等级的差值
+    GlobalConfigId_ShareCardMax         = 35;   // 共鸣水晶中起效卡牌数量 && 玩家上阵卡牌最大数量
+
+    GlobalConfigId_RecruitStartId       = 37;   // 元素招募卡池起始id
+    GlobalConfigId_CardResetConsume     = 38;   // 猎人重置消耗龙晶
+    GlobalConfigId_CardRecycleCoin      = 39;   // 猎人遣散返还遣散币数量
+    GlobalConfigId_CardRecycleStone     = 40;   // 猎人遣散返还界限石数量
+    GlobalConfigId_RetraintDmgRate      = 41;   // 元素克制时增加伤害百分比
+    GlobalConfigId_RetraintHitRate      = 42;   // 元素克制时增加命中百分比
+    GlobalConfigId_UpgradeEquipRate     = 43;   // 强化经验所需金币系数
+    GlobalConfigId_EquipRaceAttrRate    = 44;   // 装备元素加成值
+    GlobalConfigId_CombatPosOpenLv      = 45;   // 站位开启等级
+    GlobalConfigId_MazeResetTime        = 46;   // 迷宫重置时间（秒）
+
+    GlobalConfigId_MaxFavorExpDay       = 49;   // 单卡牌每日获取好感度上限
+    GlobalConfigId_RoyalPassOpen        = 50;   // 皇家犒赏令创建角色第N天开启
+    GlobalConfigId_RoyalPassUpdate      = 51;   // 皇家犒赏令刷新时间（天）
+    GlobalConfigId_BravePassUpdate      = 52;   // 勇者犒赏令刷新时间（天）
+    GlobalConfigId_BravePassOpen        = 53;   // 勇者犒赏令通关哪个副本后开启
+
+    GlobalConfigId_BadgeStrengthLv      = 57;   // 徽章强化消耗
+    GlobalConfigId_AstrologyCost        = 58;   // 占星单抽消耗钻石
+    GlobalConfigId_AstrologyDrop        = 59;   // 占星对应drop组id
+    GlobalConfigId_RankReward           = 60;   // 基础排行榜对应奖励
+    GlobalConfigId_NoviceEnd            = 61;   // 新兵特训活动持续时间
+    GlobalConfigId_InitNameCN           = 62;   // 中文默认名字
+    GlobalConfigId_InitNameJP           = 63;   // 日文默认名字
+
+    GlobalConfigId_TriggerGiftExistTime = 66;   // 触发礼包持续时间（小时）
+    GlobalConfigId_TriggerGiftDown      = 67;   // 触发礼包连续几次不买降档
+    GlobalConfigId_TriggerGiftMaxGrade  = 68;   // 到哪一档之后为最大档（0-5分别代表6、30、98、198、328、648）
+
+    GlobalConfigId_RecurtFirst1         = 69;
+    GlobalConfigId_RecurtFirst10        = 70;
+    GlobalConfigId_RecurtBeginLow       = 72;
+    GlobalConfigId_RecurtBeginHigh      = 73;
+    GlobalConfigId_ArenaClickLimit      = 74;   // 竞技场挑战点击按钮CD
+    GlobalConfigId_Arena3v3ClickLimit   = 75;   // 高级竞技场挑战点击按钮CD
+    GlobalConfigId_HandbookAttrCnt      = 76;   // 图鉴中每个猎人最大星级属性条数
+    GlobalConfigId_RecruitSpeUnlock     = 79;   // 解锁特殊招募条件
+
+    GlobalConfigId_BaseHitRate          = 901; // 基础命中百分比
+    GlobalConfigId_BaseDodgeRate        = 902; // 基础闪避百分比
+    GlobalConfigId_BaseCritRate         = 903; // 基础暴击百分比
+    GlobalConfigId_BaseToughnessRate    = 904; // 基础坚韧百分比
+    GlobalConfigId_BaseCritDmgRate      = 905; // 基础暴击伤害百分比
+    GlobalConfigId_BaseCritDecRate      = 906; // 基础暴击减伤百分比
+    GlobalConfigId_BasePhysicsDecRate   = 907; // 基础物理免伤
+    GlobalConfigId_BaseMagicDecRate     = 908; // 基础魔法免伤
+    GlobalConfigId_BaseUltimateDmgRate  = 909; // 基础最终伤害
+    GlobalConfigId_BaseUltimateDecRate  = 910; // 基础最终减伤
+};

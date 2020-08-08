@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+message MceAuth {
+    string uniqueid = 1; // 惟一索引 与web平台一致
+    string token = 2;
+    int32 accounttype = 3;
+    string deviceid = 4;
+    string versionflag = 5;
+    string channle = 6;
+    string sdkid = 7;
+    string openid = 8;
+    string subpackage = 9;
+    int32 serverid = 10; // 进入的游戏服务器ID
+}
+message MceHeartbeat {
+    string params = 1; // 参数
+}
+message MceGMCmd {
+    string opertype = 1; // "handshake" etc
+    string params = 2; // 参数 用 '|'符号 间隔的 字符串
+}
+message MceGMDebug {
+    string cmd = 1;
+}
+message MceHandShake {
+    string opertype = 1; // "handshake" etc
+    string params = 2; // 参数 用 '|'符号 间隔的 字符串
+}
+message MceCliHeartBeat {
+
+}
+
+message MceReLogin {
+    string versionflag = 1;
+}

@@ -1,0 +1,397 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseArena3v3Combat 
+{
+    ReturnValue ret = 1; // 返回结果
+}
+
+message Arena3v3Member_DisplayFormation
+{
+    int32 teamid 	= 1; // 队伍id
+    int32 fight 	= 2; // 战力
+    int32 cardid 	= 3; // 展示卡牌id
+    int32 level 	= 4; // 展示卡牌等级
+    int32 quality 	= 5; //
+}
+
+message Arena3v3Member {
+    int64 										uid 		= 1;
+    bool 										is_robot 	= 2;
+    int32 										dan 		= 3; //段位
+    int32 										score 		= 4;
+    string 										name 		= 5; //名字
+    int32 										lv 			= 6; //等级
+    int32 										head_icon 	= 7;
+    repeated Arena3v3Member_DisplayFormation 	formations 	= 8; //展示阵容
+}
+
+message MseArena3v3Info 
+{
+    int64 					weekstamp 	= 3; 	// 赛季周时间戳
+    int32 					battlenum 	= 4; 	// 今日挑战次数
+    int32 					coinhide 	= 6; 	// 隐藏已结算货币数
+    int32 					cointime 	= 7; 	// 结算货币时间
+    repeated Arena3v3Member enemylist 	= 8; 	// 对手列表
+}
+
+message Arena3v3Record_Card 
+{
+    int32 cardid 	= 1; // 展示卡牌id
+    int32 level 	= 2; // 展示卡牌等级
+    int32 quality 	= 3; // 品阶
+}
+
+message Arena3v3Record_Formation 
+{
+    bool 							win 	    = 1; // 我是否胜利
+    int64                           atkfight    = 2; // 攻击方战力   
+    int64                           deffight    = 3; // 防守方战力
+    repeated Arena3v3Record_Card 	atklist     = 4; // 攻方卡牌列表
+    repeated Arena3v3Record_Card 	deflist     = 5; // 攻方卡牌列表
+}
+
+message Arena3v3Record 
+{
+    int64 								battleid 	= 1;
+    bool 								is_attack 	= 2;
+    bool 								is_win 		= 3;
+    int32 								rank_inc 	= 4;
+    int64 								time 		= 5;
+    int64 								uid 		= 6;
+    bool 								is_robot 	= 7;
+    string 								name 		= 8; //
+    int32 								lv 			= 9;
+    int32 								head_icon 	= 10;
+    int32 								fight 		= 11;
+    int32 								vip 		= 12;
+    int32 								dan 		= 14;
+    repeated Arena3v3Record_Formation 	formations 	= 15; //每场数据
+
+}
+
+message MseArena3v3Record 
+{
+    repeated Arena3v3Record records = 1;
+}
+
+message MseArena3v3Replay 
+{
+    ReturnValue ret = 2;
+}
+
+message MseArena3v3GetCoin 
+{
+    int32 coin      = 1;
+    int32 coinhide 	= 6; 	// 隐藏已结算货币数
+    int32 cointime 	= 7; 	// 结算货币时间
+}
+
+//
+message ArenaRecord 
+{
+    int64 	battleid 	= 1; // 战报id
+    bool 	is_attack 	= 2;
+    bool 	is_win 		= 3;
+    int32 	score_inc 	= 4;
+    int64 	time 		= 5;
+    int64 	uid 		= 6;
+    bool 	is_robot 	= 7;
+    string 	name 		= 8; //
+    int32 	lv 			= 9;
+    int32 	head_icon 	= 10;
+    int32 	fight 		= 11;
+    int32 	vip 		= 12;
+}
+
+message MseArenaRecord 
+{
+    repeated ArenaRecord records = 1;
+}
+
+//
+message ArenaMember 
+{
+    int64 				uid 		= 1;
+    bool  				is_robot 	= 2;
+    int32 				rank 		= 3;
+    int32 				score 		= 4;
+    int32 				fight 		= 5;
+    string 				name 		= 6; //
+    int32 				lv 			= 7; //
+    int32 				head_icon 	= 8;
+    repeated MTeamInfo 	teaminfo 	= 9;
+}
+
+message MseArenaSearch 
+{
+    repeated ArenaMember 	members 	= 1;
+    int32 					combatnum 	= 3;
+    int64 					weekstamp 	= 4;
+}
+
+message MseEntrustAccept {
+    uint64 uid = 1;
+    ReturnValue ret = 2;
+}
+
+// 钻石加速完成
+message MseEntrustComplete {
+}
+
+message MseEntrustDel {
+    repeated int64 uid = 1;
+}
+
+/// 领取奖励
+message MseEntrustGetReward {
+    bool getall = 1;
+    uint64 uid = 2;
+    ReturnValue ret = 3;
+}
+
+message MseEntrustRefresh {
+    ReturnValue ret = 1;
+}
+
+// 远航信息
+message MseEntrusts {
+    repeated MEntrust entrusts = 1; //个人悬赏
+    int32 refresh_time = 2;
+    int32 refresh_cnt = 3;
+    bool refresh_high = 4; //废弃
+    bool refresh_luxury = 5; //废弃
+    MUpdatePattern updatePattern = 6;
+    int32 finish_cnt = 7; // 个人悬赏完成次数
+    int32 refresh_rmbcnt = 8; //废弃
+    repeated MEntrust teamentrusts = 9; // 团队悬赏
+    int32 curlevel = 10; // 当前等级
+    int32 teamfinish_cnt = 11; // 团队悬赏完成次数
+}
+
+
+message MTower {
+    int32 cate = 1; // 塔类型
+    int32 lastPassId = 2; // 最高层数
+    int32 battlecnt = 3; // 挑战次数
+}
+
+//王者之塔
+message MseKingTower {
+    repeated MTower tower = 1; // 
+    //  MBattleStatInfo	battleStat = 2; // 
+}
+
+// gridId 对应表中的id 相当于前进了多少步 即X
+// gridY 对应表中的cell_type的下标 相当于当前步的上下位置 即Y
+//迷宫 招募的卡
+message MMazeCard {
+    int64 uid = 1; //玩家身上的卡时 必须
+    int32 id = 2; //表id npc时必须
+    //  int32 		level	= 3;
+    //  int32 		quality	= 3;
+    int32 curHpRate = 3; //剩余血量万分比
+    //  int32 		power	= 6;
+}
+
+message MMazeCell {
+    repeated MMazeCard cards = 1; // 战斗cell上的npc  或 提供招募的英雄卡
+    // 单个格子的数据只会存在下面数据中的 遗物or掉落 或空（招募时为空） 
+    repeated int32 skills = 2; // 遗物
+    int32 dropid = 3; // 掉落
+}
+
+message MMazeItem {
+    int32 shopid = 1; // 对应shop表
+    int32 dropid = 2; // 对应drop表
+    int32 priceidx = 3; // 对应shopprice消耗类型下标
+}
+
+message MMazeExclusiveCell {
+    int32 gridId = 1; // 对应 MazeMap 表中的id 
+    int32 gridCell = 2; // 对应 MazeMap 表中的cell_type的值  -1表示还没选择格子
+    int32 gridY = 3; // 对应 MazeMap 表中的cell_type的下标  -1表示还没选择格子
+    int32 dropid = 4; // 对应 MazeMap 表中的掉落，只有当前cell为：怪物11，boss12 且不为0时有效
+    // 单个格子的数据只会存在下面数据中的 一种情况（没有该cell时，表示不用随机，直接读取MazeMap表）
+    MMazeCell cell = 5; // cell信息
+    repeated MShopItem items = 6; // 迷宫内购买
+    int32		sceneid			= 7; // 自适应后迷宫sceneid
+}
+
+message MMazePassCell {
+    int32 gridId = 1;
+    int32 gridY = 2;
+}
+
+//迷宫
+message MseMaze {
+    UpdatePatternEnum updateVal = 1;
+    int32 gridId = 2; // 当前正选择的格子 对应表中的id 
+    int32 gridCell = 3; // 当前正选择的格子 对应表中的cell_type的值  -1表示还没选择格子
+    int32 gridY = 4; // 当前正选择的格子 对应表中的cell_type的下标  -1表示还没选择格子
+    int32 gridState = 5; // 当前正选择的格子 0没选 1已选择 2已打下 3已领取
+    //  bool 		floorState				= 6; // 本层状态 true此层奖励已领取 (最后一格的npc血等于0表示已打下)
+    repeated MMazePassCell passCells = 7; // 本层的已通关的格子(表中的cell_type的下标)
+    repeated int32 skills = 8; // 已获得的遗物列表（skill）
+    repeated MMazeCard cards = 9; // 招募到的英雄卡 和 使用过的背包里的卡信息
+    int64 startTime = 10; // 玩法开启时间
+    repeated MMazeExclusiveCell excells = 11; // exclusive configs   选择格子与选择遗物时不用推(MceMazeGridChoose MceMazePropChoose)
+    int32 stageId = 12; // 开启迷宫时所在挂机关卡
+}
+
+//迷宫 物品选择
+message MseMazeGridChoose {
+    ReturnValue retVal = 1;
+    int32 gridId = 2; // 对应表中的id
+    int32 gridCell = 3; // 对应表中的cell_type值
+    int32 gridY = 4; // 对应表中的cell_type值
+}
+
+//迷宫 物品选择
+message MseMazePropChoose {
+    ReturnValue retVal = 1;
+    int32 gridId = 2; // 对应表中的id
+    int32 gridCell = 3; // 对应表中的cell_type值
+    int32 gridY = 4; // 对应表中的cell_type值
+    int32 propIndex = 5;
+    repeated int64 reviveUIDs = 6;
+    bool isPass = 7; // 是否放弃
+}
+
+//迷宫 使用龙泪恢复所有卡的生命与能量
+message MseMazeRecoverAllCard {
+    ReturnValue retVal = 1;
+}
+
+// 抽卡返回信息
+message MseRecruit {
+    ReturnValue ret = 1;
+    repeated MDisItem disitems = 2;
+    int32 tid = 3;
+}
+
+message MseRecruitList {
+    repeated int32 handopen = 1; // 手动开启的卡池tid
+    int32 opentime = 2; // 开启时间戳
+    int32 opentid = 3; // 轮询卡池
+    int32 reward_cnt = 4; // 抽卡奖励区间计数
+    int32 reward_max = 5; // 抽卡奖励处于哪一档
+    repeated int32 poolopen = 6; // 特殊开启的卡池tid
+}
+
+message MseRecruitOpen {
+    ReturnValue retVal = 1;
+    int32 tid = 2;
+}
+
+message MseRecruitChoose {
+	int32 tid		= 1; // 卡池id
+	int32 cardid 	= 2; //	选择卡牌
+	int64 gettime 	= 3; //	获取时间
+}
+
+message MseRecruitWishChange {
+    ReturnValue retVal = 1;
+    repeated MWishList wishlist = 2; // 心愿单
+}
+
+// 返回排行榜信息 - response
+//排行榜信息的内容
+message MRankItem {
+    int64 UID = 1; // 玩家UID
+    int32 rank = 2; // 玩家排名
+    int32 headIcon = 3; // 玩家头像
+    int32 level = 4; // 玩家等级
+    string name = 5; // 玩家名字
+    int32 vip = 6; // vip
+    int32 rankParam = 7; // 排行参数
+    repeated int64 format = 8; // 阵容信息
+    repeated int32 levels = 9; // 阵容中卡牌对应等级
+    repeated int32 quality = 10; // 阵容中卡牌突破等级
+    int32 rankType = 11; // 排行榜类型
+    bool is_robot = 12; // 是否机器人
+}
+
+message MseRankList {
+    ReturnValue retVal = 1;
+    int32 rankType = 2; // 排行榜类型
+    repeated MRankItem rankList = 3; // 排行榜信息
+    int32 myRank = 4; // 我的排名
+    int32 myRankParam = 5; // 排行榜参数（等级，战力，层数，星数）
+    repeated MRankGetkRewardComplete getrankreward = 6; // 获取排行榜奖励
+    MUpdatePattern updatePattern = 7;
+}
+
+// WorldBoss清空挑战CD
+message MseWorldBossClearCD {
+    ReturnValue retVal = 1; //0是正常 其余是错误码
+    int32 clearTimes = 2; //清空次数
+}
+
+// 返回WorldBoss信息
+message MseWorldBossInfo {
+    int32 skillId = 1; //表示此次活动给玩家增加的SKillID
+    int64 bossHp = 2; //表示此次活动Boss的总血量
+    int32 powerTimes = 3; //强化的次数
+    int32 clearTimes = 4; //清空CD的次数
+    int64 attackTime = 5; //上次挑战Boss时间戳
+}
+
+// WorldBoss强化
+message MseWorldBossPowerUp {
+    ReturnValue retVal = 1; //0是正常 其余是错误码
+    int32 powerTimes = 2; //强化次数
+}
+
+// 不同阶段排行榜及Boss信息
+message MseWorldBossStageInfo {
+    ReturnValue retVal = 1; //0是正常 其余是错误码
+    int32 stage = 2; //1表示战斗前；2表示战斗中；3表示战斗后
+    string killerName = 3; //击杀Boss者姓名（战斗前表示上次战斗）
+    int32 myRank = 4; //自己的排名(-1表示未参加)
+    int64 myDamage = 5; //自己的伤害，
+    int64 bossCurHp = 6; //表示Boss剩余血量
+    repeated MWorldBossRankItem rankItems = 7; //战斗中或者Boss未被击杀伤害排行榜
+}
+
+message MseAstrology {
+    ReturnValue retVal = 1;
+    bool isTen = 2; //是否是十次
+    repeated MDisItem itemList = 3; //获得道具和英雄卡
+}
+
+// 功能开启
+message MseActivity {
+    UpdatePatternEnum updatetype = 1;
+    repeated MFunctionSate fun = 2;
+}
+
+// 请求排行榜奖励
+message MseRankReward {
+    int32 rankType = 1; //排行榜类型(ID)
+    repeated MRankReward rankreward = 2;
+}
+
+//获取排行榜奖励
+message MseGetRankReward {
+    ReturnValue retVal = 1;
+    int32 condition = 2; //达成条件
+}
+
+// 活动操作返回
+message MseActivityOpe {
+    ReturnValue retVal = 1;
+    MActivityData data = 2;
+    ActivityOpeType type = 3;
+}
+
+// 推送活动表数据
+message MsePushActTable {
+    repeated MActivityTableRecord records = 1;
+}
+
+// 推送活动信息
+message MseSyncActivityData {
+    repeated MActivityData datas = 1;
+}

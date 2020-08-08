@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+message MceTaskAll {
+    bool isall = 1;
+    int32 type = 2;
+}
+//剧情系统
+message MceStoryRecord {
+    int32 groupId = 1;
+}
+//剧情系统
+message MceStoryRecordClear {
+}
+//发送领取任务奖励
+message MceGetTaskReward {
+    int32 taskid = 1;
+    int32 awardid = 2;
+}
+
+message MceGetPassReward {
+    int32 groupid = 1;
+    int32 rewardid = 2;
+}
+//新手引导
+message MceNoviceGuide {
+    int32 guideid = 1;
+}

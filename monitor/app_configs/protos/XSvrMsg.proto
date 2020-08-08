@@ -1,0 +1,145 @@
+
+syntax = "proto3";
+import "ReturnValue.proto";
+
+enum XSvrMsgId
+{
+	XSvrMsgId_Invalid = 0;
+	XSvrMsgId_TransmitProto2S 	= 999999999;
+	XSvrMsgId_TransmitProto2C 	= 999999998;
+	XSvrMsgId_BroadCastforeign 	= 999999997;
+	XSvrMsgId_HeartBeatReq 		= 996660001;
+	XSvrMsgId_HeartBeatAck 		= 996660002;
+	XSvrMsgId_HandShakeReq 		= 996660003;
+	XSvrMsgId_HandShakeAck 		= 996660004;
+	XSvrMsgId_NotifyUserOffline = 996660005;
+	XSvrMsgId_ReloadConfigReq 	= 996660006;
+	XSvrMsgId_ReloadConfigAck 	= 996660007;
+	XSvrMsgId_ULRequest 		= 996660008;
+	XSvrMsgId_ULResponse  		= 996660009;
+	XSvrMsgId_Recharge			= 996660010;
+	XSvrMsgId_RechargeResponse	= 996660011;
+	XSvrMsgId_GMRequest 		= 996660012;
+	XSvrMsgId_GMResponse		= 996660013;
+}
+
+message XSvrMsg_BroadCastforeign
+{
+	 //MseChat data = 1; // 消息内容
+}
+message XSvrMsg_HandShakeAck
+{
+	 string opertype 	= 1 ; // "handshake" etc
+	 int32 timezone		= 2;
+	 int32 gamezone		= 3;
+	 int32 gameid		= 4;
+	 int32 serverid		= 5;
+}
+message XSvrMsg_HandShakeReq
+{
+	 string opertype 	= 1 ; // "handshake" etc
+	 int32 gateMasterId = 2;
+}
+message XSvrMsg_HeartBeatAck
+{
+	 string params = 1 ; // 参数
+}
+message XSvrMsg_HeartBeatReq
+{
+	 string params = 1 ; // 参数
+}
+message XSvrMsg_NotifyUserOffline
+{
+	 uint32 sessionId = 1;
+}
+
+// reload configure file
+message XSvrMsg_ReloadConfigReq
+{
+     string filename = 1 ; // 参数
+}
+message XSvrMsg_ReloadConfigAck
+{
+	 ReturnValue  ret = 1; //  返回结果 0为正确 
+}
+
+// web ul request/response
+message XSvrMsg_ULRequest 
+{
+	 string 	Cmd			= 1;	// 值为ul
+	 string 	UniqueId	= 2;	// 惟一索引     如：android_86_253_18439422019_925
+	 int32 		Channel		= 3;	// 渠道ID       如：1
+	 string 	DeviceId	= 4;	// 设备码       如：864xx
+	 string 	DeviceType	= 5;	// 设备类型
+	 string 	IP			= 6;	// IP地址
+	 string 	Sid			= 7;	// 操作惟一性标记
+	 int32      ServerId    = 8;    // 请求进入的服务器ID
+	 string 	Token		= 9; 	// 前端连接服务器验证识别标记`
+}
+
+message ULResponseContent 
+{
+	 string 	UserId  	= 1; 	//`json:"string"	玩家游戏中惟一识别ID`
+	 int32 		IsNew 		= 2; 	//`json:"int32"	1-当前服新注册玩家 0-当前服老玩家`
+	 int32 		Level 		= 3;  	//`json:"int32"	等级`
+	 string 	UniqueId	= 4; 	//`json:"string"	账号`
+	 string 	Name		= 5; 	//`json:"string"	名字`
+	 string 	Token		= 6; 	//`json:"string"	前端连接服务器验证识别标记`
+	 int32 		Port 		= 7;  	//`json:"int32"	服务器端口`
+	 string 	ServerIP 	= 8; 	//`json:"string"	服务器ip`
+}
+
+message XSvrMsg_ULResponse 
+{
+	 string				Sid		= 1;	//`json:"string"	操作惟一性标记`
+	 int32				Code	= 2;	//`json:"int32"	0-成功 1-发生错误`
+	 string				Err		= 3;	//`json:"string"	错误描述 成功时为空`
+	 ULResponseContent	Content	= 4;	//`UL回复详细信息`
+}
+
+message XSvrMsg_Recharge
+{
+	 string		Cmd 		= 1;	// 值为recharge
+	 int64		UserId 		= 2;	// 玩家UID
+	 int32		ItemId		= 3;	// 商品ID 	
+	 int32 		Channel		= 4;	// 渠道ID       如：1
+	 int32      ServerId    = 5;    // 请求进入的服务器ID
+	 string 	Sid			= 6;	// 操作惟一性标记
+}
+
+message XSvrMsg_RechargeResponse
+{
+	 string				Sid		= 1;	//`json:"string"	操作惟一性标记`
+	 int32				Code	= 2;	//`json:"int32"	0-成功 1-发生错误`
+	 string				Err		= 3;	//`json:"string"	错误描述 成功时为空`
+}
+
+message XSvrMsg_GMRequest
+{
+	 string		Sid				= 1; //`json:"string"	操作惟一性标记`
+	 int32		ServerId    	= 2;
+	 string		Request 		= 3;	
+}
+
+message XSvrMsg_GMResponse
+{
+	 string		Sid				= 1; //`json:"string"	操作惟一性标记`
+	 int32		Code			= 2; //`json:"int32"	0-成功 1-发生错误`
+	 string		Err				= 3; //`json:"string"	错误描述 成功时为空`
+	 string		Content			= 4; // 实质是json结构
+}
+
+message GMPlayerinfoResponse
+{
+	 string			UniqueId		= 1;	// 玩家惟一索引
+     string			Name			= 2;			
+	 int32			Level			= 3;			
+	 int32			VipLevel		= 4; 		
+	 int32			MainStageId		= 5;	// 挂机关卡进度
+	 int32			Gold			= 6;	// 金币数量
+	 int32			Diamond			= 7;	// 付费钻石
+	 int32			DiamondFree		= 8;	// 免费钻石
+	 int32			RechargeSum		= 9;	// 充值累计总数
+	 int64			LastLoginTime	= 10;	// 上次登录时间单位毫秒
+	 int64			CreateTime		= 11;	// 角色创建时间单位毫秒
+}

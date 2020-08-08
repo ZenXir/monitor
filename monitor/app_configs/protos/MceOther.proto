@@ -1,0 +1,34 @@
+syntax = "proto3";
+import "MDefines.proto";
+import "Constant.proto";
+
+message MceShopBuyItem {
+    int32 sid = 1;
+    int32 pos = 2;
+    int32 randcost = 3;
+    int32 type = 4;
+}
+message MceShopInfo {
+    int32 sid = 1;
+}
+message MceShopRefresh {
+    int32 type = 1;
+}
+message MceChat {
+    ChatChannelType chatChannel = 1; // 聊天频道
+    string chatContent = 2; // 聊天内容
+    int64 playerGUID = 3; // 目标玩家
+}
+message MceChatDelete {
+    int64 playerGUID = 1; // 玩家id
+    bool isAll = 2; // 是否全部记录
+}
+
+message MceTimesStapMark {
+    int32 noticetype = 1; // æ ‡è®°ç±»åž‹
+}
+
+message MceLocalRecord {
+    CombatTypeDefine type = 1; // 记录类型
+    int32 key = 2; // 公会：公会id
+}

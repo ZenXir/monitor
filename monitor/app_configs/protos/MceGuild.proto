@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+import "Constant.proto";
+
+message MceGuildBossOpen 
+{
+}
+
+// 挑战boss
+message MceGuildChallengeBoss 
+{
+    CombatTypeDefine type = 1; // 6是公会boss 7是公会狩猎
+}
+
+message MceGuildCheckin 
+{
+    int32 check_id = 1; // 签到表ID
+}
+
+message MceGuildCreate 
+{
+    string name = 1;
+    int32 badge = 2; // 公会徽章资源ID   guildBadge.xlsx
+    bool needverify = 3; // 是否需要审批
+}
+
+message MceGuildDisband 
+{
+}
+
+message MceGuildInfo 
+{
+}
+
+message MceGuildJoin 
+{
+    int64 guildid = 1;
+}
+
+message MceGuildJoinList 
+{
+}
+
+message MceGuildJoinVerify 
+{
+    int64 uid = 1;
+    bool is_agree = 2;
+}
+
+message MceGuildLeave 
+{
+}
+
+message MceGuildList 
+{
+}
+
+message MceGuildLvup 
+{
+}
+
+message MceGuildManage 
+{
+    string  name        = 1; // 修改公会名字
+    int32   badge       = 2; // 公会徽章资源ID   guildBadge.xlsx
+    bool    needverify  = 3; // 是否需要审批
+}
+
+message MceGuildMembers 
+{
+}
+
+message MceGuildMy 
+{
+}
+
+message MceGuildNoticeUpdate 
+{
+    string notice = 1; // 公告内容
+}
+
+message MceGuildRanking 
+{
+    int32 idxstart  = 1; // 索引开始
+    int32 num       = 2; // 每页数量小于50
+}
+
+message MceGuildScienceUp 
+{
+    int32 scid = 1;
+}
+
+message MceGuildSearch 
+{
+    int64 guildid = 1;
+    int64 from = 2; // 客户端携带数据
+}
+
+message MceGuildServe 
+{
+    int64 uid = 1;
+    int32 rank = 2; // 职位
+}
+
+message MceGuildKick 
+{
+    int64 uid = 1;
+}
+
+message MceGuildSkillUp 
+{
+    int32 cardjob = 1;
+    bool is_reset = 2;
+}
+
+message MGetItem 
+{
+    int64 uid = 1;
+    int32 cnt = 2;
+    int32 type = 3;
+}
+
+message MceGuildTreasureGet 
+{
+    repeated MGetItem get_items = 1;
+}
+
+message MceGuildTreasureInfo 
+{
+}
+
+message MceGuildSweepBoss 
+{
+    CombatTypeDefine type = 1;
+}

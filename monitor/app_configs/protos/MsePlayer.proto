@@ -1,0 +1,153 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+import "Constant.proto";
+
+// 背包信息
+message MseBag {
+    int32 bagType = 1; // 背包类型 1： 道具背包 以后可能扩展出多个背包 比如装备背包 资源类的 可以用另一种消息通知
+    repeated MBagItem items = 2; // 物品信息
+}
+
+message MseHeadIcon {
+    int32 Icon = 1; //图标Id
+}
+message MseHeadIconSet {
+    int32 Icon = 1;
+    ReturnValue retVal = 2;
+}
+message MseNameChange {
+    string newname = 1;
+    ReturnValue errcode = 2; // ReturnValue_Success    ReturnValue_DoubleName
+    int32 type = 3;
+}
+message MsePlayerBasicInfo 
+{
+    MBasicPlayer     player     = 1;
+    CombatTypeDefine teamType   = 2;
+}
+message MsePlayerData 
+{
+    string          name            = 1;
+    int32           level           = 2;
+    int64           exp             = 3;
+    int64           guildid         = 4;    // 公会信息，需要记在玩家身上的
+    int32           guildexitime    = 5;    // 上次退出公会的时间
+    int32           headicon        = 6;    // 当前图标
+    repeated int32  headicons       = 7;    // 已解锁图标	
+    int32           modifynamect    = 8;    // 修改名字次数
+    int32           arenarank       = 9;    // 竞技场排名
+    int32           arenascore      = 10;   // 竞技场积分
+    int32           arena3v3dan     = 11;   // 高竞段位
+    repeated int32  storygrpids     = 12;   // 剧情id list
+    int64           showCardUid     = 13;   // 看板娘的UID
+    repeated int64  displayCards    = 14;   // 用于展示区的卡牌Uid
+    int32           cardBagCapacity = 17;   // 卡牌背包最大容量
+    string          sign            = 18;   // 个性签名 
+    double          fightpowermax   = 19;   // 玩家当前最大战力值
+    repeated int32  noviceguideid   = 20;   // 新手引导id
+    int64           banchattime     = 22;   // 禁言结束时间
+    int64           banlogintime    = 23;   // 封号结束时间
+}
+
+// 准备数据，第一天返回
+message MsePrepareData 
+{
+    int64 timestamp = 1; // 时间戳  单位 毫秒
+    int32 timeZone = 2; // 时区
+    int64 serverOpen = 3; // 开服时间
+}
+
+message MseUseItem {
+    int64 sid = 1;
+    ReturnValue retVal = 2; //0是正常 其余是错误码
+}
+message MseItemAct {
+    MItemAct item = 1;
+}
+
+message MseItemActAmount {
+    repeated MItemAct item = 1;
+}
+
+message MseItemBag {
+    repeated MItem items = 1; //物品信息
+    int64 money = 2; //钱
+    int64 diamond = 3; //钻石
+    int64 bind_diamond = 4; //体力
+}
+
+// 发给客户端显示的红点
+enum EActiveTip {
+    EActiveTip_Invalid = 0;
+    EActiveTip_Guild = 1; // 公会红点
+}
+message MseActiveTip {
+    EActiveTip tip = 1;
+}
+
+// 通用错误消息
+message MseError {
+    int32 msgtype = 1;
+    MFormatext msgbox = 2;
+}
+
+// 给客户端显示对话框
+message MseMessageBox {
+    MFormatext text = 1;
+}
+
+// 奖励显示
+// 需要特殊处理延迟显示的情况
+enum EnumRewardFrom {
+    RewardFromDefault = 0; // 默认
+    RewardFromRecruit = 1; // 抽卡自动发奖
+    RewardFromMaze = 2; // 迷宫
+}
+
+message MseReward {
+    repeated MDisItem items = 1;
+    int32 from = 2;
+}
+
+// 资源同步消息
+message MseUpdateResource {
+    message Resource {
+        int32 id = 1; //资源id
+        int64 value = 2; //资源的值
+        int32 timestamp = 3; //资源改变时的时间戳 恢复资源需要
+    }
+    repeated Resource resources = 1;
+}
+
+message MseGetVipReward {
+    int32 level = 1;
+    bool isfree = 2;
+}
+
+message MseVipInfo {
+    int32 level = 1;
+    int64 exp = 2;
+    int64 exp_total = 3;
+    int64 free_reward = 4;
+    int64 cost_reward = 5;
+}
+
+// 付费信息
+message MseRechargeInfo {
+    int32 first_flag = 1; // 首充标志，按位存储
+    int64 small_mc_over_time = 2; // 小月卡结束时间戳(秒)
+    int64 big_mc_over_time = 3; // 大月卡结束时间戳(秒)
+    repeated MRechargeGift gifts = 4; // 礼包
+    repeated MTriggerGift trig_gifts = 5; // 触发式礼包(没领过且未过期的)
+}
+
+// 购买免费礼包
+message MseBuyFreeGift {
+    ReturnValue retVal = 1;
+}
+
+// 推送触发式礼包
+message MseTriggerGift {
+    MTriggerGift gifts = 1;
+}

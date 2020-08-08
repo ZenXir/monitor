@@ -1,0 +1,200 @@
+syntax = "proto3";
+import "MDefines.proto";
+
+message MceArena3v3Combat 
+{
+    int64   defendUid   = 1; // 防守方Uid
+    bool    isRobot     = 2; // 是否机器人
+}
+
+// 高级竞技场匹配
+message MceArena3v3Info 
+{
+}
+
+//
+message MceArena3v3Record 
+{
+}
+
+// 废除：请求某一条战报，这个会废除，用统一接口，全部从网关获取，网关会保存所有战报信息
+message MceArena3v3Replay 
+{
+    int64 time = 1;
+}
+
+//
+message MceArena3v3GetCoin 
+{
+}
+
+// 废除：请求某一条战报，这个会废除，用统一接口，全部从网关获取，网关会保存所有战报信息
+message MceArenaCombatRecord 
+{
+    int64 time = 1;
+}
+
+//
+message MceArenaRecord 
+{
+}
+
+// 低级竞技场匹配
+message MceArenaSearch 
+{
+}
+
+message MEntrustAccept 
+{
+    uint64          uid      = 1;
+    repeated uint64 cardsid  = 2;
+    repeated int64  helpuid  = 3;
+    repeated int64  helpcard = 4;
+}
+
+message MceEntrustAccept 
+{
+    repeated MEntrustAccept accept = 1;
+}
+
+// 钻石加速完成
+message MceEntrustComplete 
+{
+    uint64 uid = 1;
+}
+
+message MceEntrustDel 
+{
+}
+
+/// 领取奖励
+message MceEntrustGetReward 
+{
+    bool    getall  = 1;
+    uint64  uid     = 2;
+}
+
+message MceEntrustRefresh 
+{
+}
+
+message MceEntrusts 
+{
+}
+
+//王者之塔
+message MceKingTower 
+{
+    //  int32  type		 = 1;	// 
+}
+
+//迷宫
+message MceMaze 
+{
+    int32 floor = 1; // [1,4]表示层数
+}
+
+//迷宫 格子选择
+message MceMazeGridChoose 
+{
+    int32 gridId    = 1; // 对应表中的id
+    int32 gridCell  = 2; // 对应表中的cell_type值
+    int32 gridY     = 3; // 对应表中的cell_type的下标
+}
+
+//迷宫 物品选择
+message MceMazePropChoose 
+{
+    int32 gridId    = 1; // 对应表中的id
+    int32 gridCell  = 2; // 对应表中的cell_type值
+    int32 gridY     = 3; // 对应表中的cell_type的下标
+    int32 propIndex = 4; // 选择的物品下标（0开始）
+    bool  isPass    = 5; // 是否放弃
+}
+
+//迷宫 使用龙泪恢复所有卡的生命与能量
+message MceMazeRecoverAllCard 
+{
+}
+
+// 抽卡
+message MceRecruit 
+{
+    int32 tid    = 1;
+    bool  is_ten = 2;
+}
+
+message MceRecruitChoose {
+	int32 tid		= 1; // 卡池id
+	int32 cardid 	= 2; // 选择卡牌
+}
+
+message MceRecruitList 
+{
+}
+
+message MceRecruitOpen 
+{
+    int32 tid = 1;
+}
+
+message MceRecruitWishChange 
+{
+    repeated MWishList wishlist = 1; // 心愿单
+}
+
+// 请求排行榜信息 - req
+message MceRankList 
+{
+    int32 rankType = 1; //排行榜类型(ID)（0是全体）
+}
+
+// 请求排行榜奖励 - req
+message MceRankReward 
+{
+    int32 rankType = 1; //排行榜类型(ID)
+}
+
+// 请求WorldBoss清空挑战CD - request
+message MceWorldBossClearCD 
+{
+    int32 stageId = 1;
+}
+
+// 请求WorldBoss信息 - request
+message MceWorldBossInfo 
+{
+    int32 stageId = 1;
+}
+
+// 请求WorldBoss强化 - request
+message MceWorldBossPowerUp 
+{
+    int32 stageId = 1;
+}
+
+// 请求不同阶段排行榜及Boss信息 - request
+message MceWorldBossStageInfo 
+{
+    int32 stageId = 1;
+}
+
+//发送占星请求
+message MceAstrology 
+{
+    bool isTen = 1; //是否是十次
+    int32 cardId = 2; //卡牌id
+}
+
+//请求获取排行榜奖励
+message MceGetRankReward 
+{
+    int32 condition = 1; //达成条件
+}
+
+// 领取某个活动的奖励
+message MceActivityOpe 
+{
+    ActivityOpeType type    = 1;
+    int32           act_id  = 2; // 活动id，activitySwitch表id
+}

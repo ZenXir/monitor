@@ -1,0 +1,277 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+import "Constant.proto";
+
+// ------------------------ 战斗审请回复 -------------------------------------------------------------
+//请求战斗 返回的消息
+message MseCombat {
+    ReturnValue ret = 1; //  返回结果 0为正确 其他请参考 ReturnValue.proto 1:场景id不对
+    CombatTypeDefine combatType = 2;
+    int32 stageId = 3; //  第几关
+    bool isAttackWin = 4;
+    // 以下项为迷宫战斗使用数据
+    int32 gridId = 5; // 对应 MazeMap 表中的id 
+    int32 gridCell = 6; // 对应 MazeMap 表中的cell_type的值  -1表示还没选择格子
+    int32 gridY = 7; // 对应 MazeMap 表中的cell_type的下标  -1表示还没选择格子
+}
+
+// ------------------------ 战报统计 -------------------------------------------------------------
+// 玩家基本信息
+message MPlayerInfoSimple 
+{
+    int64  uid   = 1; //
+    string name  = 2; // 名字
+    int32  head  = 3; // 头像
+    int32  level = 4; // 级别
+    int32  power = 5; // 战力
+    // 	int32		serverId= 6; // 分区
+}
+// 战报统计信息
+message MCombatStatNode {
+    int32 pos = 1; // 站位
+    int32 cardId = 2; // 表id
+    bool isCard = 3; // 是卡或是npc
+    int64 hurt = 4; // 伤害 输出的伤害
+    int64 cure = 5; // 治疗
+    int64 damage = 6; // 承伤 承受的伤害
+}
+
+// 战报
+message MCombatData {
+    int32 stageId = 1; // 第几关	
+    int32 sceneId = 2; // 请求的战斗阶段 第几场战斗
+    bool isEnd = 3; // 是否副本结束
+    CombatRecord record = 4; // 战报
+    int32 waveCnt = 5;
+    int32 roundCnt = 6;
+}
+
+// 战报统计信息
+message MCombatInfo 
+{
+    int64                       battleId    = 1; // 对应回放的战报id
+    int32                       stageId     = 2; // 关卡id
+    MPlayerInfoSimple           attacker    = 3; // 攻击者
+    MPlayerInfoSimple           defender    = 4; // 防守方
+    repeated MCombatStatNode    stat        = 5; // 统计信息
+    bool                        isAttackWin = 6; // 攻方是否胜利
+    int64                       time        = 7; // 战报生成时间(毫秒)
+    MCombatData                 combatdata  = 8; // 战报数据
+}
+
+//战斗统计
+message MseCombatStat 
+{
+    ReturnValue             ret         = 1; // 0成功
+    CombatTypeDefine        combatType  = 2; //
+    int32                   stageId     = 3; //
+    repeated MCombatInfo    combatinfo  = 4; // 战报信息
+    int32                   flag        = 5; // 标记 以标记是否是前端主动请求
+    int64                   battleid    = 6;
+}
+
+// ------------------------ 战报回放 -------------------------------------------------------------
+//战斗回放
+message MseCombatReplay {
+    ReturnValue ret = 1; //0成功
+    CombatTypeDefine combatType = 2; //
+    //  int64				battleId 	= 3; //
+}
+
+// ------------------------ 战报 -------------------------------------------------------------
+enum FighterType {
+    ROLE = 0; // 角色
+    NPC = 1; // 怪物
+    WORLD_BOSS = 2; // 世界BOSS
+}
+enum CombatResult {
+    ATTACK_WIN = 0; // 攻击方胜
+    DEFEND_WIN = 1; // 防御方胜
+    DRAW = 2; // 平手
+}
+message FighterInfo {
+    FighterType type = 1; //战斗方类型
+    int64 id = 2; //战斗方Id
+    string name = 3; //名字
+}
+message SkillLvInfo {
+    int32 entry = 1; //技能条目
+    int32 level = 2; //技能等级
+}
+
+enum CombatEventType {
+    CombatEvent_Invalid = 0;
+    CombatEvent_BeforeRound = 1;
+    CombatEvent_AfterRound = 2;
+    CombatEvent_SKILL = 3; // 施放技能
+    CombatEvent_RELIVE = 4; // 复活
+    CombatEvent_Control = 5; // 控制
+    CombatEvent_Aura = 6; // 光环
+    CombatEvent_RemoveAura = 7; // 光环
+    CombatEvent_TriggerSkill = 8; // 触发技能
+}
+message CombatEquip {
+    int32 entry = 1; //装备entry
+    int32 quality = 2; //品质
+    int32 level = 3; //等级
+}
+message CombatDetailActor {
+    bool isCard = 1;
+    uint64 curHp = 2; // 当前生命
+    int32 entry = 3; // entry
+    bool canMove = 4; // 可否移动
+    int32 hate = 5; // 仇恨值
+    int32 level = 6; // 卡牌等级
+    int32 quality = 7; // 品质
+    int32 starlv = 8; // 卡牌星级
+    uint64 maxHp = 9; // 生命值上限：角色的生命值与上限
+    int32 attack = 10; // 攻击：角色的攻击值
+    int32 physicsDefence = 11; // 物理防御：角色的物理防御力
+    int32 spellDefence = 12; // 法术防御：角色的法术防御力
+    int32 physicsPierce = 13; // 物理穿透：忽视目标的一部分物理防御
+    int32 spellPierce = 14; // 法术穿透：忽视目标的一部分法术防御
+    int32 critRate = 15; // 暴击：效果产生暴击的几率
+    int32 critDmg = 16; // 暴击伤害：暴击的实际加成倍率
+    int32 tenacity = 17; // 韧性：减免受到暴击伤害的几率和受到的暴击伤害
+    int32 hitRate = 18; // 命中：降低角色攻击未命中的几率，角色初始命中为90%
+    int32 dodgeRate = 19; // 闪避：闪避对手的攻击，完全规避伤害的几率
+    int32 hpRecover = 20; // 生命恢复：每场战斗结束时可恢复的HP
+    int32 energyRecover = 21; // 能量恢复：每场战斗结束时可恢复的能量值
+    int32 beHealMod = 22; // 治疗增益：被治疗的效果加成
+    int32 healMod = 23; // 治疗效果：治疗的效果加成
+    int32 physicsDmgReduce = 24; // 物理免伤
+    int32 spellDmgReduce = 25; // 法术免伤
+    int32 energy = 26; // 当前能量|能量值上限：战斗时的能量与角色的能量上限。一般来说，能量上限为100。
+    float attackSpeed = 27; // 攻击速度：角色攻击的速度值，对循环的CD时间进行减免
+    int32 energyRemain = 28; // 能量消耗：主动技能触发后，可剩余进入下次使用的能量值
+    int32 suckLv = 29; // 吸血等级：按比例将角色造成的伤害转为恢复HP，此属性主要用于吸血光环类效果。
+    int32 hpRecoverOnAttack = 30; // 攻击恢复生命：每次攻击目标所带来的HP恢复，与吸血不同，此属性恢复值与最终伤害无关，恢复量完全由本属性决定。
+    int32 energyRecoverOnAttack = 31; // 攻击恢复能量
+    CombatEquip equip = 32; // 主手武器
+    repeated int32 normalSkills = 33; // 普通技能队列 最大数量 MAX_NORMAL_SKILL_LEN
+    int32 activeSkill = 34; // 主动技能
+    int32 foremostSkill = 35; // 起手技能
+    int32 prewarSkill = 36; // 战前状态技能
+    int32 backupSkill = 37; // 备用技能
+    int32 defaultSkill = 38; // 默认技能
+    bool isImmune = 39; // 是否免疫debuff, 供世界boss等玩意使用
+    repeated SkillLvInfo skillLvList = 40; //技能等级列表 最大数量 MAX_SKILL_IN_ONE_CARD
+}
+message CombatTeam {
+    repeated CombatDetailActor actor = 1; // 最大数量 MAX_CARD_EACH_SIDE
+}
+
+message DmgValue {
+    int32 impactId = 1;
+    int32 buffid = 2;
+    int32 value = 3;
+    int32 dmgType = 4; // ImpFlag: 1未命中 2命中 4暴击 8护盾
+    int32 buffIdx = 5; // buffId在impact.txt::buff中下标 十位数表示第一级 个位表表示第二级  eg:01 buff[0][1]
+}
+message ImpactBuff {
+    int32 skillId = 1;
+    int32 impactId = 2;
+    int32 buffId = 3;
+    int32 buffIdx = 4; // buffId在impact.txt::buff中下标 十位数表示第一级 个位表表示第二级  eg:01 buff[0][1]
+    int32 shieldpower = 5; // 如果该buff为护盾时，此值为护盾值
+}
+//目标数据 是不是一组impact个体打的 包括是不是主目标	
+message TargetData {
+    int32 impactSid = 1; //impact个体sid 相同的sid 表明是同一个impact个体造成的
+    int32 impactid = 2; //impactid
+}
+message CombatActor {
+    int64 uid = 1; // 卡牌 UID, 如果是card: uid一定大于0的64位整数，如果是npc: uid一定是负数
+    uint32 pos = 2; // 所在位置
+    int64 maxHP = 3; // 最大血量
+    int64 hp = 4; // 当前血量
+    int32 cardEntry = 6; // 条目ID
+    int32 attackSpeed = 9; // 当前攻击速度
+    repeated DmgValue dmgArray = 10; // 每轮伤害类型 值
+    repeated ImpactBuff impacts = 11; // 身上有的buff状态
+    TargetData targetData = 12;
+    int32 level = 13; // 等级
+    int32 modelid = 14; // 形象ID [前端显示如果是无效的ID，读取本地表默认modelid]
+}
+message CombatEvent {
+    CombatEventType type = 1; //事件类型
+    int64 uid = 2; //发起者id
+    int64 eventPos = 3; //发起者位置
+    int32 skillEntry = 4; //技能配表ID
+    bool isDead = 5; //施法者是否死亡
+    int32 attackSpeed = 6; //施法者当前攻击速度
+    int32 curHp = 7; //施法者当前血量
+    repeated CombatActor targetActors = 8; //目标卡牌 最大数量 MAX_CARD_EACH_SIDE
+    repeated ImpactBuff impacts = 9; // 身上有的buff状态
+}
+message CombatRound {
+    repeated CombatEvent events = 1; // 本回合发生事件集合
+}
+message CombatRecord {
+    CombatTypeDefine combatType = 1; // 战斗类型
+    FighterInfo attackerInfo = 2; // 攻击方信息
+    FighterInfo defenderInfo = 3; // 防守方信息
+    int32 startRound = 4; // 起始回合
+    repeated CombatActor actors = 5; // 出场卡牌信息 最大数量 MAX_CARD_BOTH_SIDE
+    repeated CombatRound rounds = 6; // 回合信息 最大数量 MAX_ROUND
+    CombatResult result = 7; // 战斗结果
+}
+
+//战斗过程 战报播出消息 废弃
+message MseCombatData {
+    int32 stageId = 1; // 第几关	
+    int32 sceneId = 2; // 请求的战斗阶段 第几场战斗
+    bool isEnd = 3; // 是否副本结束
+    CombatRecord record = 4; // 战报
+    int32 waveCnt = 5;
+    int32 roundCnt = 6;
+}
+
+// ------------------------ 战斗掉落数据 -------------------------------------------------------------
+//战斗结算消息 显示掉落 统计 增加等
+message MseCombatResult {
+    int32 stageId = 1; // 第几关	
+    repeated MDisItem dropItems = 2; //显示关卡掉落的道具
+    ReturnValue ret = 3; //返回的是战斗请求消息 MceCombat对应的错误码 由于战斗失败 没有结算 所以其余消息的数值没意义
+    int32 atkscore = 4; //攻方战斗后积分
+    int32 atkscore_inc = 5; //攻方积分变化
+    int32 defscore = 6; //守方战斗后积分
+    int32 defscore_inc = 7; //守方积分变化
+}
+
+// ------------------------ 队伍数据 -------------------------------------------------------------
+//队伍信息
+message MCombatTeam 
+{
+    CombatTypeDefine    teamType    = 1; // 阵型类型
+    repeated int64      arrangement = 2; //  阵型里卡牌的UID（数组大小9，对应九个位置，值为UID）
+    int32               combatpower = 3;
+    int32               format      = 4;   
+}
+
+message MseCombatTeams 
+{
+    MUpdatePattern       updatePattern  = 1;
+    repeated MCombatTeam teams          = 2;
+}
+
+// 修改阵型结果消息
+message MseArrangeFormat 
+{
+    ReturnValue      retValue = 1;
+    CombatTypeDefine teamType = 2; // 阵型类型
+}
+
+message MseIdleBattle 
+{
+    ReturnValue         ret             = 1;
+    int64               idleStartTime   = 2; // 当前挂机开始时间
+    uint32              timeLength      = 3; // 领取挂机奖励的总时长
+    repeated MDisItem   dropItems       = 4; // 随机掉落物品
+    repeated MDisItem   giftItems       = 5; // 固定掉落物品
+}
+//上线发送所有章节的通关情况 通关
+message MseIdleStageData {
+    MIdleStage idleStage = 4; // 挂机节点数据
+}

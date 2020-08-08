@@ -1,0 +1,59 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseEnchantEquip {
+    ReturnValue retVal = 1;
+}
+
+message MseExclusiveEquipActive {
+    ReturnValue errcode = 1;
+}
+// 
+message MseExclusiveEquipStrengthen {
+    ReturnValue errcode = 1;
+}
+
+message MseMergeEquip {
+    ReturnValue errcode = 1; // ReturnValue_Success
+}
+
+message MseTakeEquip {
+    int32 otype = 1; // 穿戴类型: 0-穿上 1-卸下
+    ReturnValue retVal = 2;
+}
+
+message MseTransformEquip {
+    ReturnValue retVal = 1;
+}
+
+message MseUpgradeEquip {
+    ReturnValue retVal = 1;
+}
+
+message MseBadgeTakeOn {
+    int32 otype = 1; // 穿戴类型: 0-穿上 1-卸下
+    ReturnValue retVal = 2;
+}
+
+message MseUpgradeBadge {
+    ReturnValue retVal = 1;
+}
+
+// 分解
+message MseBadgeResolved {
+    ReturnValue retVal = 1;
+}
+
+// 洗练
+message MseBadgeClear {
+    ReturnValue retVal = 1;
+    repeated MBadgeExtraAttr clearset = 2;
+    int32 selecttype = 3; //选中类型
+}
+
+// 私物强化
+message MseStrengthPersonal {
+    ReturnValue retVal = 1;
+    int32 critNum = 2; // 暴击次数	
+}

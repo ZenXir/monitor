@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+message MceCardAddMax {
+}
+
+message MceCardModelSet {
+    int32 cardid = 1; // 图鉴id
+    int32 ModelId = 2; // 立绘id
+}
+
+message MceDisplayCardAdjust {
+    repeated int64 cardUID = 1; //展示的卡牌UID
+}
+
+message MceMergeCard {
+    int32 pieceId = 1;
+    int32 num = 2;
+}
+
+message MceTransformCard {
+    int64 carduid = 1;
+    repeated int64 devourResuid = 2;
+}
+
+message MceUpgradeCard 
+{
+    int32 upgradetype = 1; // 升多少级
+    int64 carduid = 2;
+}
+
+message MceAdvancedCard {
+    int64 carduid = 1;
+}
+
+message MceStarupCard {
+    int64 carduid = 1;
+    repeated int64 devourResuid1 = 2;
+    repeated int64 devourResuid2 = 3;
+    repeated int64 devourResuid3 = 4;
+}
+
+message MceDecomposeCard {
+    bool resetOrRecycle = 1; // false: reset card; true: recycle card
+    repeated int64 cardUids = 2;
+}
+
+message MceGetCardScore {
+    int64 cardUid = 1;
+}
+
+message MceCardQualityUp {
+    message NeedCard {
+        int64 mainUid = 1;
+        repeated int64 auxUids = 2;
+    }
+    int32 isAuto = 1; // 0单个突破，1是一键突破
+    repeated NeedCard needs = 2;
+}
+
+// 新突破
+message MceBreakupCard {
+    int64 carduid = 1;
+    int32 isuse = 2; // 1使用万能碎片，0不使用
+}
+
+// 碎片转换
+message MceCardPieceTrans {
+    int32 pieceId = 1;
+    int32 num = 2;
+}
+
+// 设置看板娘
+message MceSetShowGirl {
+    repeated int32 cardids = 1;
+}
+
+// 对话看板娘
+message MceTalkShowGirl {
+    int32 cardid = 1;
+}
+
+// 请求图鉴信息
+message MceCardHandbook {
+
+}
+
+//设置守护者
+message MceChangeGuard {
+    repeated int32 cardid = 1;
+}
+// 设置碎片探索卡牌
+message MceCardPieceExploreSet {
+    repeated int64 cardsids = 1;
+}
+// 请求碎片探索信息
+message MceCardPieceExplore {
+
+}
+// 收取碎片探索
+message MceCardPieceExploreCollect {
+
+}
+
+// 手动激活图鉴星级
+message MceActiveCardHandbookQuality {
+    int32 cardid = 1; // 图鉴id
+}

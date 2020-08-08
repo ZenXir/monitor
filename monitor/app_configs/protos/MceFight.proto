@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "Constant.proto";
+
+message MceCombat {
+    CombatTypeDefine combatType = 1; // 玩法类型 (现在一个玩法对应一个阵型)
+    int32 charpterId = 2; // 章节id（推图才有这参数）
+    int32 stageId = 3; // 第几关
+    // 以下项为迷宫战斗使用数据
+    int32 gridId = 4; // 对应 MazeMap 表中的id 
+    int32 gridCell = 5; // 对应 MazeMap 表中的cell_type的值  -1表示还没选择格子
+    int32 gridY = 6; // 对应 MazeMap 表中的cell_type的下标  -1表示还没选择格子
+}
+//战斗统计
+message MceCombatStat {
+    CombatTypeDefine combatType = 1; // 战斗类型
+    int32 stageId = 2; // 关卡id PVE时填写 其他战斗：PVP，爬塔或3v3时填0即可
+    int32 flag = 3; // 标记 以标记是否是前端主动请求 后端原值返回
+    int64 battleId = 4; // 请求的战报id
+}
+//战斗回放
+message MceCombatReplay {
+    CombatTypeDefine combatType = 1; // 战斗类型 CombatType_PVE CombatType_PVP CombatType_Arena3v3
+    int32 stageId = 2; // 关卡id PVE时填写 其他战斗：PVP，爬塔或3v3时填0即可
+    int64 battleId = 3; // 战报id
+}
+
+message MceArrangeFormat 
+{
+    CombatTypeDefine    teamType    = 1; // 阵型类型
+    repeated int64      arrangement = 2;
+    int32               posFormat   = 3; // 站位阵型 配表:formation.txt
+}
+// 开始挂机和挂机领奖均用该消息
+// 开始挂机时，前端发送该消息，服务器回复 MseIdleBattle 消息，错误码为挂机成功，或挂机失败原因
+// 挂机中，前端发送该消息，服务器回复 MseIdleBattle 消息，错误码为领奖成功，或领奖失败原因
+message MceIdleBattle {
+    int32 chapterId = 1;
+    int32 stageId = 2;
+    int32 operType = 3; // 0: 开始一个挂机， 1：快速战斗，2：领取通关奖利(这个操作需要stageId,chapterId可填默认值)  3:设置挂机关卡
+}
+message McePvpCombat {
+    int64 defendUid = 1; // 防守方Uid
+    bool isRobot = 2; // 是否机器人
+}
+
+message MceFightPowerChange {
+    double fightpower = 1; // 战力值     
+}

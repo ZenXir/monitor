@@ -1,0 +1,36 @@
+{
+  "development" : {
+    "httpApiPort" : 60008,
+    "httpMonitorPort" : 60010,
+    "redisConfig" : {
+      "host" : "127.0.0.1",
+      "port" : 6379,
+      "db": 0,
+      "password": ""
+    },
+    "mongoDBConfig": {
+      "host": "127.0.0.1",
+      "port": 27017,
+      "db" : "AccountCenterPlat"
+    }
+  },
+  "production" : {
+    "httpApiPort" : 60008,
+    "httpMonitorPort" : 60010,
+    "redisConfig" : {
+      "host" : "127.0.0.1",
+      "port" : 6379,
+      "db": 0,
+      "password": ""
+    },
+    "mongoDBConfig": {
+      "host": "127.0.0.1",
+      "port": 27017,
+      "db" : "AccountCenterPlat"
+    }
+  }
+}
+
+
+
+

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+message MceFriendAcceptVisit {
+    int64 playerGUID = 1;
+    bool isAll = 2; // 是否一键接受拜访
+}
+message MceFriendAddBlack {
+    int64 playerGUID = 1;
+}
+message MceFriendAgree {
+    int64 playerGUID = 1;
+	bool isAll = 2; // 是否全部
+}
+message MceFriendApply {
+    repeated int64 applylist = 1; // 申请好友列表
+}
+message MceFriendApplyList {
+}
+message MceFriendBlackList {
+}
+message MceFriendChatFriend {
+    int64 friendUID = 1; // 好友的UID
+    string chatContent = 2; // 聊天内容
+}
+message MceFriendChatList {
+}
+message MceFriendChatMarkRead {
+    int64 playerGUID = 1; // 玩家的所有聊天标记为已读
+    bool isAll = 2; // 是否全部记录都记录为已读
+}
+message MceFriendDelete {
+    int64 playerGUID = 1;
+}
+message MceFriendList {
+}
+message MceFriendPK {
+    int64 playerGUID = 1;
+}
+message MceFriendRefuse {
+    int64 playerGUID = 1;
+    bool isAll = 2; // 是否全部拒绝
+}
+message MceFriendRemoveBlack {
+    int64 playerGUID = 1;
+    bool isAll = 2; // 是否全部移出
+}
+message MceFriendSearchList {
+    string searchKey = 1; // 搜索关键字，为空时系统找出推荐列表
+}
+message MceFriendVisit {
+    int64 playerGUID = 1; // 好友GUID
+    bool isAll = 2; // 是否一键拜访
+    repeated int64 visitList = 3; // 拜访的优先顺序
+}
+message MceFriendVisitedList {
+}

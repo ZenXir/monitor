@@ -1,0 +1,205 @@
+syntax = "proto3";
+enum ReturnValue 
+{
+    ErrorCode_Success 						= 0;
+    ErrorCode_Failed 						= -1;
+    ErrorCode_Player_UID_Err 				= 1; 	// 角色UID错误
+    ErrorCode_DB_Failed 					= 2; 	// 请求DB数据错误
+    ErrorCode_Card_Index_Err 				= 3; 	// 卡牌位置索引错误
+    ErrorCode_Card_UID_Err 					= 4; 	// 卡牌UID错误
+    ErrorCode_Gold_Insufficient 			= 5; 	// 金币不足
+    ErrorCode_Be_MaxLevel 					= 6; 	// 已经是最高等级了
+    ErrorCode_Lvl_CantUpThanPlayerLvl 		= 7; 	// 等级不能高于角色等级
+    ErrorCode_Bag_NotBag 					= 8; 	// 没有道具对应的背包
+    ErrorCode_Bag_NotItem 					= 9; 	// 找不到对应的道具
+    ErrorCode_Bag_NotItemCfg 				= 10; 	// 道具对应的魔板为空 找不到对应的表配置
+    ErrorCode_Bag_UseItemNotNum 			= 11; 	// 使用道具 数量不足 无法使用
+    ErrorCode_TemplateErr 					= 12; 	// 表配置错误
+    ErrorCode_Bag_NotCanUse 				= 13; 	// 道具不可使用
+    ErrorCode_Bag_NotUseMany 				= 14; 	// 不可以多次使用
+    ErrorCode_Bag_KeyNotNum 				= 15; 	// 使用宝箱对应的钥匙数量不足
+    ErrorCode_Lvl_Insufficient 				= 16; 	// 等级不够
+    ErrorCode_DevourCard_Insufficient 		= 17; 	// 资源卡不足 
+    ErrorCode_UniChip_Insufficient 			= 18; 	// 万能碎片不足
+    ErrorCode_Be_MaxTransformId 			= 19; 	// 已经是最高职介
+    ErrorCode_DevourCard_InCombatTeam 		= 20; 	// 被吞噬的卡在队伍中
+    ErrorCode_DevourCard_Overflow 			= 21; 	// 被吞噬的卡数量大于需求数量
+    ErrorCode_Resource_Lack 				= 22; 	// 资源不足
+    ErrorCode_ElevateStone_Insufficient 	= 23; 	// 界限石不足
+    ErrorCode_Dungeon_GiftIndexErr 			= 24; 	// 关卡结点 领取礼包 客户端要领取的礼包不存在
+    ErrorCode_Dungeon_GiftLackStar 			= 25; 	// 关卡结点 领取礼包 星数不足
+    ErrorCode_Dungeon_GiftGeted 			= 26; 	// 关卡结点 领取礼包 已经领取过不能反复领取
+    ErrorCode_Dungeon_TypeErr 				= 27; 	// 副本挑战副本类型错误
+    ErrorCode_Dungeon_StageIdErr 			= 28; 	// 副本关卡找不到
+    ErrorCode_Dungeon_LvlLack 				= 29; 	// 副本挑战玩家等级不足
+    ErrorCode_Dungeon_SweepNotWin 			= 30; 	// 扫荡失败 没有通过的关卡
+    ErrorCode_Dungeon_OverAttackCount 		= 31; 	// 关卡挑战次数超出
+    ErrorCode_Dungeon_SectionIdErr 			= 32; 	// 结点找不到关卡id
+    ErrorCode_ItemIsLack 					= 33; 	// 扣除物品 物品不足
+    ErrorCode_Dungeon_HandSectionStateErr 	= 34; 	// 关卡不能交接 状态不对 不是可交道具 可通过状态
+    ErrorCode_Dungeon_StageStateErr 		= 35; 	// 关卡状态不对 不能领取奖励
+    ErrorCode_Tower_MaxFloor 				= 36; 	// 当前为最大层数不能扫荡
+    ErrorCode_Tower_OnceSweepErr 			= 37; 	// 立即扫荡发现没有扫荡 报错
+    ErrorCode_Team_FormationIndexErr 		= 38; 	// 阵容索引错误
+    ErrorCode_Dungeon_SweepNotStar 			= 39; 	// 扫荡关卡 星数不够不可以扫荡
+    ErrorCode_EquipUpgrade_ShouldUpgradeRole = 40;	// 等级不满足 请先升级猎人小分队
+    ErrorCode_Equip_ProfessionInvalid 		= 41; 	// 装备职业错误 不匹配
+    ErrorCode_FoundryStone_Insufficient 	= 42; 	// 锻造石不足
+    ErrorCode_Skill_IdErr 					= 43; 	// 技能id 错误
+    ErrorCode_Skill_ExpOnly 				= 44; 	// 技能等级只增加了经验
+    ErrorCode_Skill_MaxLvl 					= 45; 	// 技能最大等级
+    ErrorCode_TrophyMuseum_ResInsufficient 	= 46; 	// 战利品馆资源不足
+    ErrorCode_Diamond_Insufficient 			= 47; 	// 钻石不足
+    ErrorCode_Trainer_Insufficient 			= 48; 	// 训练假人不足
+    ErrorCode_Trainer_stepAllMax 			= 49; 	// 训练全满
+    ErrorCode_DoubleName 					= 50; 	// 名字重复
+    ErrorCode_AppendSpell_MisMatch 			= 51; 	// 当前装备类型为3 不可以附魔
+    ErrorCode_AppendSpell_ResInsufficient 	= 52; 	// 消耗的资源不足
+    ErrorCode_Chat_ChannelInvalid 			= 53; 	// 该频道当前无法发言
+    ErrorCode_Chat_AddIsFriend 				= 54; 	// 对方已经是您的好友
+    ErrorCode_Chat_AddIsBlack 				= 55; 	// 在黑名单中无法添加好友
+    ErrorCode_Chat_AddFriendListIsFull 		= 56; 	// 好友列表已满
+    ErrorCode_Chat_BlackIsBlack 			= 57; 	// 已经在黑名单中
+    ErrorCode_Chat_BlackListIsFull 			= 58; 	// 黑名单列表已满
+    ErrorCode_Friend_ChatNotBeFriend 		= 59; 	// 已经不是好友关系
+    ErrorCode_Friend_VisitFriendLimit 		= 60; 	// 今日拜访已达到上限
+    ErrorCode_Friend_AcceptVisitLimit 		= 61; 	// 今日接收拜访已达到上限
+    ErrorCode_Friend_RefreshInCD 			= 62; 	// 刷新间隔过短
+    ErrorCode_Friend_BlackIsFriend 			= 63; 	// 好友无法移到黑名单
+    ErrorCode_Guild_Full 					= 64; 	// 对方公会已满员
+    ErrorCode_Guild_NoSearch 				= 65; 	// 没找到该公会
+    ErrorCode_Guild_NameBan 				= 66; 	// 公会名称不合法，请重新输入
+    ErrorCode_Guild_SetTotem 				= 67; 	// 请设置图腾
+    ErrorCode_Guild_ApplyMax 				= 68; 	// 已达到申请数量上限
+    ErrorCode_Guild_JoinOthers 				= 69; 	// 该玩家已经加入其他公会
+    ErrorCode_Guild_NoticeBan				= 70; 	// 内容不合法，请重新输入
+    ErrorCode_Guild_IsIn 					= 71; 	// 已有公会，先退出才能创建公会
+    ErrorCode_Guild_NotInApplyList 			= 72; 	// 不在申请列表中
+    ErrorCode_Guild_GoldCheckFail 			= 73; 	// 金币不足，签到失败
+    ErrorCode_Guild_CheckAlready 			= 74; 	// 今日已签到，请明日再来
+    ErrorCode_Guild_ScienceLvFail 			= 75; 	// 公会等级不足，升级失败
+    ErrorCode_Guild_NoPermission 			= 76; 	// 权限不足
+    ErrorCode_Guild_InApplyList 			= 77; 	// 你已经在申请列表中了
+    ErrorCode_Guild_CD 						= 78; 	// 您还处于申请冷却中，暂时无法加入
+    ErrorCode_Guild_ViceLeaderMax 			= 79; 	// 副会长最多任职5人
+    ErrorCode_Guild_DoubleName 				= 80; 	// 公会名字重复
+    ErrorCode_Piece_Insufficient 			= 81; 	// 碎片不足
+    ErrorCode_Card_FavorLvMax 				= 82; 	// 卡牌好感度等级满级了
+    ErrorCode_Card_LvMax 					= 83; 	// 卡牌升级到上限了
+    ErrorCode_Card_ShareLvMax 				= 84; 	// 卡牌升级升级超过了与共鸣水晶等级的最大差值
+    ErrorCode_Card_QualityMax 				= 85; 	// 卡牌突破到上限了
+    ErrorCode_Card_RaceWrong 				= 86; 	// 卡牌突破必须同一种族
+    ErrorCode_Card_NameWrong 				= 87; 	// 卡牌突破必须同名卡
+    ErrorCode_Equip_StrengthMaxLv 			= 88; 	// 装备已经强化到最大等级
+    ErrorCode_Equip_NotSameProfession 		= 89; 	// 装备与卡牌不是一个职业
+    ErrorCode_Card_NoExcluEquip 			= 90; 	// 该猎人无法穿戴专属装备
+    ErrorCode_Card_NeedSSR4 				= 91; 	// 猎人突破到SSR4星后开放专属装备激活
+    ErrorCode_WorldBoss_NotOpen 			= 92; 	// 活动未开启
+    ErrorCode_WorldBoss_ActivityEnd 		= 93; 	// 活动已结束
+    ErrorCode_WorldBoss_NotPowerUp 			= 94; 	// 挑战倒计时小于5分钟可以进行火力强化
+    ErrorCode_WorldBoss_NoCD 				= 95; 	// 未处于冷却时间中
+    ErrorCode_WorldBoss_InCD 				= 96; 	// 处于冷却时间中
+    ErrorCode_ActivityNotOpen 				= 97; 	// 活动暂未开启
+    ErrorCode_Arena_ItemLack 				= 110; 	// 挑战领不足
+    ErrorCode_Arena_SetFightDataError 		= 111; 	// 设置战斗数据错误	
+    ErrorCode_Tech_HasLvlUp 				= 112; 	// 加速科技升级时，科级Cd已完成	
+    ErrorCode_Formation_noCard 				= 113;	
+    ErrorCode_CardBag_Max_Capacity 			= 114; 	// 卡牌背包已到上限
+    ErrorCode_CardBag_Not_Enough 			= 115; 	// 卡牌背包剩余格子不够
+    ErrorCode_Cannot_Sell_Puton 			= 116; 	// 不可出售穿在身上的装备
+    ErrorCode_IdleBattleChapterErr 			= 117; 	// 挂机chapter id 错误
+    ErrorCode_IdleBattleStageErr 			= 118; 	// 挂机stage id 错误
+    ErrorCode_IdleBattleLevelLower 			= 119; 	// 挂机 等级不够 错误
+    ErrorCode_IdleBattleProcessor 			= 120; 	// 挂机 关卡只能向前不能后退 错误
+    ErrorCode_IdleBattleTimeInsufficent 	= 121; 	// 挂机 不到领奖时间 错误
+    ErrorCode_IdleBattleParamErr 			= 122; 	// 挂机 奖利配表参数 错误
+    ErrorCode_Decompose_Beyond 				= 123; 	// 猎人分解超出最大分解数量
+    ErrorCode_Guild_RedPacket_none 			= 124;	
+    ErrorCode_ShareCrystal_Insufficient 	= 125; 	// 水晶碎片不足
+    ErrorCode_Formation_SlotLocked 			= 126; 	// 槽位没解锁
+    ErrorCode_Fetter_CardIsInReinforcement 	= 127; 	// 卡牌增援状态
+    ErrorCode_Fetter_CardHasBeenInfored 	= 128; 	// 卡牌已经添加增援
+    ErrorCode_Handbook_NotActive 			= 129; 	// 卡牌图鉴未激活
+    ErrorCode_Handbook_NotUnlock 			= 130; 	// 图鉴没有解锁立绘
+    ErrorCode_Personal_NotUnlock 			= 131; 	// 私物未解锁，好感度等级不够
+    ErrorCode_Personal_MaxLv 				= 132; 	// 私物满级了
+    ErrorCode_ShowGirl_Empty 				= 133; 	// 看板娘设置至少有一个，不能为空
+    ErrorCode_ShowGirl_OutOfBounds 			= 134; 	// 看板娘设置越界
+    ErrorCode_ShowGirl_TalkFull 			= 135; 	// 看板娘对话次数当日满了
+    ErrorCode_Arena_ClickLimit 				= 136; 	// 挑战按钮点击太快了
+    ErrorCode_Handbook_AttrFull 			= 137; 	// 属性达到上限
+
+    ErrorCode_Friend_NotFriend 				= 139; 	// 不是好友
+    ErrorCode_Guild_NoGuild 				= 140; 	// 玩家还没有公会
+    ErrorCode_Guild_NotEnoughActive 		= 141; 	// 没有足够活跃度开启公会Boss
+    ErrorCode_Guild_NotInGuild 				= 142; 	// 玩家不在这个公会中
+    ErrorCode_Guild_LastNotOver 			= 143; 	// 上次开启的活动还没结束
+    ErrorCode_Guild_BossNotOpen 			= 144; 	// Boss活动未开启
+    ErrorCode_Guild_BossEnd 				= 145; 	// Boss活动已结束
+    ErrorCode_Guild_BossMaxCnt 				= 146; 	// Boss挑战次数满了
+    ErrorCode_Guild_HuntMaxCnt 				= 147; 	// 狩猎次数满了
+    ErrorCode_Guild_BossNoDamage            = 148;  // 扫荡公会boss伤害为0
+
+    ErrorCode_Card_Exclusived 				= 160; 	// 专属装备已激活
+
+    ErrorCode_Entrust_ErrID 				= 171; 	// 悬赏任务，ID错误
+    ErrorCode_Entrust_ErrCfg 				= 172; 	// 悬赏任务，表错误
+    ErrorCode_Entrust_Quantity 				= 173; 	// 悬赏任务，品阶错误
+    ErrorCode_Entrust_Race 					= 174; 	// 悬赏任务，种族不符合要求
+    ErrorCode_Entrust_NotComplete 			= 175; 	// 悬赏任务，未完成
+    ErrorCode_Entrust_NotCost 				= 176; 	// 悬赏任务，消耗资源不足
+    ErrorCode_Entrust_TooMuch 				= 177; 	// 悬赏任务，上阵英雄过多
+
+    ErrorCode_Badge_ErrID 					= 180; 	// 徽章 ID错误
+    ErrorCode_Badge_RepaceSameID 			= 181; 	// 徽章 同一徽章错误
+    ErrorCode_Badge_RepaceSameType 			= 182; 	// 徽章 不可装备同类型的卡
+    ErrorCode_Badge_StrengthMaxLv 			= 183; 	// 徽章 强化等级已满
+	ErrorCode_Badge_AttrTypeNoExist 		= 184; 	// 徽章 没有此类型
+	
+	ErrorCode_Arrange_SameCard				= 190;	// 阵容，不能有同名卡牌
+	ErrorCode_Arrange_Beyond				= 191;	// 阵容，超出5人了
+    ErrorCode_Arrange_SetFailed				= 192;	// 阵容，设置失败
+    ErrorCode_Arrange_NotSetDefend          = 193;  // 阵容，没有设置防守阵容
+    ErrorCode_Arrange_NotSetAttack          = 194;  // 阵容，没有设置攻击阵容
+
+
+    Log_Guild_guildLv 						= 200;
+    Log_Guild_newMember 					= 201;
+    Log_Guild_viceLeader 					= 202;
+    Log_Guild_cancelViceLeader 				= 203;
+    Log_Guild_check 						= 204;
+    Log_Guild_science 						= 205;
+    Log_Guild_transfer 						= 206;
+    Log_Guild_Treasure 						= 210; 	// 工会宝库 兑换
+
+    // Recharge
+    ErrorCode_Recharge_Not_Free 			= 220; 	// 只能购买免费礼包 
+    ErrorCode_Recharge_Limit 				= 221; 	// 购买达到限购次数
+    ErrorCode_Recharge_TimeOut 				= 222; 	// 购买超时
+
+    // Recruit
+    ErrorCode_RecruitNoChoose               = 230;  // 抽卡，没有选择奖励
+    ErrorCode_RecruitChooseGet              = 231;  // 已经获取选择卡牌
+
+    // Activity 
+    ErrorCode_Activity_GotReward 			= 240; 	// 已经领取过了，不能再领 
+    ErrorCode_Activity_NotFinish 			= 241;	// 条件未达成
+
+    ErrorCode_Fight_NotEnough               = 250;  // 战力不足
+
+    Tips_Guild_viceLeader 					= 500;
+
+    ErrorCode_NoBattleLog 					= 501; 	// 没有战报记录  
+    ErrorCode_HeadIconUnLock 				= 502; 	// 头像没有解锁
+    ErrorCode_CardHaveExist 				= 503; 	// 合成卡牌已经存在
+    ErrorCode_Piece_ErrType 				= 504; 	// 碎片转换类型错误
+    ErrorCode_Explore_Setlimit 				= 505; 	// 碎片探索放置卡牌超过限制
+    ErrorCode_Function_NotOpen 				= 506; 	// 功能未开启
+    ErrorCode_Version_NotMatch 				= 507; 	// 版本不匹配
+    ErrorCode_Player_Offline 				= 508; 	// 玩家已经下线
+    ErrorCode_Maze_Timeout 					= 509; 	// 迷宫已刷新
+    ErrorCode_BanLogin 						= 510; 	// 封号
+    ErrorCode_BanChat 						= 511; 	// 禁聊
+
+    ErrorCode_NULL = 1023;
+}

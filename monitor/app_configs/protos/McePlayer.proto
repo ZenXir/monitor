@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "Constant.proto";
+
+message MceHeadIconSet {
+    int32 Icon = 1; //图标Id
+}
+
+message MceNameChange {
+    string newname = 1;
+    int32 type = 2;
+}
+
+message McePlayerBasicInfo {
+    int64 uid = 1;
+    CombatTypeDefine teamType = 2;
+}
+
+message MceUseItem {
+    int64 sid = 1;
+    int32 num = 2;
+    int32 selectid = 3;
+}
+
+message MceGetVipReward {
+    int32 level = 1;
+    bool isfree = 2;
+}
+
+// 购买免费礼包
+message MceBuyFreeGift {
+    int32 gift_id = 1; // ??id
+}

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message MceMailDelete {
+    int64 id = 1;
+    bool bCardletter = 2; // 是否是手札
+    bool isAll = 3;
+}
+message MceMailGotMail {
+    int64 id = 1;
+    bool isAll = 2;
+    bool bCardletter = 3; // 是否是手札
+}
+message MceMailList {
+}
+message MceMailMarkRead {
+    int64 id = 1;
+    bool bCardletter = 2; // 是否是手札
+    // bool bReply = 3 ; // 是否回复
+}

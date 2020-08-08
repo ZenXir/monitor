@@ -1,0 +1,69 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseFriendAcceptVisit {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    int32 friendPoint = 2; //接受拜访获得的友情点数
+}
+message MseFriendAddBlack {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+}
+message MseFriendAgree {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+}
+message MseFriendApply {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated int64 failedlist = 2; // 批量添加时失败的uid列表
+}
+message MseFriendApplyList {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated MFriendItem applyItems = 2;
+}
+message MseFriendBlackList {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated MFriendItem blackItems = 2;
+}
+message MseFriendChatFriend {
+    int64 friendUID = 1; // 好友的UID
+    MFriendChatItem chatItem = 2;
+}
+message MseFriendChatList {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated MFriendChatContent chatItems = 2;
+}
+message MseFriendChatMarkRead {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+}
+message MseFriendDelete {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+}
+message MseFriendList {
+    UpdatePatternEnum updatetype = 1;
+    repeated MFriendItem friendItems = 2;
+    repeated MFriendItem applyItems = 3;
+    repeated MFriendItem blackItems = 4;
+}
+message MseFriendPK {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+}
+message MseFriendRefuse {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    bool isAll = 2; // 是否全部拒绝申请
+}
+message MseFriendRemoveBlack {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    bool isAll = 2; // 是否全部解除黑名单
+}
+message MseFriendSearchList {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated MFriendItem searchItems = 2;
+}
+message MseFriendVisit {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    bool isAll = 2; // 是否一键接受拜访
+}
+message MseFriendVisitedList {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated MFriendItem visitedItems = 2;
+}

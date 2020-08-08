@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseTaskAll {
+    UpdatePatternEnum updatetype = 1;
+    repeated MTask tasks = 2;
+    repeated MAchCompleted complete = 3; /// 记录已完成的成就。
+    int32 active_daily = 6; /// 每日活跃点。
+    int32 active_daily_time = 7;
+    repeated int32 active_daily_awards = 8;
+    int32 active_week = 9; /// 周活跃点。
+    int32 active_week_time = 10;
+    repeated int32 active_week_awards = 11;
+    int32 ach_point = 12;
+    int32 ach_point_awardlast = 13; /// 最后一次领取的成就点奖励id
+    int64 active_novice_time = 14;
+}
+message MseTaskDel {
+    repeated int32 taskid = 1;
+}
+message MseStoryRecord {
+    ReturnValue retVal = 1;
+    int32 groupId = 2;
+}
+message MseStoryRecordClear {
+    ReturnValue retVal = 1;
+}
+
+//发送领取任务奖励
+message MseGetTaskReward {
+    ReturnValue retVal = 1; //0成功 其余是错误码 
+    int32 taskid = 2;
+    int32 awardid = 3;
+}
+
+message MsePassAll {
+    UpdatePatternEnum updatetype = 1;
+    repeated MPass pass = 2;
+}
+
+message MseGetPassReward {
+    ReturnValue retVal = 1; //0成功 其余是错误码 
+    int32 groupid = 2;
+    int32 rewardid = 3;
+}
+
+message MseNoviceGuide {
+    ReturnValue retVal = 1;
+    int32 guideid = 2;
+}

@@ -1,0 +1,52 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+import "Constant.proto";
+
+message MseShopBuyItem {
+    ReturnValue errcode = 1; // ReturnValue_Success
+    int32 sid = 2;
+    int32 pos = 3;
+    int32 type = 4;
+    int32 randcost = 5;
+}
+message MseShopInfo {
+    ReturnValue errcode = 1; // ReturnValue_Success
+    MShopInfo shopinfo = 2;
+}
+message MseShopRefresh {
+    ReturnValue errcode = 1; // ReturnValue_Success
+    MShopInfo shopinfo = 2;
+}
+message MseChat {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    repeated MChatItem chats = 2;
+    UpdatePatternEnum uptype = 3;
+}
+message MseChatDelete {
+    ReturnValue retVal = 1; //0成功 其余是错误码
+    int64 friendid = 2;
+}
+
+message MseTimer {
+    int32 action = 1;
+    string json = 2;
+}
+
+message MseTimesStapMark {
+    ReturnValue ret = 1; //返回
+}
+
+message MRecordItem {
+    string name = 1; // 用户名
+    int64 battleid = 2; // 对战记录id 请求回放使用
+    int64 param = 3; // 公会：造成伤害值
+    int32 icon = 4; // 用户头像
+    int32 level = 5; // 用户等级
+}
+
+message MseLocalRecord {
+    CombatTypeDefine type = 1; // 记录类型
+    int32 key = 2; // 公会id
+    repeated MRecordItem item = 3; // 挑战记录
+}

@@ -1,0 +1,44 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+
+message MseAuth {
+    string uid = 1;
+    ReturnValue ret = 2;
+    int64 banlogintime = 3; // 封号结束时间 单位秒
+    string redirectport = 4;
+    string redirectip = 5;
+    string redirectpass = 6;
+    string name = 7;
+    bool bIsNew = 8;
+    int32 nCamp = 9; //推荐的国家
+    repeated int32 skillcds = 10; //技能cd
+    int64 timestamp = 11; //时间戳  单位 毫秒
+    int32 timeZone = 12; //时区
+    int64 serverOpen = 13; // 开服时间
+    int64 logoutTime = 14; // 上次登出时间
+    int32 ServerId = 15; //所在服务器ID
+}
+message MseHeartbeat {
+    string params = 1; // 参数
+}
+message MseGMCmd {
+    string opertype = 1; // "handshake" etc
+    ReturnValue retVal = 2;
+    string params = 3; // 参数 用 '|'符号 间隔的字符串
+}
+message MseGMDebug {
+    ReturnValue ret = 1; //成功1 其余为错误码
+}
+message MseHandShake {
+    string opertype = 1; // "handshake" etc
+    int32 retVal = 2;
+    string params = 3; // 参数 用 '|'符号 间隔的字符串
+}
+
+message MseCliHeartBeat {
+
+}
+
+message MseReLogin {
+    ReturnValue ret = 1; //成功1 其余为错误码
+}

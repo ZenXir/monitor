@@ -1,0 +1,136 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseCardAddMax {
+    ReturnValue retVal = 1;
+    int32 capacity = 2;
+}
+
+message MseCardBag {
+    MUpdatePattern updatePattern = 1;
+    repeated MCard cards = 2; //物品信息
+    int64 money = 3; //钱
+    int64 diamond = 4; //钻石
+    int64 binddiamond = 5; //体力
+}
+
+message MseCardHandbook {
+    MUpdatePattern updatePattern = 1;
+    repeated MCardHandbook book = 2;
+    int32 talkcnt = 3; // 对话次数
+    repeated int32 showgirls = 4; // 看板娘
+}
+
+message MseCardModelSet {
+    ReturnValue ret = 1;
+    int64 cardid = 2;
+    int32 ModelId = 3;
+}
+
+message MseCardModelSync {
+    int64 cardUid = 1;
+    int32 ModelId = 2;
+}
+
+message MseDelCard {
+    repeated int64 cards = 1;
+}
+
+message MseDisplayCardAdjust {
+    ReturnValue retVal = 1;
+    repeated int64 cardUID = 2; //展示的卡牌UID
+}
+
+message MseMergeCard {
+    ReturnValue errcode = 1; // ReturnValue_Success
+}
+
+message MseTransformCard {
+    ReturnValue retVal = 1;
+    repeated int64 devouredCards = 2; // 被吞噬掉(卡牌背包里删除的卡uid)
+}
+
+message MseUpgradeCard {
+    ReturnValue retVal = 1; // 如果升级卡牌成功会依次发送 1:palyerdata数据 2:升级的卡牌数据 3:这个消息 如果升级失败 仅发送该消息根据错误码提示信息
+}
+
+message MseAdvancedCard {
+    ReturnValue retVal = 1;
+}
+
+message MseStarupCard {
+    ReturnValue retVal = 1;
+    repeated int64 devouredCards = 2; // 被吞噬掉(卡牌背包里删除的卡uid)
+}
+
+message MseDecomposeCard {
+    ReturnValue retVal = 1;
+    repeated int64 delCards = 2; // 遣散时删除的卡
+}
+
+message MseGetCardScore {
+    ReturnValue retVal = 1;
+    int64 equipScore = 2; // 装备评分
+    int64 starScore = 3; // 星级评分
+    int64 advancedScore = 4; // 进阶评分 
+}
+
+message MseCardQualityUp {
+    ReturnValue retVal = 1;
+    repeated int64 delCards = 2; // 突破删除的副卡
+    int32 isAuto = 3; // 0单个突破，1是一键突破
+}
+
+// 新突破
+message MseBreakupCard {
+    ReturnValue retVal = 1;
+    int64 carduid = 2;
+    int32 nextQua = 3;
+}
+
+// 碎片转换
+message MseCardPieceTrans {
+    ReturnValue retVal = 1;
+}
+
+// 设置看板娘
+message MseSetShowGirl {
+    ReturnValue retVal = 1;
+    repeated int32 cardids = 2;
+}
+
+// 对话看板娘
+message MseTalkShowGirl {
+    ReturnValue retVal = 1;
+    int32 count = 2;
+}
+
+//设置守护者
+message MseChangeGuard {
+    ReturnValue retVal = 1;
+    repeated int32 cardids = 2;
+    repeated int32 openids = 3;
+}
+//请求碎片探索信息
+message MseCardPieceExplore {
+    MUpdatePattern updatePattern = 1;
+    repeated MCardPieceExplore cardpieceexplore = 2;
+}
+
+// 设置碎片探索卡牌
+message MseCardPieceExploreSet {
+    ReturnValue retVal = 1;
+}
+
+// 收取碎片探索
+message MseCardPieceExploreCollect {
+    ReturnValue retVal = 1;
+}
+
+// 手动激活图鉴属性
+message MseActiveCardHandbookQuality {
+    ReturnValue retVal = 1;
+    int32 cardid = 2; // 图鉴id
+    int32 attrnum = 3; // 属性条数
+}

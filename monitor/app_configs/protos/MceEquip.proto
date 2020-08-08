@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+message MceEnchantEquip {
+}
+
+message MceExclusiveEquipActive {
+    int64 carduid = 1;
+}
+
+// 专属装备强化
+message MceExclusiveEquipStrengthen {
+    int64 carduid = 2;
+}
+
+message MceMergeEquip {
+    int32 pieceId = 1;
+}
+
+message MceTakeEquip {
+    int64 carduid = 1;
+    int32 otype = 2; // 穿戴类型: 0-穿上 1-卸下
+    repeated int64 equipsids = 3;
+}
+
+message MceTransformEquip {
+    int64 sid = 1;
+    int32 tid = 2;
+}
+
+message MceUpgradeEquip {
+    int64 sid = 1;
+    message CostItem {
+        int64 sid = 1;
+        int32 num = 2;
+    }
+    repeated CostItem items = 2;
+    repeated CostItem equips = 3;
+}
+
+message MceBadgeTakeOn {
+    int64 carduid = 1;
+    int32 otype = 2; // 穿戴类型: 0-穿上 1-卸下 2-替换
+    int64 badgeid1 = 3; //位置1
+    int64 badgeid2 = 4;
+}
+
+//强化
+message MceUpgradeBadge {
+    int64 sid = 1;
+    message CostItem {
+        int64 sid = 1;
+        int32 num = 2;
+    }
+    repeated CostItem items = 2;
+    repeated CostItem badges = 3;
+}
+
+//分解
+message MceBadgeResolved {
+    repeated int64 sid = 1;
+}
+
+//洗练
+message MceBadgeClear {
+    int64 sid = 1;
+    int32 cleartype = 2; //洗练类型
+    bool lock = 3; //是否锁定类型
+    int32 selecttype = 4; //选中类型
+}
+
+// 私物强化
+message MceStrengthPersonal {
+    int64 carduid = 1;
+    int32 costnum = 2;
+}

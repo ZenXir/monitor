@@ -1,0 +1,164 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseGuildBossOpen 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success    ReturnValue_DoubleName
+}
+
+message MGuildBoss 
+{
+    int32 id    = 1; // sceneid
+    int32 cnt   = 2; // 挑战次数
+    int64 stamp = 3; // 开启时间
+}
+
+// 挑战boss
+message MseGuildChallengeBoss 
+{
+    ReturnValue         errcode = 1;
+    repeated MGuildBoss boss    = 2;
+}
+
+message MseGuildCheckin 
+{
+    ReturnValue errcode     = 1; // ReturnValue_Success 
+    int32       check_id    = 2; // 签到表ID
+}
+
+message MseGuildCreate 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success    ReturnValue_DoubleName
+    int64       guildid = 2; // 创建成功，返回自己的工会ID
+}
+
+message MseGuildDisband 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success 
+}
+
+message MseGuildInfo 
+{
+    MGuildInfo guild_info = 1;
+}
+
+message MseGuildJoin 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success ReturnValue_Failed
+    int64       guildid = 2;
+}
+
+message MseGuildJoinList 
+{
+    repeated MGuildPlayer applylist = 1; // 申请加入的玩家列表
+}
+
+message MseGuildTip 
+{
+}
+
+message MseGuildJoinVerify 
+{
+    int64       uid      = 1;
+    bool        is_agree = 2;
+    ReturnValue errcode  = 3; // ReturnValue_Success    ReturnValue_Failed
+}
+
+message MseGuildJoinVerifyResult 
+{
+    int64 guildid   = 1;
+    bool  is_agree  = 2;
+}
+
+message MseGuildLeave 
+{
+    ReturnValue errcode         = 1;    // ReturnValue_Success
+    int32       guildexitime    = 37;   // 刷新退出公会的时间戳
+}
+
+message MseGuildList 
+{
+    repeated MGuildInfoSimple guilds = 1; // 工会列表
+}
+
+message MseGuildLvup 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success
+}
+
+message MseGuildManage 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success    ReturnValue_DoubleName 
+}
+
+message MseGuildMembers 
+{
+    repeated MGuildPlayer members = 1; // 工会成员
+}
+
+message MseGuildMy 
+{
+    MGuildMy guild_my = 1;
+}
+
+message MseGuildNoticeUpdate 
+{
+    ReturnValue errcode = 1; // ReturnValue_Success ReturnValue_Failed
+}
+
+message MseGuildRanking 
+{
+    repeated MGuildInfoSimple guilds = 1; // 工会列表
+}
+
+message MseGuildScienceUp 
+{
+    // MGuildScience  science     = 1;
+    ReturnValue errcode = 2; // ReturnValue_Success    ReturnValue_DoubleName 
+}
+
+message MseGuildSearch 
+{
+    repeated MGuildInfoSimple guilds = 1; // 工会列表
+    int64 from = 2; // 客户端携带数据
+}
+message MseGuildServe 
+{
+    int64 uid = 1;
+    int32 rank = 2; // 职位
+    ReturnValue errcode = 3; // ReturnValue_Success ReturnValue_Failed
+}
+
+message MseGuildKick 
+{
+    int64 uid = 1; // 踢出的玩家id
+    int64 kick_time = 2; // 踢出的时间
+}
+
+message MseGuildServeResult 
+{
+    int32 rank = 1; // 职位
+}
+
+message MseGuildSkillUp 
+{
+    ReturnValue errcode = 1;
+    int32 cardjob = 2;
+    bool is_reset = 4;
+}
+message MseGuildTreasureGet 
+{
+    ReturnValue errcode = 1;
+}
+
+message MseGuildTreasureInfo 
+{ //   宝库
+    repeated MBag       items    = 1;
+    repeated MFormatext note_tre = 2; // 宝库日志
+}
+
+message MseGuildSweepBoss 
+{
+    ReturnValue errcode = 1;
+}

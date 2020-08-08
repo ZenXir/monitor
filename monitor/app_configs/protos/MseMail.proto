@@ -1,0 +1,47 @@
+syntax = "proto3";
+import "ReturnValue.proto";
+import "MDefines.proto";
+
+message MseMailDelete {
+    ReturnValue retVal = 1;
+    bool isAll = 2;
+    repeated int64 delIds = 3;
+    bool bCardletter = 4; // 是否是手札
+}
+message MseMailGotMail {
+    ReturnValue retVal = 1;
+    bool isAll = 2;
+    repeated int64 gotIds = 3;
+    bool bCardletter = 4; // 是否是手札
+}
+message MMailItem {
+    int64 id = 1; // i++
+    int32 tid = 2; // 表ID
+    int32 timestamp = 3; // 发送时间
+    int32 giftid = 4; // 礼包表ID
+    bool isRead = 5; // 正文中的 %s
+    bool isGot = 6; // 正文中的 %s
+    repeated string params_title = 7; // 标题中的 %s
+    repeated string params_desc = 8; // 正文中的 %s
+    repeated MDisItem res = 9; // 携带的资源
+}
+//手札包含的内容
+message MCardLetterItem {
+    int64 id = 1;
+    int32 timestamp = 2; // 发送时间
+    bool isRead = 3; // 读取标记
+    bool isGot = 4; // 附件收取标记
+    // bool  isreply = 5; 	// 是否回复标记
+}
+message MseMailList {
+    UpdatePatternEnum updatetype = 1;
+    repeated MMailItem mailList = 2; // 邮件内容
+    bool bCardletter = 3; // 是否是手札
+    repeated MCardLetterItem cardletterList = 4; // 邮件内容
+}
+message MseMailMarkRead {
+    ReturnValue retVal = 1;
+    int64 id = 2;
+    bool bCardletter = 3; // 是否是手札
+    // bool bReply = 4 ; // 是否回复
+}
