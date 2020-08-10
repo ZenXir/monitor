@@ -486,8 +486,7 @@ router.get('/viewcombatreport', function(req, res) {
         logger.info("result_data: " + JSON.stringify(result_data, null, 4))//使用四个空格缩进
         var str_pretty1 = JSON.stringify(result_data, null, 4) 
         var str_pretty2 = JSON.stringify(result_data) 
-        //return res.render("admin/mytable", {error: err, tableContent : str_pretty2});
-        return res.render("admin/mytable", {error: str_pretty1});
+        return res.render("admin/combatreport", {error: err, tableContent : str_pretty2});
     });
 });
 

@@ -1,0 +1,23 @@
+include "../layouts/iframe_layout.blade"
+
+replace block body
+	.container-fluid
+		h2 Result:
+
+		- if(typeof error !== "undefined" && error !== null)
+			p= error
+		- else
+			-tableContent = JSON.parse(tableContent)
+			-if (typeof tableContent === "object")
+				table(border="1" style="max-width:2000px")
+					tbody
+						tr
+						td(align="middle")= JSON.stringify(tableContent, null, 4)
+			-else
+				table(border="1" style="max-width:2000px")
+					tbody
+						tr
+						p= tableContent
+
+							
+						
