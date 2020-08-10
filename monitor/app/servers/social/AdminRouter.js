@@ -438,10 +438,6 @@ const Bytes2HexString = (b)=> {
 router.get('/viewcombatreport', function(req, res) {
     logger.info("viewcombatreport" + JSON.stringify(req.query));
     var noticeInfo = `Please Input Valid Params: ["pve", "kingtower", "earthtower", "watertower", "firetower", "windtower"] USE: stageid, OTHERS USE: battleid.`;
-    if (!Boolean(combattype_keys[req.query.querytype] || (!Boolean(req.query.stageid) && !Boolean(req.query.battleid))) {
-        return res.render("admin/mytable", {error: noticeInfo});
-    }
-
     var combattype_keys = {
         "pve": "MainStageCombatReports",
         "pvp": "PVPCombatReports",
@@ -455,6 +451,9 @@ router.get('/viewcombatreport', function(req, res) {
         "firetower" : "ElementTowerCombatReports",
         "windtower" : "ElementTowerCombatReports"
     };
+    if (!Boolean(combattype_keys[req.query.querytype] || (!Boolean(req.query.stageid) && !Boolean(req.query.battleid))) {
+        return res.render("admin/mytable", {error: noticeInfo});
+    }
     var reportskey = combattype_keys[req.query.querytype] + "_ServerId_" + req.query.serverid;
     var reportsfield = "";
     if (req.query.querytype == "pve"
