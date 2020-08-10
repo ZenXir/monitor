@@ -437,8 +437,9 @@ const Bytes2HexString = (b)=> {
 
 router.get('/viewcombatreport', function(req, res) {
     logger.info("viewcombatreport" + JSON.stringify(req.query));
-    if (!Boolean(req.query.stageid) && !Boolean(req.query.battleid)) {
-        return res.render("admin/mytable", {error: "Please Input Valid Params"});
+    var noticeInfo = `Please Input Valid Params: ["pve", "kingtower", "earthtower", "watertower", "firetower", "windtower"] USE: stageid, OTHERS USE: battleid.`;
+    if (!Boolean(combattype_keys[req.query.querytype] || (!Boolean(req.query.stageid) && !Boolean(req.query.battleid))) {
+        return res.render("admin/mytable", {error: noticeInfo});
     }
 
     var combattype_keys = {
@@ -454,12 +455,21 @@ router.get('/viewcombatreport', function(req, res) {
         "firetower" : "ElementTowerCombatReports",
         "windtower" : "ElementTowerCombatReports"
     };
-    var reportskey = combattype_keys[req.query.querytype];
-    if (!Boolean(combattype_keys[req.query.querytype]) || !Boolean(reportskey)) {
-        return res.render("admin/mytable", {error: "Please Input Valid Params"});
+    var reportskey = combattype_keys[req.query.querytype] + "_ServerId_" + req.query.serverid;
+    var reportsfield = "";
+    if (req.query.querytype == "pve"
+        || req.query.querytype == "kingtower"
+        || req.query.querytype == "earthtower"
+        || req.query.querytype == "watertower"
+        || req.query.querytype == "firetower"
+        || req.query.querytype == "windtower") {
+        reportsfield = req.query.stageid;
+    } else {
+        reportsfield = req.query.battleid;
     }
-    reportskey = reportskey + "_ServerId_" + req.query.serverid;
-    var reportsfield = req.query.battleid;
+    if (reportsfield.length <= 0) {
+        return res.render("admin/mytable", {error: noticeInfo});
+    }
 
     var AccountsDao = require('../../common/dao/AccountsDao');
     var MsgProtobuf = require('../../../modules/MsgProtobuf');
