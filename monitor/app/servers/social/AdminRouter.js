@@ -451,7 +451,7 @@ router.get('/viewcombatreport', function(req, res) {
         "firetower" : "ElementTowerCombatReports",
         "windtower" : "ElementTowerCombatReports"
     };
-    if (!Boolean(combattype_keys[req.query.querytype] || (!Boolean(req.query.stageid) && !Boolean(req.query.battleid))) {
+    if (!Boolean(combattype_keys[req.query.querytype]) || (!Boolean(req.query.stageid) && !Boolean(req.query.battleid))) {
         return res.render("admin/mytable", {error: noticeInfo});
     }
     var reportskey = combattype_keys[req.query.querytype] + "_ServerId_" + req.query.serverid;
