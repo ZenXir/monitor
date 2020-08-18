@@ -134,20 +134,28 @@ message MseVipInfo {
 }
 
 // 付费信息
-message MseRechargeInfo {
-    int32 first_flag = 1; // 首充标志，按位存储
-    int64 small_mc_over_time = 2; // 小月卡结束时间戳(秒)
-    int64 big_mc_over_time = 3; // 大月卡结束时间戳(秒)
-    repeated MRechargeGift gifts = 4; // 礼包
-    repeated MTriggerGift trig_gifts = 5; // 触发式礼包(没领过且未过期的)
+message MseRechargeInfo 
+{
+    int32       first_flag              = 1;    // 首充标志，按位存储
+    repeated    MRechargeGift gifts     = 4;    // 礼包
+    repeated    MTriggerGift trig_gifts = 5;    // 触发式礼包(没领过且未过期的)
+    string      birthday                = 6;    // 生日，空串代表没设置生日
+    int32       monthrecharge           = 7;    // 月充值金额
 }
 
 // 购买免费礼包
-message MseBuyFreeGift {
+message MseBuyFreeGift 
+{
     ReturnValue retVal = 1;
 }
 
 // 推送触发式礼包
-message MseTriggerGift {
+message MseTriggerGift 
+{
     MTriggerGift gifts = 1;
+}
+
+message MseBirthday
+{
+    ReturnValue retVal = 1;
 }

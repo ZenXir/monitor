@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "Constant.proto";
+import "MDefines.proto";
 
 message MceCombat {
     CombatTypeDefine combatType = 1; // 玩法类型 (现在一个玩法对应一个阵型)
@@ -46,4 +47,18 @@ message McePvpCombat {
 
 message MceFightPowerChange {
     double fightpower = 1; // 战力值     
+}
+
+message MceCombatsimulateSet
+{
+    repeated MSimulateTeam attack = 1;
+	repeated MSimulateTeam defend = 2;
+}
+
+message MceCombatsimulateStart
+{
+    CombatTypeDefine combatType = 1;
+    int32 charpterId = 2; // 章节id（推图才有这参数）
+    int32 stageId = 3; // 第几关  
+	int32 nums = 4; // 模拟次数
 }

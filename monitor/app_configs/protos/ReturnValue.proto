@@ -200,6 +200,7 @@ enum ReturnValue
     ErrorCode_Maze_Timeout 					= 509; 	// 迷宫已刷新
     ErrorCode_BanLogin 						= 510; 	// 封号
     ErrorCode_BanChat 						= 511; 	// 禁聊
+	ErrorCode_Chat_ApplyListIsFull          = 512; 	// 申请列表已达上限
 
     ErrorCode_NULL = 1023;
 }

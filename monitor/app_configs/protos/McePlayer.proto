@@ -31,3 +31,8 @@ message MceGetVipReward {
 message MceBuyFreeGift {
     int32 gift_id = 1; // ??id
 }
+
+message MceBirthday
+{
+    string birthday = 1;
+}

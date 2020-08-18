@@ -127,6 +127,7 @@ message MceRecruit
 message MceRecruitChoose {
 	int32 tid		= 1; // 卡池id
 	int32 cardid 	= 2; // 选择卡牌
+	int32 cardid2 	= 3; // 选择卡牌
 }
 
 message MceRecruitList 

@@ -35,6 +35,7 @@ message MCombatStatNode {
     int64 hurt = 4; // 伤害 输出的伤害
     int64 cure = 5; // 治疗
     int64 damage = 6; // 承伤 承受的伤害
+	int32 cardlv = 7; // 等级
 }
 
 // 战报
@@ -274,4 +275,16 @@ message MseIdleBattle
 //上线发送所有章节的通关情况 通关
 message MseIdleStageData {
     MIdleStage idleStage = 4; // 挂机节点数据
+}
+
+message MseCombatsimulateSet
+{
+    ReturnValue         ret           = 1;
+	int64               attackpower   = 2; 
+	int64               defendpower   = 3; 
+}
+
+message MseCombatsimulateStart
+{
+    int32 wintimes = 1;  
 }

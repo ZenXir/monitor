@@ -66,8 +66,9 @@ message Arena3v3Record
     int32 								head_icon 	= 10;
     int32 								fight 		= 11;
     int32 								vip 		= 12;
-    int32 								dan 		= 14;
-    repeated Arena3v3Record_Formation 	formations 	= 15; //每场数据
+    int32 								dan 		= 14;   // 对手段位
+    repeated Arena3v3Record_Formation 	formations 	= 15;   // 每场数据
+    int32                               mydan       = 16;   // 自己当时的段位
 
 }
 
@@ -278,6 +279,7 @@ message MseRecruitList {
     int32 reward_cnt = 4; // 抽卡奖励区间计数
     int32 reward_max = 5; // 抽卡奖励处于哪一档
     repeated int32 poolopen = 6; // 特殊开启的卡池tid
+	int32 normaltimes = 7; // 普通抽卡总次数
 }
 
 message MseRecruitOpen {
