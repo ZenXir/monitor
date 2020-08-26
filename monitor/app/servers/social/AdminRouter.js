@@ -376,8 +376,13 @@ router.get('/queryserverinfo', function(req, res) {
 
     var post_data = {
         type: "queryserversinfo",
+        port : 7000,
+        currentLoad : 800,
+        loadLimit : 1000,
+        status : 'normal',
     };
-    var content = JSON.stringify(post_data);
+    var query_str = require('querystring');
+    var content = query_str.stringify(post_data);
 
     var options = {
         hostname: '192.168.2.142',
