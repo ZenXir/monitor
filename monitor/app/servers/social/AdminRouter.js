@@ -17,15 +17,6 @@ router.use(session({ secret: 'erase fox', resave: false, saveUninitialized: true
 
 var urlRoot = "";
 var http = require('http');
-var options = {
-    hostname: '192.168.2.142',
-    port: 8001,
-    path: '/cmdmanagerplanet',
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-};
 
 router.all('*', function(req, res, next) {
     urlRoot = req.headers.url_root || "";
@@ -384,11 +375,19 @@ router.get('/queryserverinfo', function(req, res) {
     logger.info("queryserverinfo" + JSON.stringify(req.query));
 
     var post_data = {
-        type: "queryserverinfo",
+        type: "queryserversinfo",
     };
     var content = JSON.stringify(post_data);
 
-
+    var options = {
+        hostname: '192.168.2.142',
+        port: 8001,
+        path: '/master/serversinfo',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    };
     var req = http.request(options, function (resdata) {
         console.log('STATUS: ' + resdata.statusCode);
         console.log('HEADERS: ' + JSON.stringify(resdata.headers));
