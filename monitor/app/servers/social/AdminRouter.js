@@ -348,6 +348,36 @@ router.get('/updateexternalconfigures', function(req, res) {
     });
 });
 
+router.get('./syncversionconf', function(req, res) {
+    logger.info("syncversionconf " + JSON.stringify(req.query));
+
+    if ("" == req.query.syncversion) {
+        logger.error("syncversion is nil.");
+        return res.render("admin/mytable", {error: "syncversion is nil. please input it!"});
+    }
+
+    const exec = require('child_process').execFile;
+    exec('../Tools/update_table_specific.sh', [ req.query.syncversion ], function(err, stdout, stderr) {
+        var output = [];
+        if (err) {
+            output.push({"err : ": JSON.stringify(err)});
+        }
+        if (stderr) {
+            stderr.split('\n').forEach(function(line) {
+                output.push({"stdinfo: ": line});
+            })
+        }
+        if (stdout) {
+            stdout.split('\n').forEach(function(line) {
+                if (line.length > 0)
+                    output.push({"Success : ": line});
+            })
+        }
+        logger.info("syncversionconf result : " + JSON.stringify(output));
+        return res.render("admin/mytable", {error: (err?"Failed : "+err:err), tableContent: JSON.stringify(output)});
+    });
+});
+
 router.get('/queryserverinfo', function(req, res) {
     logger.info("queryserverinfo" + JSON.stringify(req.query));
 

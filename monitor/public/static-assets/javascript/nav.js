@@ -118,6 +118,15 @@ $(document).ready(function () {
                             var url = $("#query_serverinfo").attr('url');
                             openUrlOnTabs(url, "Query ServerInfo");
                         });
+
+                        $("#syncversionconf_button").on("click", function() {
+                            var params = [];
+                            var syncversion = $("#syncversion").val();
+                            syncversion = encodeURI(syncversion);
+                            params.push(["syncversion", syncversion].join("="));
+                            var url = $("#syncversionconf_button").attr('url') + "?" + params.join("&");
+                            openUrlOnTabs(url, "View Combat Report");
+                        });
                         
                         $("#view_combatreport_button").on("click", function() {
                             var params = [];
