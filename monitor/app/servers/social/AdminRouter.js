@@ -348,7 +348,7 @@ router.get('/updateexternalconfigures', function(req, res) {
     });
 });
 
-router.get('./syncversionconf', function(req, res) {
+router.get('/syncversionconf', function(req, res) {
     logger.info("syncversionconf " + JSON.stringify(req.query));
 
     if ("" == req.query.syncversion) {
