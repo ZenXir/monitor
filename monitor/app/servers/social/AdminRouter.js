@@ -396,7 +396,7 @@ router.get('/queryserverinfo', function(req, res) {
             console.log('BODY: ' + chunk);
             let serversInfo = JSON.parse(chunk)
             let output = [];
-            serversInfo.forEach(function(item,index) {
+            serversInfo.List.forEach(function(item,index) {
                 output.push({"Success : ": JSON.stringify(item)});
             });
             logger.info("query servers info : %s", JSON.stringify(output));
