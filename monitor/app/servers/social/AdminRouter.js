@@ -362,11 +362,13 @@ router.get('/syncversionconf', function(req, res) {
         if (err) {
             output.push({"err : ": JSON.stringify(err)});
         }
+        /*
         if (stderr) {
             stderr.split('\n').forEach(function(line) {
                 output.push({"stdinfo: ": line});
             })
         }
+        */
         if (stdout) {
             stdout.split('\n').forEach(function(line) {
                 if (line.length > 0)
