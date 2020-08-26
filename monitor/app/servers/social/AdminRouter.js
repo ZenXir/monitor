@@ -381,7 +381,7 @@ router.get('/queryserverinfo', function(req, res) {
 
     var options = {
         hostname: '192.168.2.142',
-        port: 8001,
+        port: 9992,
         path: '/master/serversinfo',
         method: 'POST',
         headers: {
