@@ -2,12 +2,13 @@
 dat=`date "+%Y-%m-%d_%H:%M"`
 day=`date "+%Y/%m/%d" -d now`
 #localip=`ip a | grep "\binet\b" |awk '{print $2}'| egrep -e "^10|172" | awk -F"/" '{print $1; exit;}'`
-basedir="/data/MongoDBBackup/mongodb/$day"
+basedir="/data/MongoDBBackup/$day"
 
 helpfunc(){
         echo
         echo "options:"
         echo " -P      specify the port"
+        echo " -D      specify the databases"
         echo " is running like mongodb_fullbackup.sh -P 27019 -D DGSvr_1,DGSvr_2"
 }
 

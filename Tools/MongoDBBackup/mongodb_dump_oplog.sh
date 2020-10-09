@@ -30,7 +30,7 @@ fi
 start_time="Timestamp(${start_t}, 0)"
 stop_time="Timestamp(${stop_t}, 0)"
 date_now=`date "+%Y%m%d%H%M%S" -d now`
-backdir="/data/MongoDBBackup/mongodb/oplog"
+backdir="/data/MongoDBBackup/oplog"
 
 #dump
 function data_fetch(){

@@ -2,7 +2,7 @@
 dat=`date "+%Y-%m-%d_%H:%M"`
 day=`date "+%Y/%m/%d" -d now`
 #localip=`ip a | grep "\binet\b" |awk '{print $2}'| egrep -e "^10|172" | awk -F"/" '{print $1; exit;}'`
-basedir="/data/MongoDBBackup/mongodb/$day"
+basedir="/data/MongoDBBackup/$day"
 
 helpfunc(){
         echo
