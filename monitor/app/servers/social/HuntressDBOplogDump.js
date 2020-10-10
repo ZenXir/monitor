@@ -28,8 +28,8 @@ Second(Optional)	Minute	Hour	Day of Month	Month	Day of Week
         let host = '10.0.3.252:36019';
         let usrname = 'root';
         let passwd = 'sincetimes6';
-        let start_t = _now;
-        let stop_t = _now - 24 * 60 * 60;
+        let start_t = _now - 24 * 60 * 60;
+        let stop_t = _now;
 	
         const exec = require('child_process').execFile;
         exec('../Tools/MongoDBBackup/mongodb_dump_oplog_replicate.sh', [ '-H', host, '-U', usrname, '-P', passwd, '-S', start_t, , '-E', stop_t ], function(err) {
