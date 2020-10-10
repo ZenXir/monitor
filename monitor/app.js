@@ -4,7 +4,7 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var Redis = require('ioredis');
 var GeneralConfigMan = require("./app/common/GeneralConfigMan");
-var PersistentDBMan = require("./app/servers/social/PersistentDBMan");
+var HuntressDBBackup = require("./app/servers/social/HuntressDBBackup");
 
 /**
  * Init app for client.
@@ -42,7 +42,7 @@ app.configure('production|development', 'social', function() {
         //var AccountsDao = require('./app/common/dao/AccountsDao');
         //AccountsDao.getDao().setVerifyedAccount(0, 0, 'xxxxxxxxxxx', {a: "a", b: "b"});
     }
-    app.load(PersistentDBMan, {});
+    app.load(HuntressDBBackup, {});
 
 	// http request service
     var httpApiPort = GeneralConfigMan.getInstance().getConfig().httpApiPort;
