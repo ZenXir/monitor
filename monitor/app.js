@@ -4,7 +4,7 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var Redis = require('ioredis');
 var GeneralConfigMan = require("./app/common/GeneralConfigMan");
-var PersistentDao = require('./app/common/dao/PersistentDao');
+var PersistentDBMan = require("./app/servers/social/PersistentDBMan");
 
 /**
  * Init app for client.
@@ -23,7 +23,7 @@ app.configure('production|development', 'connector', function(){
     });
 });
 
-app.configure('production|development', 'master|connector|zgate|logic|social|balance', function () {
+app.configure('production|development', 'master|social', function () {
     let env = app.get('env');
     logger.info("env is " + env);
 
@@ -33,46 +33,7 @@ app.configure('production|development', 'master|connector|zgate|logic|social|bal
     app.set('redisClient', new Redis(generalConfig.redisConfig));
     app.set('redisPub', new Redis(generalConfig.redisConfig));
     app.set('redisSub', new Redis(generalConfig.redisConfig));
-    app.set("persistentDao", new PersistentDao(generalConfig.mongoDBConfig));
     //*/
-});
-
-app.configure('production|development', 'zgate', function(){
-	var SocketNet = require("./modules/SocketNet");
-	var MsgProtobuf = require("./modules/MsgProtobuf");
-	var ProtocolRegistry = require('./app/servers/zgate/ProtocolRegistry');
-	var BaseService = require('./app/servers/zgate/BaseService');
-	var CenterServerMgr = require('./app/servers/zgate/CenterServerMgr');
-	var zgate = new SocketNet;
-	if (MsgProtobuf.getInstance().loadProto()) {
-		ProtocolRegistry.register();
-		// 启动gate服务
-        zgate.start_server(BaseService.GS4GCServiceCfg, function(service){
-
-		});
-		// 连接CenterServer
-		//zgate.start_server(BaseService.CenterServerInfoCfg, function(service){
-		//	CenterServerMgr.Init(service);
-		//});
-		// test redis
-		/*
-		var AccountsDao = require('./app/common/dao/AccountsDao');
-		AccountsDao.getDao().setVerifyedAccount(0, 0, 'xxxxxxxxxxx', {a: "a", b: "b"});
-		*/
-		// test mongodb
-		/*
-		var testPersistant = function(){
-			var persistent = require('pomelo').app.get("persistentDao");
-			persistent.getPlayerIdCount(function(data) {
-				logger.warn('------------' + data);
-			})
-			persistent.savePlayerId(999999, {a: "a", b: "b"});
-		}
-        setTimeout(() => {
-            testPersistant()
-        }, 6000);
-        */
-	}
 });
 
 app.configure('production|development', 'social', function() {
@@ -81,6 +42,7 @@ app.configure('production|development', 'social', function() {
         //var AccountsDao = require('./app/common/dao/AccountsDao');
         //AccountsDao.getDao().setVerifyedAccount(0, 0, 'xxxxxxxxxxx', {a: "a", b: "b"});
     }
+    app.load(PersistentDBMan, {});
 
 	// http request service
     var httpApiPort = GeneralConfigMan.getInstance().getConfig().httpApiPort;
