@@ -11,14 +11,14 @@ helpfunc(){
         echo " -U      specify the username"
         echo " -P      specify the pass word"
         echo " -D      specify the databases"
-        echo " is running like mongodb_fullbackup_replicate.sh -H 192.168.2.142:27019 -D DGSvr_1,DGSvr_2"
+        echo " is running like mongodb_fullbackup_replicate.sh -H 10.0.3.252:36019 -U root -P sincetimes6 -D DGSvr_1,DGSvr_2"
 }
 
-while getopts "H:D:" Option
+while getopts "H:U:P:D:" Option
 do
         case $Option in
                 H) hostname=$OPTARG;;
-                U) usr=$OPTARG;;
+                U) usrname=$OPTARG;;
                 P) passwd=$OPTARG;;
                 D) dbname=$OPTARG;;
                 *) helpfunc; exit 1; ;;
@@ -35,7 +35,7 @@ dobackup(){
         #mongodump -u$bacuser -p$pswd --port $i --oplog  -o "$basedir"/mongo"$i"
         #if /data/mongodb/bin/mongodump -h 192.168.2.142 --port $ports -d $i --oplog -o "$basedir"/"$i"_$dat;then
         #if /data/mongodb/bin/mongodump -h 192.168.2.142 --port $ports -d $i -o "$basedir"/"$i"_$dat;then
-        if /data/mongodb/bin/mongodump --host $hostname -u $usr -p $passwd --authenticationDatabase "admin" -d $i -o "$basedir"/"$i"_$dat;then
+        if /data/mongodb4.2.9/bin/mongodump --host $hostname -u "$usrname" -p "$passwd" --authenticationDatabase "admin" -d $i -o "$basedir"/"$i"_$dat;then
                 echo "Mongo Backup($i) -->Sucess"
         else
                 echo "Mongo Backup($i) -->faild"
@@ -45,11 +45,12 @@ dobackup(){
 
 check(){
 person=`whoami`
+:<<!
         if [ "$person" != "root" ]; then
                 echo "the user is now $person, checkout to 'root' to continue"
                 exit 1
         fi
- 
+!
         if [ -z "$hostname" ] ;then
                 helpfunc
                 exit 1
