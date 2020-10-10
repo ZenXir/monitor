@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var Redis = require('ioredis');
 var GeneralConfigMan = require("./app/common/GeneralConfigMan");
 var HuntressDBBackup = require("./app/servers/social/HuntressDBBackup");
+var HuntressDBOplogDump = require("./app/servers/social/HuntressDBOplogDump");
 
 /**
  * Init app for client.
@@ -43,6 +44,7 @@ app.configure('production|development', 'social', function() {
         //AccountsDao.getDao().setVerifyedAccount(0, 0, 'xxxxxxxxxxx', {a: "a", b: "b"});
     }
     app.load(HuntressDBBackup, {});
+    app.load(HuntressDBOplogDump, {});
 
 	// http request service
     var httpApiPort = GeneralConfigMan.getInstance().getConfig().httpApiPort;
