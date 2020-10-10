@@ -57,7 +57,7 @@ person=`whoami`
         fi
 
         if [ -z "$dbname" ] ;then
-                helpfuc
+                helpfunc
                 exit 1
         fi
  

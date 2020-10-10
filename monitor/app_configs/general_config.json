@@ -4,9 +4,9 @@
     "httpMonitorPort" : 60010,
     "redisConfig" : {
       "host" : "127.0.0.1",
-      "port" : 6379,
+      "port" : 19999,
       "db": 0,
-      "password": ""
+      "password": "b72CUbSwZtbJQOkfaR6cDCw8ZjS7XzMlTiTzCnbOIkI="
     },
     "mongoDBConfig": {
       "host": "127.0.0.1",
@@ -19,9 +19,9 @@
     "httpMonitorPort" : 60010,
     "redisConfig" : {
       "host" : "127.0.0.1",
-      "port" : 6379,
+      "port" : 19999,
       "db": 0,
-      "password": ""
+      "password": "b72CUbSwZtbJQOkfaR6cDCw8ZjS7XzMlTiTzCnbOIkI="
     },
     "mongoDBConfig": {
       "host": "127.0.0.1",

@@ -15,15 +15,29 @@ HuntressDBBackup.prototype.persistentByMinute = function() {
 
 HuntressDBBackup.prototype.afterStart = function(cb) {
     var self = this;
-    // execute backup process at 4:30 everyday
-    var dayJob = new CronJob("0 * * * * *", function() {
-    //var dayJob = new CronJob("0 30 4 * * *", function() {
+
+/*
+       *                  *      *          *             *         *
+       *                  *      *          *             *         *
+       *                  *      *          *             *         *
+Second(Optional)	Minute	Hour	Day of Month	Month	Day of Week
+ */
+    var dayJob = new CronJob("0 * * * * *", function() { // execute every minute
+    //var dayJob = new CronJob("30 4 * * *", function() { // execute backup process at 4:30 everyday
         let _now = Date.now()/1000;
+	let host = '10.0.3.252:36019';
+	let usrname = 'root';
+	let passwd = 'sincetimes6';
+	let dbs = 'DGSvr_1,DGSvr_2';
+	
         const exec = require('child_process').execFile;
-        exec('../Tools/MongoDBBackup/mongodb_fullbackup_replicate.sh', [ -H "10.0.3.252:36019" -U "root" -P "sincetimes6" -D DGSvr_1,DGSvr_2 ], function(err) {
+        //exec('../Tools/MongoDBBackup/mongodb_fullbackup_replicate.sh', [ '-H', '10.0.3.252:36019', '-U', 'root', '-P', 'sincetimes6', '-D', 'DGSvr_1,DGSvr_2' ], function(err) {
+        exec('../Tools/MongoDBBackup/mongodb_fullbackup_replicate.sh', [ '-H', host, '-U', usrname, '-P', passwd, '-D', dbs ], function(err) {
             if (err) {
-                logger.warn('----------------- req.headers: ' + err);
-            }
+                logger.error('----------------- exec backup db err: ' + err);
+            } else {
+		logger.info('----------------- exec backup db success.');
+	    }
         });
     });
     dayJob.start();
