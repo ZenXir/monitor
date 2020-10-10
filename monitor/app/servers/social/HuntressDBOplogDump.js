@@ -1,19 +1,19 @@
 var CronJob = require('cron').CronJob;
 var logger = require('pomelo-logger').getLogger('pomelo');
 
-var HuntressDBBackup = function(app, opts) {
+var HuntressDBOplogDump = function(app, opts) {
     this.app = app;
 };
 
-HuntressDBBackup.prototype.start = function(cb) {
+HuntressDBOplogDump.prototype.start = function(cb) {
     process.nextTick(cb);
 };
 
-HuntressDBBackup.prototype.persistentByMinute = function() {
+HuntressDBOplogDump.prototype.persistentByMinute = function() {
     PersistentDaoHelper.persistendDailySlotState();
 };
 
-HuntressDBBackup.prototype.afterStart = function(cb) {
+HuntressDBOplogDump.prototype.afterStart = function(cb) {
     var self = this;
 
 /*
@@ -28,16 +28,16 @@ Second(Optional)	Minute	Hour	Day of Month	Month	Day of Week
         let host = '10.0.3.252:36019';
         let usrname = 'root';
         let passwd = 'sincetimes6';
-        let dbs = 'DGSvr_1,DGSvr_2';
+        let start_t = _now;
+        let stop_t = _now - 24 * 60 * 60;
 	
         const exec = require('child_process').execFile;
-        //exec('../Tools/MongoDBBackup/mongodb_fullbackup_replicate.sh', [ '-H', '10.0.3.252:36019', '-U', 'root', '-P', 'sincetimes6', '-D', 'DGSvr_1,DGSvr_2' ], function(err) {
-        exec('../Tools/MongoDBBackup/mongodb_fullbackup_replicate.sh', [ '-H', host, '-U', usrname, '-P', passwd, '-D', dbs ], function(err) {
+        exec('../Tools/MongoDBBackup/mongodb_dump_oplog_replicate.sh', [ '-H', host, '-U', usrname, '-P', passwd, '-S', start_t, , '-E', stop_t ], function(err) {
             if (err) {
-                logger.error('----------------- exec backup db err: ' + err);
+                logger.error('----------------- exec dump oplog err: ' + err);
             } else {
-		logger.info('----------------- exec backup db success.');
-	    }
+                logger.info('----------------- exec dump oplog success. start time: ' + start_t + ' stop time: ' + stop_t);
+	       }
         });
     });
     dayJob.start();
@@ -45,11 +45,11 @@ Second(Optional)	Minute	Hour	Day of Month	Month	Day of Week
     process.nextTick(cb);
 };
 
-HuntressDBBackup.prototype.stop = function(force, cb) {
+HuntressDBOplogDump.prototype.stop = function(force, cb) {
     process.nextTick(cb);
 };
 
 module.exports = function(app, opts) {
-    return new HuntressDBBackup(app, opts);
+    return new HuntressDBOplogDump(app, opts);
 };
 
