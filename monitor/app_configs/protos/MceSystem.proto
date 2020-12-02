@@ -33,3 +33,8 @@ message MceCliHeartBeat {
 message MceReLogin {
     string versionflag = 1;
 }
+
+message MceNewPlayerStat
+{
+    repeated string param = 1;
+}

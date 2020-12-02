@@ -5,6 +5,7 @@ import "MDefines.proto";
 message MseFriendAcceptVisit {
     ReturnValue retVal = 1; //0成功 其余是错误码
     int32 friendPoint = 2; //接受拜访获得的友情点数
+	int32 allfriendPoint = 3; //今天接受拜访获得的友情点数
 }
 message MseFriendAddBlack {
     ReturnValue retVal = 1; //0成功 其余是错误码
@@ -43,6 +44,7 @@ message MseFriendList {
     repeated MFriendItem friendItems = 2;
     repeated MFriendItem applyItems = 3;
     repeated MFriendItem blackItems = 4;
+	int32 allfriendPoint = 5; //今天接受拜访获得的友情点数
 }
 message MseFriendPK {
     ReturnValue retVal = 1; //0成功 其余是错误码

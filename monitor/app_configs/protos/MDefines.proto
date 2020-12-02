@@ -67,7 +67,7 @@ message MBasicPlayer
     string                  name        = 3;
     string                  sign        = 4;    //个性签名
     int32                   headicon    = 5;
-    int32                   fight       = 6;
+    int64                   fight       = 6;
     int32                   guild       = 7;
     int32                   viplv       = 8;
     int32                   guildrank   = 9;    // 公会职位   
@@ -140,21 +140,23 @@ enum EnumCardType {
     CardType_Maze = 1; // 迷宫招募的卡
 }
 
-message MCard {
-    int64 uid = 1; // (不可堆叠的物品的 递增id)
-    int32 cardId = 2; // 卡牌id
-    MEquipInfo equip_attr = 3; // 装备属性
-    repeated MDisItem costlist = 4; // 培养这张卡的累计物品   type =>资源(0) 道具(1) 装备(2) 卡牌(9)
-    int32 quality = 5; // 品阶
-    int32 level = 6; // 等级
-    int32 exclu_flag = 7; // 专属装备激活 0未激活，1 激活
-    int32 exclu_strenglv = 8; // 专属装备强化等级
-    EnumCardType type = 9; // 卡类型
-    int32 personal_lv = 10; // 私物强化等级
-    int32 personal_exp = 11; // 私物强化经验
-    int32 combatPower = 12; // 战力
-    repeated MAttr attrs = 13; // 属性
-    MBadgeInfo badge_attr = 14; // 徽章属性
+message MCard 
+{
+    int64               uid             = 1;    // (不可堆叠的物品的 递增id)
+    int32               cardId          = 2;    // 卡牌id
+    MEquipInfo          equip_attr      = 3;    // 装备属性
+    repeated MDisItem   costlist        = 4;    // 培养这张卡的累计物品   type =>资源(0) 道具(1) 装备(2) 卡牌(9)
+    int32               quality         = 5;    // 品阶
+    int32               level           = 6;    // 等级
+    int32               exclu_flag      = 7;    // 专属装备激活 0未激活，1 激活
+    int32               exclu_strenglv  = 8;    // 专属装备强化等级
+    EnumCardType        type            = 9;    // 卡类型
+    int32               personal_lv     = 10;   // 私物强化等级
+    int32               personal_exp    = 11;   // 私物强化经验
+    int64               combatPower     = 12;   // 战力
+    repeated MAttr      attrs           = 13;   // 属性
+    MBadgeInfo          badge_attr      = 14;   // 徽章属性
+    bool                qualityreward   = 15;   // 是否领取升星奖励
 }
 
 // 图鉴
@@ -181,30 +183,28 @@ message MItem {
 //     int64 endtime = 2 ;
 //}
 
-//徽章附加信息
-message MBadgeVice {
-    int32 type = 1;
-    int32 point = 2;
-}
 
 //道具
 message MBagItem {
-    int32 id = 1; // 物品id
-    int64 sid = 2; // 物品唯一表示 格子id
-    int32 num = 3; // 数量
-    int32 bagtype = 4;
-    int32 timestamp = 5;
+    int32 id                            = 1; // 物品id
+    int64 sid                           = 2; // 物品唯一表示 格子id
+    int32 num                           = 3; // 数量
+    int32 bagtype                       = 4;
+    int32 timestamp                     = 5;
 
     //道具属性
-    int32 subtype = 6; // 子类型
+    int32 subtype                       = 6; // 子类型
 
     // 装备、徽章属性
-    int32 strengthLv = 7; // 强化等级
-    int32 strengthexp = 8; // 强化经验
-    int64 carduid = 9; // 在那个卡牌身上
+    int32 strengthLv                    = 7; // 强化等级
+    int32 strengthexp                   = 8; // 强化经验
+    int64 carduid                       = 9; // 在那个卡牌身上
 
     // 徽章附加属性
-    repeated MBadgeVice badgevice = 10;
+    repeated MBadgeExtraAttr badgevice  = 10;
+
+    //是否上锁
+    bool islock                         = 11;
 }
 message MBag {
     int32 type = 1; //背包的物品类型
@@ -283,6 +283,7 @@ enum ChatChannelType {
     ChatChan_System = 1;
     ChatChan_Guild = 2;
     ChatChan_Private = 3;
+    ChatChan_Activity = 4;
 }
 
 //聊天数据
@@ -372,6 +373,17 @@ message MGuildInfoSimple
     int64   total_active    = 13;   // 总活跃度
 }
 
+message MDungeonCard
+{
+    int32 id    = 1;
+    int32 times = 2;
+}
+message MBossData
+{
+    int32   bossid = 1;
+    int32   bosshp = 2;
+}
+
 message MGuildMy // 跟Player走的工会信息
 {
     int64 guildid       = 1; //  公会信息，需要记在玩家身上的
@@ -457,10 +469,21 @@ message MWishList {
 	repeated bool achieve  = 3;
 }
 
+message MBadgeAttrTemp
+{
+    int32 before    = 1;    // 之前得类型
+    int32 type      = 2;    // 现在得类型
+    int32 value     = 3;    // 现在得数值
+    bool oper      = 4;    // 上次洗练得操作
+}
+
 // 徽章附属性
 message MBadgeExtraAttr {
-    int32 type = 1; //类型
-    int32 point = 2; //值
+    int32 type                      = 1;   //类型
+    int32 point                     = 2;   //值
+	int32 cleartimes                = 3;   //洗练次数
+    int32 level                     = 4;   //阶级
+    repeated MBadgeAttrTemp temp    = 5;   // 洗练临时属性
 }
 
 // 阵容信息
@@ -541,24 +564,48 @@ message MTriggerGift {
 }
 
 // 活动公共数据
-enum ActivityOpeType {
+enum ActivityOpeType 
+{
     AOT_Invalid = 0;
-    AOT_GET = 1; // 领取某个活动的奖励
+    AOT_GET     = 1; // 领取某个活动的奖励
 }
-message MActivityData {
-    int32 act_id = 1; // 活动id，activitySwitch表id
-    repeated int32 int_params = 2; // int参数列表
-    string str_params = 3; // string参数列表    
+
+message MActivityData 
+{
+    int32           act_id      = 1; // 活动id，activitySwitch表id
+    repeated int32  int_params  = 2; // int参数列表
+    string          str_params  = 3; // string参数列表    
 }
 
 // activitySwitch推送信息
-message MActivityTableRecord {
-    int32 id = 1;
-    int32 group = 2;
-    string starttime = 3;
-    string endtime = 4;
-    int32 version = 5;
-    string param = 6;
+message MActivityTableRecord 
+{
+    int32   id          = 1;
+    int32   group       = 2;
+    string  starttime   = 3;
+    string  endtime     = 4;
+    int32   version     = 5;
+    string  param       = 6;
+    int32   svropentime = 7;    // 服务器开服时间
+}
+
+message MSimulateEquipItem {
+    int32 equipid = 1;              //装备id
+    int32 equip_strenglv = 2;       //装备强化等级
+}
+
+message MSimulateEquipInfo{
+    MSimulateEquipItem weapon = 1;      // 装备之武器 
+    MSimulateEquipItem jacket = 2;      // 装备之上衣 
+    MSimulateEquipItem trousers = 3;    // 装备之下衣 
+    MSimulateEquipItem shoes = 4;       // 装备之鞋子 
+}
+
+message MSimulateBadge 
+{
+    int32 badgeid = 1;
+	int32 subattr1 = 2;
+	int32 subattr2 = 3;
 }
 
 // 设置模拟阵容
@@ -566,5 +613,20 @@ message MSimulateTeam {
     int32 cardid = 1;
     int32 level = 2;
     int32 stars = 3;
-	int32 pos = 4;
+    int32 pos = 4;
+    int32 personal_lv = 5;          //私物强化等级
+    int32 exclu_flag = 6;           //专属装备激活 0未激活，1 激活
+    int32 exclu_strenglv = 7;       //专属装备强化等级
+    MSimulateEquipInfo equip = 8;   //武器
+    MSimulateBadge badge1 = 9;      //徽章1
+    MSimulateBadge badge2 = 10;      //徽章2
+
+}
+
+// 发给客户端显示的红点
+enum EActiveTip {
+    EActiveTip_Invalid = 0;
+    EActiveTip_Guild = 1; // 公会红点
+    EActiveTip_WorldBoss = 2;   // 世界boss
+    EActiveTip_Activity = 3;    // 广告红点
 }

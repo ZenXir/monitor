@@ -19,9 +19,9 @@ message MceGuildCheckin
 
 message MceGuildCreate 
 {
-    string name = 1;
-    int32 badge = 2; // 公会徽章资源ID   guildBadge.xlsx
-    bool needverify = 3; // 是否需要审批
+    string  name        = 1;
+    int32   badge       = 2; // 公会徽章资源ID   guildBadge.xlsx
+    bool    needverify  = 3; // 是否需要审批
 }
 
 message MceGuildDisband 
@@ -43,8 +43,8 @@ message MceGuildJoinList
 
 message MceGuildJoinVerify 
 {
-    int64 uid = 1;
-    bool is_agree = 2;
+    int64   uid      = 1;
+    bool    is_agree = 2;
 }
 
 message MceGuildLeave 
@@ -93,12 +93,12 @@ message MceGuildScienceUp
 message MceGuildSearch 
 {
     int64 guildid = 1;
-    int64 from = 2; // 客户端携带数据
+    int64 from    = 2; // 客户端携带数据
 }
 
 message MceGuildServe 
 {
-    int64 uid = 1;
+    int64 uid  = 1;
     int32 rank = 2; // 职位
 }
 
@@ -115,9 +115,9 @@ message MceGuildSkillUp
 
 message MGetItem 
 {
-    int64 uid = 1;
-    int32 cnt = 2;
-    int32 type = 3;
+    int64 uid   = 1;
+    int32 cnt   = 2;
+    int32 type  = 3;
 }
 
 message MceGuildTreasureGet 
@@ -132,4 +132,19 @@ message MceGuildTreasureInfo
 message MceGuildSweepBoss 
 {
     CombatTypeDefine type = 1;
+}
+
+// 购买公会副本挑战次数
+message MceGuildDungeonBuy
+{
+}
+
+// 请求公会副本信息
+message MceGuildDungeonAskInfo
+{
+}
+
+// 公会副本登录同步信息，红点信息等
+message MceGuildDungeonLoginSync
+{
 }

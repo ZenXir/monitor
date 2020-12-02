@@ -42,3 +42,7 @@ message MseCliHeartBeat {
 message MseReLogin {
     ReturnValue ret = 1; //成功1 其余为错误码
 }
+
+message MseNewPlayerStat
+{
+}

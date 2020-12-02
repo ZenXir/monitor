@@ -68,8 +68,23 @@ message MceBadgeClear {
     int32 selecttype = 4; //选中类型
 }
 
+//徽章升阶
+message MceBadgeUp
+{
+    int64 sid = 1;
+    int32 type = 2;
+}
+
 // 私物强化
 message MceStrengthPersonal {
     int64 carduid = 1;
     int32 costnum = 2;
+}
+
+// 装备上锁
+message MceItemLock
+{
+    int64 sid       = 1;
+    int32 bagtype   = 2;
+    bool islock     = 3;
 }

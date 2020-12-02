@@ -37,16 +37,44 @@ message MseTimesStapMark {
     ReturnValue ret = 1; //返回
 }
 
-message MRecordItem {
-    string name = 1; // 用户名
-    int64 battleid = 2; // 对战记录id 请求回放使用
-    int64 param = 3; // 公会：造成伤害值
-    int32 icon = 4; // 用户头像
-    int32 level = 5; // 用户等级
+message MRecordItem 
+{
+    string  name     = 1;   // 用户名
+    int64   battleid = 2;   // 对战记录id 请求回放使用
+    int64   param    = 3;   // 公会：造成伤害值
+    int32   icon     = 4;   // 用户头像
+    int32   level    = 5;   // 用户等级
+    int32   stage    = 6;
 }
 
 message MseLocalRecord {
     CombatTypeDefine type = 1; // 记录类型
     int32 key = 2; // 公会id
     repeated MRecordItem item = 3; // 挑战记录
+}
+
+message MseFaithUp
+{
+    ReturnValue ret = 1;
+}
+
+message MseFaithInfo
+{
+    int32 core          = 1;
+    repeated int32 sate = 2;
+}
+
+message MseNewWorldBossInfo
+{
+    int32 id            = 1;
+    int32 starttime     = 2;
+    int32 cnt           = 3;
+    int32 buycnt        = 4;
+    int32 rank          = 5;
+    int64 damage        = 6;
+}
+
+message MseNewWorldBossBuy
+{
+    ReturnValue ret = 1;
 }

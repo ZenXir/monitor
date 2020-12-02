@@ -3,14 +3,15 @@ syntax = "proto3";
 import "Constant.proto";
 import "MDefines.proto";
 
-message MceCombat {
-    CombatTypeDefine combatType = 1; // 玩法类型 (现在一个玩法对应一个阵型)
-    int32 charpterId = 2; // 章节id（推图才有这参数）
-    int32 stageId = 3; // 第几关
+message MceCombat 
+{
+    CombatTypeDefine    combatType  = 1; // 玩法类型 (现在一个玩法对应一个阵型)
+    int32               charpterId  = 2; // 章节id（推图才有这参数）
+    int32               stageId     = 3; // 第几关
     // 以下项为迷宫战斗使用数据
-    int32 gridId = 4; // 对应 MazeMap 表中的id 
-    int32 gridCell = 5; // 对应 MazeMap 表中的cell_type的值  -1表示还没选择格子
-    int32 gridY = 6; // 对应 MazeMap 表中的cell_type的下标  -1表示还没选择格子
+    int32               gridId      = 4; // 对应 MazeMap 表中的id 
+    int32               gridCell    = 5; // 对应 MazeMap 表中的cell_type的值  -1表示还没选择格子
+    int32               gridY       = 6; // 对应 MazeMap 表中的cell_type的下标  -1表示还没选择格子
 }
 //战斗统计
 message MceCombatStat {
@@ -46,13 +47,15 @@ message McePvpCombat {
 }
 
 message MceFightPowerChange {
-    double fightpower = 1; // 战力值     
+    double fightpower = 1; // 战力值  
+    repeated string params = 2; //战力前5数据   
 }
 
 message MceCombatsimulateSet
 {
     repeated MSimulateTeam attack = 1;
 	repeated MSimulateTeam defend = 2;
+	bool def = 3;
 }
 
 message MceCombatsimulateStart

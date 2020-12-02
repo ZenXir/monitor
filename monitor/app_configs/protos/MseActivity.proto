@@ -10,7 +10,7 @@ message MseArena3v3Combat
 message Arena3v3Member_DisplayFormation
 {
     int32 teamid 	= 1; // 队伍id
-    int32 fight 	= 2; // 战力
+    int64 fight 	= 2; // 战力
     int32 cardid 	= 3; // 展示卡牌id
     int32 level 	= 4; // 展示卡牌等级
     int32 quality 	= 5; //
@@ -29,6 +29,7 @@ message Arena3v3Member {
 
 message MseArena3v3Info 
 {
+    bool                    onlyme      = 1;    // true 只发我自己的信息，否则全发
     int64 					weekstamp 	= 3; 	// 赛季周时间戳
     int32 					battlenum 	= 4; 	// 今日挑战次数
     int32 					coinhide 	= 6; 	// 隐藏已结算货币数
@@ -64,7 +65,7 @@ message Arena3v3Record
     string 								name 		= 8; //
     int32 								lv 			= 9;
     int32 								head_icon 	= 10;
-    int32 								fight 		= 11;
+    int64 								fight 		= 11;
     int32 								vip 		= 12;
     int32 								dan 		= 14;   // 对手段位
     repeated Arena3v3Record_Formation 	formations 	= 15;   // 每场数据
@@ -102,7 +103,7 @@ message ArenaRecord
     string 	name 		= 8; //
     int32 	lv 			= 9;
     int32 	head_icon 	= 10;
-    int32 	fight 		= 11;
+    int64 	fight 		= 11;
     int32 	vip 		= 12;
 }
 
@@ -118,7 +119,7 @@ message ArenaMember
     bool  				is_robot 	= 2;
     int32 				rank 		= 3;
     int32 				score 		= 4;
-    int32 				fight 		= 5;
+    int64 				fight 		= 5;
     string 				name 		= 6; //
     int32 				lv 			= 7; //
     int32 				head_icon 	= 8;
@@ -193,6 +194,7 @@ message MMazeCard {
     //  int32 		level	= 3;
     //  int32 		quality	= 3;
     int32 curHpRate = 3; //剩余血量万分比
+    int32 pos       = 4; // 在阵容中得位置
     //  int32 		power	= 6;
 }
 
@@ -300,29 +302,32 @@ message MseRecruitWishChange {
 
 // 返回排行榜信息 - response
 //排行榜信息的内容
-message MRankItem {
-    int64 UID = 1; // 玩家UID
-    int32 rank = 2; // 玩家排名
-    int32 headIcon = 3; // 玩家头像
-    int32 level = 4; // 玩家等级
-    string name = 5; // 玩家名字
-    int32 vip = 6; // vip
-    int32 rankParam = 7; // 排行参数
-    repeated int64 format = 8; // 阵容信息
-    repeated int32 levels = 9; // 阵容中卡牌对应等级
-    repeated int32 quality = 10; // 阵容中卡牌突破等级
-    int32 rankType = 11; // 排行榜类型
-    bool is_robot = 12; // 是否机器人
+message MRankItem 
+{
+    int64          UID          = 1;    // 玩家UID
+    int32          rank         = 2;    // 玩家排名
+    int32          headIcon     = 3;    // 玩家头像
+    int32          level        = 4;    // 玩家等级
+    string         name         = 5;    // 玩家名字
+    int32          vip          = 6;    // vip
+    int32          rankParam    = 7;    // 排行参数
+    repeated int64 format       = 8;    // 阵容信息
+    repeated int32 levels       = 9;    // 阵容中卡牌对应等级
+    repeated int32 quality      = 10;   // 阵容中卡牌突破等级
+    int32          rankType     = 11;   // 排行榜类型
+    bool           is_robot     = 12;   // 是否机器人
+    repeated int64 params       = 13;   // 额外参数
 }
 
-message MseRankList {
-    ReturnValue retVal = 1;
-    int32 rankType = 2; // 排行榜类型
-    repeated MRankItem rankList = 3; // 排行榜信息
-    int32 myRank = 4; // 我的排名
-    int32 myRankParam = 5; // 排行榜参数（等级，战力，层数，星数）
-    repeated MRankGetkRewardComplete getrankreward = 6; // 获取排行榜奖励
-    MUpdatePattern updatePattern = 7;
+message MseRankList 
+{
+    ReturnValue                         retVal          = 1;
+    int32                               rankType        = 2; // 排行榜类型
+    repeated MRankItem                  rankList        = 3; // 排行榜信息
+    int32                               myRank          = 4; // 我的排名
+    int32                               myRankParam     = 5; // 排行榜参数（等级，战力，层数，星数）
+    repeated MRankGetkRewardComplete    getrankreward   = 6; // 获取排行榜奖励
+    MUpdatePattern                      updatePattern   = 7;
 }
 
 // WorldBoss清空挑战CD
@@ -396,4 +401,17 @@ message MsePushActTable {
 // 推送活动信息
 message MseSyncActivityData {
     repeated MActivityData datas = 1;
+}
+
+// 扭蛋活动
+message MseGacha
+{
+    ReturnValue         retVal = 1;
+    repeated MDisItem   items  = 2; // 不合并
+}
+
+// 推送迷宫时间
+message MseMazeTime
+{
+    int64 time = 1;
 }

@@ -42,12 +42,14 @@ message MsePlayerData
     repeated int32  storygrpids     = 12;   // 剧情id list
     int64           showCardUid     = 13;   // 看板娘的UID
     repeated int64  displayCards    = 14;   // 用于展示区的卡牌Uid
-    int32           cardBagCapacity = 17;   // 卡牌背包最大容量
+    //int32           cardBagCapacity = 17;   // 卡牌背包最大容量
     string          sign            = 18;   // 个性签名 
     double          fightpowermax   = 19;   // 玩家当前最大战力值
     repeated int32  noviceguideid   = 20;   // 新手引导id
     int64           banchattime     = 22;   // 禁言结束时间
     int64           banlogintime    = 23;   // 封号结束时间
+    int32           arenanum        = 24;   // 低竞挑战次数
+    int32           arena3v3num     = 25;   // 高竞挑战次数
 }
 
 // 准备数据，第一天返回
@@ -77,13 +79,15 @@ message MseItemBag {
     int64 bind_diamond = 4; //体力
 }
 
-// 发给客户端显示的红点
-enum EActiveTip {
-    EActiveTip_Invalid = 0;
-    EActiveTip_Guild = 1; // 公会红点
+message MActiveTip
+{
+    int32 type = 1;
+    repeated int64 params = 2;
 }
+
 message MseActiveTip {
     EActiveTip tip = 1;
+    repeated MActiveTip others = 2;
 }
 
 // 通用错误消息
@@ -156,6 +160,11 @@ message MseTriggerGift
 }
 
 message MseBirthday
+{
+    ReturnValue retVal = 1;
+}
+
+message MseReadActiveTip
 {
     ReturnValue retVal = 1;
 }

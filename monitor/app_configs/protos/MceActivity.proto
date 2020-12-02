@@ -10,6 +10,7 @@ message MceArena3v3Combat
 // 高级竞技场匹配
 message MceArena3v3Info 
 {
+    bool    onlyme      = 1;    // true 只发我自己的信息，否则全发
 }
 
 //
@@ -198,4 +199,16 @@ message MceActivityOpe
 {
     ActivityOpeType type    = 1;
     int32           act_id  = 2; // 活动id，activitySwitch表id
+}
+
+// 抽扭蛋
+message MceGacha
+{
+    bool isten = 1; // 是否10连抽
+}
+
+// 请求活动数据
+message MceAskFiveUpdateData
+{
+    int32   type = 1;   // 自定义的更新模块儿id 定义在GameDefines.h
 }

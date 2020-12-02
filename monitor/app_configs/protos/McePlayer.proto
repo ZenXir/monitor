@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "Constant.proto";
+import "MDefines.proto";
 
 message MceHeadIconSet {
     int32 Icon = 1; //图标Id
@@ -35,4 +36,9 @@ message MceBuyFreeGift {
 message MceBirthday
 {
     string birthday = 1;
+}
+
+message MceReadActiveTip
+{
+    EActiveTip tip = 1;
 }

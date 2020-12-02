@@ -41,7 +41,26 @@ enum CombatTypeDefine
 	CombatTypeWaterTower		= 16;	// 水塔阵容
 	CombatTypeFireTower		    = 17;	// 火塔阵容
 	CombatTypeWindTower		    = 18;	// 风塔阵容
-	CombatTypeMax 				= 19;
+
+    CombatTypePveExt1           = 19;   // PVE推图多队1 0队是：CombatTypePve
+    CombatTypePveExt2           = 20;   // PVE推图多队2
+    CombatTypePveExt3           = 21;   // PVE推图多队3
+    CombatTypePveExt4           = 22;   // PVE推图多队4
+    CombatTypePveExt5           = 23;   // PVE推图多队5
+    CombatTypePveExt6           = 24;   // PVE推图多队6
+    CombatTypePveExt7           = 25;   // PVE推图多队7
+    CombatTypePveExt8           = 26;   // PVE推图多队8
+    CombatTypeKingTowerExt1     = 27;   // 王者之塔多队1 0队是：CombatTypeKingTower
+    CombatTypeKingTowerExt2     = 28;   // 王者之塔多队2
+    CombatTypeKingTowerExt3     = 29;   // 王者之塔多队3
+    CombatTypeKingTowerExt4     = 30;   // 王者之塔多队4
+    CombatTypeKingTowerExt5     = 31;   // 王者之塔多队5
+    CombatTypeKingTowerExt6     = 32;   // 王者之塔多队6
+    CombatTypeKingTowerExt7     = 33;   // 王者之塔多队7
+    CombatTypeKingTowerExt8     = 34;   // 王者之塔多队8
+    CombatTypeGVE               = 35;   // 公会GVE
+    CombatTypeWorldBoss         = 36;   // 世界Boss
+	CombatTypeMax 				= 37;
 }
 
 enum CombatDefine {
@@ -79,6 +98,7 @@ enum TaskType {
     TaskStory = 4;
     TaskNovice = 5;
     TaskGrow = 6;
+	TaskStarGift = 7;
 };
 
 enum TaskState {
@@ -119,6 +139,7 @@ enum TriggerCond {
     TriggerCondCardCntSurmount = 205; // 卡牌突破等级达到x的卡牌数量
     TriggerCondCardTrainingCnt = 206; // 卡牌训练xx训练达到xx次
     TriggerCondCardSkillLvCnt = 207; // 卡牌技能达到+x的技能数量
+	TriggerCondCardAStarGiftCnt = 208; // 卡牌升星送礼
 
 
     TriggerCondEquipCnt = 301; // 拥有装备总数量      数量
@@ -155,6 +176,8 @@ enum TriggerCond {
     TriggerJJcRank = 1102; // 竞技场排名进入前x名	名次
 
     TriggerTowerPassLv = 1201; // 通关王者之塔xx层
+	TriggerTowerPassLvMax = 1202; // 通关王者之塔xx层
+    TriggerElementTower = 1301; // 四种元素之塔通关xx层
     TriggerContinueLogin = 1401;
     TriggerCardUpCnt = 10001; // 升级卡牌xx次
     TriggerEquipStrCnt = 10002; // 装备强化xx次
@@ -171,6 +194,12 @@ enum TriggerCond {
     TriggerGuildShopBuyCnt = 10013; // 公会商店购买装备xx次
     TriggerShopBuyCnt = 10014; // 普通商铺购买道具xx次
     TriggerJJcSuccessCnt = 10015; // 竞技场取得胜利xx场
+	TriggerCardBreadUpCnt = 10016;
+    TriggerPowerUpdate = 10017;
+    TriggerGuidBossJoin = 10018;
+    TriggerPersonalStrLvSum = 10019;
+    TriggerExcEquipStrLvSum = 10020;
+    TriggerBadgeStrLvSum = 10021;
 };
 
 // 全局配置表枚举 GlobalConfig.txt
@@ -234,6 +263,11 @@ enum GlobalConfigIdx
     GlobalConfigId_Arena3v3ClickLimit   = 75;   // 高级竞技场挑战点击按钮CD
     GlobalConfigId_HandbookAttrCnt      = 76;   // 图鉴中每个猎人最大星级属性条数
     GlobalConfigId_RecruitSpeUnlock     = 79;   // 解锁特殊招募条件
+
+    GlobalConfigId_ActiveExcluQuality   = 81;   // 卡牌专属装备解锁需要的品质星级
+
+    GlobalConfigId_ExcluLvMax           = 83;   // 专属等级上限--四元素|光暗元素
+	GlobalConfigId_RecuritLoop          = 86;   // 抽卡循环奖励条件
 
     GlobalConfigId_BaseHitRate          = 901; // 基础命中百分比
     GlobalConfigId_BaseDodgeRate        = 902; // 基础闪避百分比

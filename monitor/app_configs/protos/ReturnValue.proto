@@ -86,10 +86,10 @@ enum ReturnValue
     ErrorCode_Piece_Insufficient 			= 81; 	// 碎片不足
     ErrorCode_Card_FavorLvMax 				= 82; 	// 卡牌好感度等级满级了
     ErrorCode_Card_LvMax 					= 83; 	// 卡牌升级到上限了
-    ErrorCode_Card_ShareLvMax 				= 84; 	// 卡牌升级升级超过了与共鸣水晶等级的最大差值
+    ErrorCode_Card_Qualitylow 				= 84; 	// 卡牌突破等级低，无法领取突破奖励
     ErrorCode_Card_QualityMax 				= 85; 	// 卡牌突破到上限了
     ErrorCode_Card_RaceWrong 				= 86; 	// 卡牌突破必须同一种族
-    ErrorCode_Card_NameWrong 				= 87; 	// 卡牌突破必须同名卡
+    ErrorCode_Card_BreakGift_GOT 			= 87; 	// 卡牌突破奖励已领取
     ErrorCode_Equip_StrengthMaxLv 			= 88; 	// 装备已经强化到最大等级
     ErrorCode_Equip_NotSameProfession 		= 89; 	// 装备与卡牌不是一个职业
     ErrorCode_Card_NoExcluEquip 			= 90; 	// 该猎人无法穿戴专属装备
@@ -134,13 +134,20 @@ enum ReturnValue
     ErrorCode_Guild_NotEnoughActive 		= 141; 	// 没有足够活跃度开启公会Boss
     ErrorCode_Guild_NotInGuild 				= 142; 	// 玩家不在这个公会中
     ErrorCode_Guild_LastNotOver 			= 143; 	// 上次开启的活动还没结束
-    ErrorCode_Guild_BossNotOpen 			= 144; 	// Boss活动未开启
-    ErrorCode_Guild_BossEnd 				= 145; 	// Boss活动已结束
-    ErrorCode_Guild_BossMaxCnt 				= 146; 	// Boss挑战次数满了
+    ErrorCode_GuildDungeon_Minlv 			= 144; 	// 公会等级不够，无法开启Dungeon
+    ErrorCode_GuildDungeon_MinFuck 			= 145; 	// Dungeon挑战次数不够了
+    ErrorCode_GuildDungeon_Fucking 			= 146; 	// Dungeon别人正在打
     ErrorCode_Guild_HuntMaxCnt 				= 147; 	// 狩猎次数满了
     ErrorCode_Guild_BossNoDamage            = 148;  // 扫荡公会boss伤害为0
+    ErrorCode_GuildDungeon_fuckmax          = 150;  // 挑战累积次数已满
+    ErrorCode_GuildDungeon_buymax           = 151;  // 购买次数已满
+    ErrorCode_GuildDungeon_cardnotimes      = 152;  // 猎人上场次数不够了
+    ErrorCode_GuildDungeon_pass             = 153;  // Dungeon通关了
+    ErrorCode_GuildDungeon_passcur          = 154;  // 本关已通过，请往下一关
+    
 
     ErrorCode_Card_Exclusived 				= 160; 	// 专属装备已激活
+    ErrorCode_Card_ExcluMaxLv               = 161;  // 专属装备强化最大等级
 
     ErrorCode_Entrust_ErrID 				= 171; 	// 悬赏任务，ID错误
     ErrorCode_Entrust_ErrCfg 				= 172; 	// 悬赏任务，表错误
@@ -186,6 +193,10 @@ enum ReturnValue
     ErrorCode_Activity_NotFinish 			= 241;	// 条件未达成
 
     ErrorCode_Fight_NotEnough               = 250;  // 战力不足
+    
+    ErrorCode_Combat_TypeError              = 260;  // 战斗类型不对
+    ErrorCode_Combat_SceneError             = 261;  // 场景错误
+    ErrorCode_Combat_PushError              = 262;  // push失败
 
     Tips_Guild_viceLeader 					= 500;
 
@@ -200,7 +211,8 @@ enum ReturnValue
     ErrorCode_Maze_Timeout 					= 509; 	// 迷宫已刷新
     ErrorCode_BanLogin 						= 510; 	// 封号
     ErrorCode_BanChat 						= 511; 	// 禁聊
-	ErrorCode_Chat_ApplyListIsFull          = 512; 	// 申请列表已达上限
+    ErrorCode_Chat_ApplyListIsFull          = 512;  // 申请列表已达上限
+	ErrorCode_MaintainKick                  = 513; 	// 维护踢人
 
     ErrorCode_NULL = 1023;
 }

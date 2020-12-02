@@ -24,7 +24,7 @@ message MPlayerInfoSimple
     string name  = 2; // 名字
     int32  head  = 3; // 头像
     int32  level = 4; // 级别
-    int32  power = 5; // 战力
+    int64  power = 5; // 战力
     // 	int32		serverId= 6; // 分区
 }
 // 战报统计信息
@@ -70,6 +70,7 @@ message MseCombatStat
     repeated MCombatInfo    combatinfo  = 4; // 战报信息
     int32                   flag        = 5; // 标记 以标记是否是前端主动请求
     int64                   battleid    = 6;
+    repeated int64          param       = 7; // 附加参数 1-世界boss战报时[要存储的战报序列] 2-竞技场PVP和3V3时[相关的player uid] 3-GUILD BOSS/HUNT时[为公会ID]
 }
 
 // ------------------------ 战报回放 -------------------------------------------------------------
@@ -202,7 +203,7 @@ message CombatEvent {
     int32 skillEntry = 4; //技能配表ID
     bool isDead = 5; //施法者是否死亡
     int32 attackSpeed = 6; //施法者当前攻击速度
-    int32 curHp = 7; //施法者当前血量
+    int64 curHp = 7; //施法者当前血量
     repeated CombatActor targetActors = 8; //目标卡牌 最大数量 MAX_CARD_EACH_SIDE
     repeated ImpactBuff impacts = 9; // 身上有的buff状态
 }
@@ -247,7 +248,7 @@ message MCombatTeam
 {
     CombatTypeDefine    teamType    = 1; // 阵型类型
     repeated int64      arrangement = 2; //  阵型里卡牌的UID（数组大小9，对应九个位置，值为UID）
-    int32               combatpower = 3;
+    int64               combatpower = 3;
     int32               format      = 4;   
 }
 
@@ -287,4 +288,5 @@ message MseCombatsimulateSet
 message MseCombatsimulateStart
 {
     int32 wintimes = 1;  
+	int32 nums = 2; 
 }

@@ -32,3 +32,18 @@ message MceLocalRecord {
     CombatTypeDefine type = 1; // 记录类型
     int32 key = 2; // 公会：公会id
 }
+
+message MceFaithUp
+{
+    int32 type = 1;
+}
+
+message MceNewWorldBossInfo
+{
+    
+}
+
+message MceNewWorldBossBuy
+{
+    
+}

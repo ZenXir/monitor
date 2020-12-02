@@ -162,3 +162,30 @@ message MseGuildSweepBoss
 {
     ReturnValue errcode = 1;
 }
+
+// 公会副本登录同步信息，红点信息等
+message MseGuildDungeonLoginSync
+{
+    int64           opentime    = 1;    // 活动开启时间
+    int32           lefttimes   = 2;    // 剩余挑战次数
+    int32           buytimes    = 3;    
+    repeated int32  buffs       = 10;
+}
+
+// 购买公会副本挑战次数
+message MseGuildDungeonBuy
+{
+    ReturnValue errcode     = 1;
+    int32       lefttimes   = 2;    // 剩余挑战次数
+    int32       buytimes    = 3;
+}
+
+// 公会副本同步信息，战斗前和战斗后
+message MseGuildDungeonAskInfo
+{
+    ReturnValue             errcode     = 1;
+    int32                   curstage    = 2;    // 当前关卡
+    int32                   rank        = 3;    // 排名
+    repeated MDungeonCard   cards       = 9;    // 使用过的card
+    repeated MBossData      bossdatas   = 10;   // 当前关卡boss信息
+}

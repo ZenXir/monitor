@@ -52,8 +52,20 @@ message MseBadgeClear {
     int32 selecttype = 3; //选中类型
 }
 
+//徽章升阶
+message MseBadgeUp
+{
+    ReturnValue retVal = 1;
+}
+
 // 私物强化
 message MseStrengthPersonal {
     ReturnValue retVal = 1;
     int32 critNum = 2; // 暴击次数	
+}
+
+// 装备上锁
+message MseItemLock
+{
+    ReturnValue retVal = 1;
 }

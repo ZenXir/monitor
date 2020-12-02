@@ -2,7 +2,9 @@ syntax = "proto3";
 import "ReturnValue.proto";
 import "MDefines.proto";
 
-message MseCardAddMax {
+// 废弃
+message MseCardAddMax 
+{
     ReturnValue retVal = 1;
     int32 capacity = 2;
 }
@@ -133,4 +135,10 @@ message MseActiveCardHandbookQuality {
     ReturnValue retVal = 1;
     int32 cardid = 2; // 图鉴id
     int32 attrnum = 3; // 属性条数
+}
+
+// 领取升星奖励
+message MseGetBreakUpReward
+{
+    ReturnValue retVal = 1;
 }
