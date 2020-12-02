@@ -14,4 +14,9 @@ echo 'kill old game pids: {'${game_pids}'}'
 sleep 1
 
 cd /home/DragonGirlServer/Debug/
+svn up
 sh startgame.sh 
+
+cd /data/DragonGirlServer_tag_20201203/Debug/
+svn up
+sh startgame.sh

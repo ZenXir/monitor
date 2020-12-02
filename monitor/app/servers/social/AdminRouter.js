@@ -57,6 +57,7 @@ router.post('/login', function(req, res, next) {
         "fengbotao" : "fengbotao",
         "zhengmanlou" : "zhengmanlou",
         "sunmurui" : "sunmurui",
+        "wangqian" : "wangqian",
         "admin" : "admin"
     };
     
