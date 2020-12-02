@@ -20,3 +20,4 @@ sh startgame.sh
 cd /data/DragonGirlServer_tag_20201203/Debug/
 svn up
 sh startgame.sh
+

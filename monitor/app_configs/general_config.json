@@ -4,7 +4,7 @@
     "httpMonitorPort" : 60010,
     "redisConfig" : {
       "host" : "127.0.0.1",
-      "port" : 19999,
+      "port" : 6379,
       "db": 0,
       "password": "b72CUbSwZtbJQOkfaR6cDCw8ZjS7XzMlTiTzCnbOIkI="
     },
@@ -19,7 +19,7 @@
     "httpMonitorPort" : 60010,
     "redisConfig" : {
       "host" : "127.0.0.1",
-      "port" : 19999,
+      "port" : 6379,
       "db": 0,
       "password": "b72CUbSwZtbJQOkfaR6cDCw8ZjS7XzMlTiTzCnbOIkI="
     },
