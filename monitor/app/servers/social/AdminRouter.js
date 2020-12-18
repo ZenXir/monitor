@@ -17,6 +17,8 @@ router.use(session({ secret: 'erase fox', resave: false, saveUninitialized: true
 
 var urlRoot = "";
 var http = require('http');
+var zlib = require('zlib');
+
 
 router.all('*', function(req, res, next) {
     urlRoot = req.headers.url_root || "";
@@ -520,11 +522,26 @@ router.get('/viewcombatreport', function(req, res) {
 
         let protoMessages = MsgProtobuf.getInstance().MessagesRef();
         let data = Hexstring2btye(combarReportObj.MseCombatStat)
-        let result_data = protoMessages.MseCombatStat.decode(data)
-        logger.info("result_data: " + JSON.stringify(result_data, null, 4))//使用四个空格缩进
-        var str_pretty1 = JSON.stringify(result_data, null, 4) 
-        var str_pretty2 = JSON.stringify(result_data) 
-        return res.render("admin/combatreport", {error: err, tableContent : str_pretty2});
+        if (combarReportObj.hasOwnProperty("IsCompress") && combarReportObj["IsCompress"] > 0) {
+            var databuf = Buffer.from(data)
+            zlib.inflate(databuf, function(err, decompressedMsgBody) {
+                if (err) {
+                    throw err;
+                }
+                let result_data = protoMessages.MseCombatStat.decode(decompressedMsgBody)
+                logger.info("result_data: " + JSON.stringify(result_data, null, 4))//使用四个空格缩进
+                var str_pretty1 = JSON.stringify(result_data, null, 4) 
+                var str_pretty2 = JSON.stringify(result_data) 
+                return res.render("admin/combatreport", {error: err, tableContent : str_pretty2});
+            });
+        } else {
+            let result_data = protoMessages.MseCombatStat.decode(data)
+            logger.info("result_data: " + JSON.stringify(result_data, null, 4))//使用四个空格缩进
+            var str_pretty1 = JSON.stringify(result_data, null, 4) 
+            var str_pretty2 = JSON.stringify(result_data) 
+            return res.render("admin/combatreport", {error: err, tableContent : str_pretty2});
+            
+        }
     });
 });
 
