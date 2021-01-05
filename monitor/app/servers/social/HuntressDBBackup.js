@@ -28,7 +28,7 @@ Second(Optional)	Minute	Hour	Day of Month	Month	Day of Week
         let host = '10.0.3.252:36019';
         let usrname = 'root';
         let passwd = 'sincetimes6';
-        let dbs = 'DGSvr_1,DGSvr_2,DGSvr_3';
+        let dbs = 'DGSvr_1,DGSvr_2,DGSvr_3,DGSvr_4';
 	
         const exec = require('child_process').execFile;
         //exec('../Tools/MongoDBBackup/mongodb_fullbackup_replicate.sh', [ '-H', '10.0.3.252:36019', '-U', 'root', '-P', 'sincetimes6', '-D', 'DGSvr_1,DGSvr_2' ], function(err) {
