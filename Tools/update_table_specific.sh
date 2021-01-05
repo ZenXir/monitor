@@ -28,11 +28,13 @@ do
         do
             config_onedir=${config_version_list[$j]}
             config_onedir=${config_onedir%/*}
-            #echo $config_onedir
+            config_onedir=${config_onedir#*2021}
+            echo $config_onedir
             if [[ $1 = $config_onedir ]];
             then
                 find_config_version="yes"
                 if [ ! -d $config_onedir ];
+                config_onedir="2021${config_onedir}"
                 then
                     svn co https://192.168.0.126/svn/DragonGirls/DragonGirlsConfig/正式数据表/$config_onedir
                 fi
