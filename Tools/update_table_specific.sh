@@ -11,7 +11,7 @@ do
     var_oneline=${var_oneline#*_}
     var_oneline=${var_oneline%_*}
 
-    var_oneline=${var_oneline#*2020}
+    var_oneline=${var_oneline#*2021}
     if [[ $1 = $var_oneline ]];
     then
         #echo $var_oneline
