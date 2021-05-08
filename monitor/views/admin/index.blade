@@ -1,66 +1,72 @@
 include "../layouts/index_layout.blade"
 
 replace block body
-	aside(class="ui-layout-west")
-		section#accordion(class="ui-accordion ui-widget")
-			-var itemsaggregatekinds = ["PVE","PVP","KingTower","Maze","Arena3V3","GuildBoss","GuildHunt","EarthTower","WaterTower","FireTower","WindTower","GVE"];
-			-var whitelistopertype = ["Add", "Delete"];
-			h3 GameServerMgr
-			nav
-				br
-				button#restart_gameserver(url="restartgameserver") RestartTrunkGameServer
-				br
-				br
-				button#update_configures(url="updateconfigures") UpdateTrunkConfigFiles
-				br
-				br
-				button#query_serverinfo(url="queryserverinfo") QueryServersInfo
-				br
-				br
-				p.label SyncVersionConf:
-				br
-				input#syncversion(type="text")
-				br
-				br
-				button#syncversionconf_button(url="syncversionconf") Submit
-				br
-				br
-			h3 ExternalTestSvrMgr
-			nav
-				br
-				button#restart_external_gameserver(url="restartexternalgameserver") RestartExternalServer
-				br
-				br
-				button#update_external_configures(url="updateexternalconfigures") UpdateExternalFiles
-				p.label File Name:
-				br
-				input#config_file_name(type="text")
-				br
-			h3 ViewCombatReport
-			nav
-				select#item_selected_type
-					-for (var i in itemsaggregatekinds)
-						-var queryType = itemsaggregatekinds[i]
-						option(value="#{queryType}")= queryType
-				br
-				br
-				p.label ServerId:
-				br
-				input#serverid(type="text")
-				br
-				p.label StageId:
-				br
-				input#stageid(type="text")
-				br
-				p.label BattleId:
-				br
-				input#battleid(type="text")
-				br
-				br
-				button#view_combatreport_button(url="viewcombatreport") Submit
-	section(class="ui-layout-center")
-		#tabs
-			ul
-				li
-					a(href="#welcome") Welcome
-			iframe#welcome(src="welcome")
+    aside(class="ui-layout-west")
+        section#accordion(class="ui-accordion ui-widget")
+            -var itemsaggregatekinds = ["PVE","PVP","KingTower","Maze","Arena3V3","GuildBoss","GuildHunt","EarthTower","WaterTower","FireTower","WindTower","GVE"];
+            -var whitelistopertype = ["Add", "Delete"];
+            -var huntressversiontype = ["Japan:","Korea:KR","Taiwan:CT"];
+            h3 GameServerMgr
+            nav
+                br
+                button#restart_gameserver(url="restartgameserver") RestartTrunkGameServer
+                br
+                br
+                button#update_configures(url="updateconfigures") UpdateTrunkConfigFiles
+                br
+                br
+                button#query_serverinfo(url="queryserverinfo") QueryServersInfo
+                br
+                br
+                p.label SyncVersionConf:
+                br
+                select#item_selected_type
+                    -for (var i in huntressversiontype)
+                        -var queryType = huntressversiontype[i]
+                        option(value="#{queryType}")= queryType
+                br
+                input#syncversion(type="text")
+                br
+                br
+                button#syncversionconf_button(url="syncversionconf") Submit
+                br
+                br
+            h3 ExternalTestSvrMgr
+            nav
+                br
+                button#restart_external_gameserver(url="restartexternalgameserver") RestartExternalServer
+                br
+                br
+                button#update_external_configures(url="updateexternalconfigures") UpdateExternalFiles
+                p.label File Name:
+                br
+                input#config_file_name(type="text")
+                br
+            h3 ViewCombatReport
+            nav
+                select#item_selected_type
+                    -for (var i in itemsaggregatekinds)
+                        -var queryType = itemsaggregatekinds[i]
+                        option(value="#{queryType}")= queryType
+                br
+                br
+                p.label ServerId:
+                br
+                input#serverid(type="text")
+                br
+                p.label StageId:
+                br
+                input#stageid(type="text")
+                br
+                p.label BattleId:
+                br
+                input#battleid(type="text")
+                br
+                br
+                button#view_combatreport_button(url="viewcombatreport") Submit
+    section(class="ui-layout-center")
+        #tabs
+            ul
+                li
+                    a(href="#welcome") Welcome
+            iframe#welcome(src="welcome")

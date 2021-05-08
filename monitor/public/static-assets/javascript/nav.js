@@ -124,6 +124,8 @@ $(document).ready(function () {
                             var syncversion = $("#syncversion").val();
                             syncversion = encodeURI(syncversion);
                             params.push(["syncversion", syncversion].join("="));
+                            var queryType= $("#item_selected_type").val();
+                            params.push(["querytype", queryType.toLowerCase()].join("="));
                             var url = $("#syncversionconf_button").attr('url') + "?" + params.join("&");
                             openUrlOnTabs(url, "View Combat Report");
                         });

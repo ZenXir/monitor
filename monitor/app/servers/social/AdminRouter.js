@@ -46,6 +46,7 @@ router.post('/login', function(req, res, next) {
     logger.info("In admin/login, user: %s, password:%s", req.body.username, req.body.password);
 
     var adminlist = {
+        "zhangzexi": "zhangzexi",
         "jiangyong": "jiangyong",
         "yangjinzhi": "yangjinzhi",
         "chencheng": "chencheng",
@@ -60,6 +61,7 @@ router.post('/login', function(req, res, next) {
         "zhengmanlou" : "zhengmanlou",
         "sunmurui" : "sunmurui",
         "wangqian" : "wangqian",
+        "hushenjia" : "hushenjia",
         "admin" : "admin"
     };
     
@@ -343,7 +345,7 @@ router.get('/updateexternalconfigures', function(req, res) {
 });
 
 router.get('/syncversionconf', function(req, res) {
-    logger.info("syncversionconf " + JSON.stringify(req.query));
+    logger.info("syncversionconf " + JSON.stringify(req.query) + " sync type: " + req.query.querytype);
 
     if ("" == req.query.syncversion) {
         logger.error("syncversion is nil.");
@@ -351,7 +353,7 @@ router.get('/syncversionconf', function(req, res) {
     }
 
     const exec = require('child_process').execFile;
-    exec('../Tools/update_table_specific.sh', [ req.query.syncversion ], function(err, stdout, stderr) {
+    exec('../Tools/update_table_specific.sh', [ req.query.syncversion, req.query.querytype ], function(err, stdout, stderr) {
         var output = [];
         if (err) {
             output.push({"err : ": JSON.stringify(err)});
