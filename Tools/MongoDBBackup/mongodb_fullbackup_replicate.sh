@@ -3,6 +3,10 @@ dat=`date "+%Y-%m-%d_%H:%M"`
 day=`date "+%Y/%m/%d" -d now`
 #localip=`ip a | grep "\binet\b" |awk '{print $2}'| egrep -e "^10|172" | awk -F"/" '{print $1; exit;}'`
 basedir="/data/MongoDBBackup/$day"
+logdir="/data/monitor/Tools/log"
+[ ! -d $logdir ] && mkdir -p $logdir
+log="$logdir"/"$(date "+%Y-%m-%d" -d now)".log
+touch $log
 
 helpfunc(){
         echo
@@ -35,7 +39,8 @@ dobackup(){
         #mongodump -u$bacuser -p$pswd --port $i --oplog  -o "$basedir"/mongo"$i"
         #if /data/mongodb/bin/mongodump -h 192.168.2.142 --port $ports -d $i --oplog -o "$basedir"/"$i"_$dat;then
         #if /data/mongodb/bin/mongodump -h 192.168.2.142 --port $ports -d $i -o "$basedir"/"$i"_$dat;then
-        if /data/mongodb4.2.9/bin/mongodump --host $hostname -u "$usrname" -p "$passwd" --authenticationDatabase "admin" -d $i -o "$basedir"/"$i"_$dat;then
+	/data/mongodb4.2.9/bin/mongodump --host $hostname -u "$usrname" -p "$passwd" --authenticationDatabase "admin" -d $i -o "$basedir"/"$i"_$dat >> $log
+        if [ $? -eq 0 ];then
                 echo "Mongo Backup($i) -->Sucess"
         else
                 echo "Mongo Backup($i) -->faild"
@@ -77,6 +82,7 @@ else
         exit 1
 fi
 }
+
 main(){
     check
     dobackup
